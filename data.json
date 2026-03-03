@@ -1,0 +1,19 @@
+{
+  "categories": [
+    {
+      "name": "🫧 Temizlik & Deterjan",
+      "products": [
+        { "name": "Bingo matik 4 kg", "price": 188 },
+        { "name": "Domestos 1850 ml", "price": 116 },
+        { "name": "Fairy 1350 ml", "price": 115 }
+      ]
+    },
+    {
+      "name": "🧴 Kağıt & Kişisel Bakım",
+      "products": [
+        { "name": "Papia 16 tk", "price": 132 },
+        { "name": "Solo 32 tk", "price": 232 }
+      ]
+    }
+  ]
+}
