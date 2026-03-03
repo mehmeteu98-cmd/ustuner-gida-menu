@@ -6,156 +6,193 @@
 <title>Üstüner Toptan Gıda</title>
 
 <style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f4f6f9;
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f4f6f9;
 }
 
-header {
-  background: #0f172a;
-  color: white;
-  text-align: center;
-  padding: 20px;
-  font-size: 22px;
-  font-weight: bold;
+/* GİRİŞ EKRANI */
+#welcome{
+  position:fixed;
+  width:100%;
+  height:100vh;
+  background:#0f172a;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:1000;
 }
 
-.container {
-  padding: 15px;
+#welcome button{
+  margin-top:20px;
+  padding:10px 20px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:16px;
 }
 
-.search-box {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  font-size: 14px;
+/* HEADER */
+header{
+  background:#0f172a;
+  color:white;
+  text-align:center;
+  padding:15px;
+  font-size:20px;
+  font-weight:bold;
 }
 
-.menu-section {
-  background: white;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  overflow: hidden;
+/* SEARCH */
+.search-box{
+  width:90%;
+  margin:15px auto;
+  display:block;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
 }
 
-.category-header {
-  padding: 12px;
-  font-weight: bold;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  background: #e2e8f0;
+/* MENU */
+.container{
+  padding:10px;
 }
 
-.products {
-  display: none;
-  padding: 10px 15px;
+.menu-section{
+  background:white;
+  margin-bottom:15px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+  overflow:hidden;
 }
 
-.menu-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid #f1f1f1;
-  cursor: pointer;
+.category-header{
+  padding:12px;
+  background:#e2e8f0;
+  display:flex;
+  justify-content:space-between;
+  cursor:pointer;
+  font-weight:bold;
 }
 
-.menu-item:last-child {
-  border-bottom: none;
+.products{
+  display:none;
+  padding:10px 15px;
 }
 
-.product-price {
-  font-weight: bold;
+.menu-item{
+  display:flex;
+  justify-content:space-between;
+  padding:8px 0;
+  border-bottom:1px solid #eee;
+}
+
+.menu-item:last-child{
+  border-bottom:none;
+}
+
+/* WHATSAPP SABİT BUTON */
+.whatsapp{
+  position:fixed;
+  right:15px;
+  bottom:15px;
+  background:#25D366;
+  color:white;
+  padding:15px;
+  border-radius:50%;
+  font-size:20px;
+  text-decoration:none;
+  box-shadow:0 4px 10px rgba(0,0,0,0.3);
 }
 </style>
 </head>
 
 <body>
 
+<!-- GİRİŞ -->
+<div id="welcome">
+  <h1>Üstüner Toptan Gıda</h1>
+  <button onclick="startMenu()">Menüye Giriş</button>
+</div>
+
 <header>Üstüner Toptan Gıda</header>
 
+<input type="text" id="search" class="search-box" placeholder="Ürün ara...">
+
 <div class="container">
-  <input type="text" id="search" class="search-box" placeholder="Ürün ara...">
   <div id="menu-container"></div>
 </div>
 
+<!-- SABİT WHATSAPP -->
+<a class="whatsapp"
+   href="https://wa.me/905444465503?text=Merhaba,%20bilgi%20almak%20istiyorum."
+   target="_blank">W</a>
+
 <script>
 
-const phoneNumber = "905444465503"; // 05444465503 → başına 90 eklendi
+function startMenu(){
+  document.getElementById("welcome").style.display="none";
+}
 
 fetch("data.json")
-  .then(res => res.json())
-  .then(data => {
+.then(res=>res.json())
+.then(data=>{
 
-    const container = document.getElementById("menu-container");
-    const searchInput = document.getElementById("search");
+  const container=document.getElementById("menu-container");
+  const searchInput=document.getElementById("search");
 
-    function renderMenu(filter = "") {
-      container.innerHTML = "";
+  function renderMenu(filter=""){
+    container.innerHTML="";
 
-      data.categories.forEach(category => {
+    data.categories.forEach(category=>{
 
-        const filteredProducts = category.products.filter(p =>
-          p.name.toLowerCase().includes(filter.toLowerCase())
-        );
+      const filtered=category.products.filter(p=>
+        p.name.toLowerCase().includes(filter.toLowerCase())
+      );
 
-        if (filteredProducts.length === 0) return;
+      if(filtered.length===0) return;
 
-        const section = document.createElement("div");
-        section.classList.add("menu-section");
+      const section=document.createElement("div");
+      section.classList.add("menu-section");
 
-        const header = document.createElement("div");
-        header.classList.add("category-header");
-        header.innerHTML = `
-          <span>${category.name}</span>
-          <span>▼</span>
+      const header=document.createElement("div");
+      header.classList.add("category-header");
+      header.innerHTML=`<span>${category.name}</span><span>▼</span>`;
+
+      const productsDiv=document.createElement("div");
+      productsDiv.classList.add("products");
+
+      header.onclick=()=>{
+        productsDiv.style.display=
+          productsDiv.style.display==="block"?"none":"block";
+      };
+
+      filtered.forEach(product=>{
+        const item=document.createElement("div");
+        item.classList.add("menu-item");
+        item.innerHTML=`
+          <span>${product.name}</span>
+          <span>${product.price} ₺</span>
         `;
-
-        const productsDiv = document.createElement("div");
-        productsDiv.classList.add("products");
-
-        header.addEventListener("click", () => {
-          productsDiv.style.display =
-            productsDiv.style.display === "block" ? "none" : "block";
-        });
-
-        filteredProducts.forEach(product => {
-
-          const item = document.createElement("div");
-          item.classList.add("menu-item");
-
-          item.innerHTML = `
-            <span>${product.name}</span>
-            <span class="product-price">${product.price} ₺</span>
-          `;
-
-          item.addEventListener("click", () => {
-            const message = `Merhaba, ${product.name} (${product.price} ₺) sipariş vermek istiyorum.`;
-            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-            window.open(url, "_blank");
-          });
-
-          productsDiv.appendChild(item);
-        });
-
-        section.appendChild(header);
-        section.appendChild(productsDiv);
-        container.appendChild(section);
+        productsDiv.appendChild(item);
       });
-    }
 
-    renderMenu();
+      section.appendChild(header);
+      section.appendChild(productsDiv);
+      container.appendChild(section);
 
-    searchInput.addEventListener("input", (e) => {
-      renderMenu(e.target.value);
     });
+  }
 
+  renderMenu();
+
+  searchInput.addEventListener("input",(e)=>{
+    renderMenu(e.target.value);
   });
 
+});
 </script>
 
 </body>
