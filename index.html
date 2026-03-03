@@ -13,14 +13,14 @@
         .category-wrapper { margin-bottom: 10px; }
         .category-header { background: #fff; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-left: 5px solid #C9A227; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .category-header h2 { margin: 0; font-size: 18px; color: #0B1F3B; text-transform: uppercase; }
-        .arrow { transition: 0.3s; color: #0B1F3B; }
         .product-list { display: none; padding: 10px 5px; }
         .category-wrapper.active .product-list { display: block; }
         .category-wrapper.active .arrow { transform: rotate(180deg); }
         .product-card { background: white; display: flex; justify-content: space-between; align-items: center; padding: 12px; margin-bottom: 8px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .product-name { font-weight: 500; font-size: 14px; }
         .product-price { font-weight: bold; color: #C9A227; font-size: 16px; white-space: nowrap; }
-        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 14px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 14px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 100; font-size: 14px; }
+        .arrow { transition: 0.3s; }
     </style>
 </head>
 <body>
@@ -35,7 +35,7 @@
 
     <div class="category-wrapper">
         <div class="category-header" onclick="toggleCategory(this)">
-            <h2>Temizlik</h2><span class="arrow">▼</span>
+            <h2>Temizlik ve Deterjan</h2><span class="arrow">▼</span>
         </div>
         <div class="product-list">
             <div class="product-card"><span class="product-name">Bingo matik 1,5 kg</span><span class="product-price">97 ₺</span></div>
@@ -45,38 +45,48 @@
             <div class="product-card"><span class="product-name">Bingo matik 8 kg</span><span class="product-price">332 ₺</span></div>
             <div class="product-card"><span class="product-name">Bingo matik 9 kg</span><span class="product-price">367 ₺</span></div>
             <div class="product-card"><span class="product-name">Bingo matik 10 kg</span><span class="product-price">396 ₺</span></div>
+            <div class="product-card"><span class="product-name">Bingo elde yıkama 3 kg</span><span class="product-price">141 ₺</span></div>
             <div class="product-card"><span class="product-name">Bingo sıvı 2600 ml</span><span class="product-price">183 ₺</span></div>
             <div class="product-card"><span class="product-name">Bingo sıvı 1755 ml</span><span class="product-price">136 ₺</span></div>
+            <div class="product-card"><span class="product-name">Bingo giysi şampuanı 3 lt</span><span class="product-price">154 ₺</span></div>
+            <div class="product-card"><span class="product-name">Bingo giysi şampuanı 4 lt</span><span class="product-price">209 ₺</span></div>
             <div class="product-card"><span class="product-name">Yumoş konsantre</span><span class="product-price">110 ₺</span></div>
+            <div class="product-card"><span class="product-name">Yumoş standart 5 lt</span><span class="product-price">138 ₺</span></div>
+            <div class="product-card"><span class="product-name">Bingo soft 5 lt</span><span class="product-price">138 ₺</span></div>
             <div class="product-card"><span class="product-name">Domestos 750 ml</span><span class="product-price">58 ₺</span></div>
+            <div class="product-card"><span class="product-name">Domestos 1850 ml</span><span class="product-price">116 ₺</span></div>
+            <div class="product-card"><span class="product-name">Domestos 3240 ml</span><span class="product-price">174 ₺</span></div>
+            <div class="product-card"><span class="product-name">Ace 2 lt</span><span class="product-price">63 ₺</span></div>
             <div class="product-card"><span class="product-name">Ace 4 lt</span><span class="product-price">101 ₺</span></div>
+            <div class="product-card"><span class="product-name">Pril gold 54 lü</span><span class="product-price">397 ₺</span></div>
+            <div class="product-card"><span class="product-name">Pril hepsi bir arada 80 li</span><span class="product-price">397 ₺</span></div>
             <div class="product-card"><span class="product-name">Pril 4 kg</span><span class="product-price">145 ₺</span></div>
             <div class="product-card"><span class="product-name">Fairy 2600 ml</span><span class="product-price">201 ₺</span></div>
-            <div class="product-card"><span class="product-name">Bingo soft 5 lt</span><span class="product-price">138 ₺</span></div>
-            <div class="product-card"><span class="product-name">Camsil matik 500 ml</span><span class="product-price">32 ₺</span></div>
-            <div class="product-card"><span class="product-name">Marc yüzey tem. 2500 ml</span><span class="product-price">98 ₺</span></div>
+            <div class="product-card"><span class="product-name">Fairy 1350 ml</span><span class="product-price">115 ₺</span></div>
+            <div class="product-card"><span class="product-name">Fairy 650 ml</span><span class="product-price">56 ₺</span></div>
         </div>
     </div>
 
     <div class="category-wrapper">
         <div class="category-header" onclick="toggleCategory(this)">
-            <h2>Kişisel Bakım</h2><span class="arrow">▼</span>
+            <h2>Kağıt Ürünleri ve Hijyen</h2><span class="arrow">▼</span>
         </div>
         <div class="product-list">
             <div class="product-card"><span class="product-name">Papia 16 tk</span><span class="product-price">132 ₺</span></div>
+            <div class="product-card"><span class="product-name">Familia 16 tk</span><span class="product-price">112 ₺</span></div>
             <div class="product-card"><span class="product-name">Familia 32 tk</span><span class="product-price">216 ₺</span></div>
+            <div class="product-card"><span class="product-name">Solo 16 tk</span><span class="product-price">123 ₺</span></div>
             <div class="product-card"><span class="product-name">Solo 32 tk</span><span class="product-price">232 ₺</span></div>
             <div class="product-card"><span class="product-name">Selpak 16 tk</span><span class="product-price">162 ₺</span></div>
+            <div class="product-card"><span class="product-name">Papia 6 lı havlu</span><span class="product-price">106 ₺</span></div>
+            <div class="product-card"><span class="product-name">Familia 6 lı havlu</span><span class="product-price">88 ₺</span></div>
             <div class="product-card"><span class="product-name">Solo 12 li havlu</span><span class="product-price">182 ₺</span></div>
             <div class="product-card"><span class="product-name">Molfix jumbo paket</span><span class="product-price">121 ₺</span></div>
-            <div class="product-card"><span class="product-name">Bebem jumbo paket</span><span class="product-price">106 ₺</span></div>
+            <div class="product-card"><span class="product-name">Bebem fırsat paketi</span><span class="product-price">168 ₺</span></div>
             <div class="product-card"><span class="product-name">Bebem ultra fırsat paketi</span><span class="product-price">319 ₺</span></div>
             <div class="product-card"><span class="product-name">Orkid Platinum Çeşitleri</span><span class="product-price">68 ₺</span></div>
             <div class="product-card"><span class="product-name">Sleepy Islak Mendil</span><span class="product-price">28 ₺</span></div>
-            <div class="product-card"><span class="product-name">Hacı Şakir 4x150 gr</span><span class="product-price">84 ₺</span></div>
-            <div class="product-card"><span class="product-name">Duru banyo 4x150 gr</span><span class="product-price">78 ₺</span></div>
-            <div class="product-card"><span class="product-name">Clear şampuan 485 ml</span><span class="product-price">95 ₺</span></div>
-            <div class="product-card"><span class="product-name">Elidor şampuan 400 ml</span><span class="product-price">72 ₺</span></div>
+            <div class="product-card"><span class="product-name">Maylo Dev Havlu</span><span class="product-price">45 ₺</span></div>
         </div>
     </div>
 
@@ -101,6 +111,5 @@
         }
     }
 </script>
-
 </body>
 </html>
