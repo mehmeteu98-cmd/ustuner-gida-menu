@@ -1,147 +1,167 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Üstüner Gıda - Ürün Listesi</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Üstüner Gıda - Dijital Menü</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f7f6;
+            color: #333;
+        }
 
-<style>
-body{
-margin:0;
-font-family:Arial, sans-serif;
-background:#ffffff;
-color:#0B1F3B;
-}
+        header {
+            background: #0B1F3B;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
-header{
-background:#0B1F3B;
-color:white;
-padding:20px;
-text-align:center;
-}
+        header h1 {
+            margin: 0;
+            font-size: 26px;
+            letter-spacing: 1px;
+        }
 
-header h1{
-margin:0;
-font-size:22px;
-}
+        header p {
+            margin: 10px 0 0 0;
+            font-size: 14px;
+            opacity: 0.9;
+            font-style: italic;
+        }
 
-header p{
-margin:5px 0 0 0;
-font-size:13px;
-opacity:0.8;
-}
+        .search-container {
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            background: #f4f7f6;
+            z-index: 10;
+        }
 
-.search{
-padding:15px;
-}
+        .search-container input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #0B1F3B;
+            border-radius: 25px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+        }
 
-.search input{
-width:100%;
-padding:12px;
-border:1px solid #ddd;
-border-radius:8px;
-font-size:14px;
-}
+        .menu-section {
+            padding: 0 20px 80px 20px;
+        }
 
-.category{
-padding:15px;
-}
+        .category-title {
+            border-left: 5px solid #C9A227;
+            padding-left: 10px;
+            margin: 25px 0 15px 0;
+            font-size: 20px;
+            color: #0B1F3B;
+            text-transform: uppercase;
+        }
 
-.category h2{
-border-bottom:2px solid #C9A227;
-padding-bottom:5px;
-font-size:18px;
-}
+        .product-card {
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
 
-.product{
-display:flex;
-justify-content:space-between;
-padding:10px 0;
-border-bottom:1px solid #eee;
-font-size:14px;
-}
+        .product-name {
+            font-weight: 500;
+            font-size: 16px;
+        }
 
-.price{
-font-weight:bold;
-color:#C9A227;
-}
+        .product-price {
+            font-weight: bold;
+            color: #C9A227;
+            font-size: 18px;
+            white-space: nowrap;
+        }
 
-.whatsapp{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25D366;
-color:white;
-padding:15px 18px;
-border-radius:50px;
-text-decoration:none;
-font-size:14px;
-box-shadow:0 4px 8px rgba(0,0,0,0.2);
-}
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #25D366;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 100;
+            transition: transform 0.2s;
+        }
 
-</style>
+        .whatsapp-float:active {
+            transform: scale(0.95);
+        }
+    </style>
 </head>
-
 <body>
 
 <header>
-<h1>Üstüner Gıda</h1>
-<p>Fiyatlar Günlük Güncellenmektedir</p>
+    <h1>Üstüner Gıda</h1>
+    <p>Güncel Fiyat Listesi</p>
 </header>
 
-<div class="search">
-<input type="text" id="searchInput" placeholder="Ürün ara..." onkeyup="searchProducts()">
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Ürünlerde ara..." onkeyup="searchProducts()">
 </div>
 
-<div class="category">
-<h2>İçecekler</h2>
+<div class="menu-section">
+    <h2 class="category-title">İçecekler</h2>
+    <div class="product-card">
+        <span class="product-name">Coca Cola 1L</span>
+        <span class="product-price">35 ₺</span>
+    </div>
+    <div class="product-card">
+        <span class="product-name">Ayran 1L</span>
+        <span class="product-price">22 ₺</span>
+    </div>
 
-<div class="product">
-<span>Coca Cola 1L</span>
-<span class="price">35 ₺</span>
+    <h2 class="category-title">Temel Gıda</h2>
+    <div class="product-card">
+        <span class="product-name">Toz Şeker 5kg</span>
+        <span class="product-price">185 ₺</span>
+    </div>
+    <div class="product-card">
+        <span class="product-name">Pirinç 2.5kg</span>
+        <span class="product-price">140 ₺</span>
+    </div>
 </div>
 
-<div class="product">
-<span>Ayran 1L</span>
-<span class="price">22 ₺</span>
-</div>
-
-</div>
-
-<div class="category">
-<h2>Temel Gıda</h2>
-
-<div class="product">
-<span>Toz Şeker 5kg</span>
-<span class="price">185 ₺</span>
-</div>
-
-<div class="product">
-<span>Pirinç 2.5kg</span>
-<span class="price">140 ₺</span>
-</div>
-
-</div>
-
-<a class="whatsapp" href="https://wa.me/905444466503?text=Merhaba%2C%20Üstüner%20Gıda%20ürün%20listesi%20üzerinden%20sipariş%20vermek%20istiyorum." target="_blank">
-WhatsApp
+<a href="https://wa.me/905444466503?text=Merhaba, sipariş vermek istiyorum." class="whatsapp-float" target="_blank">
+    Sipariş Ver (WhatsApp)
 </a>
 
 <script>
-function searchProducts(){
-let input=document.getElementById('searchInput');
-let filter=input.value.toLowerCase();
-let products=document.getElementsByClassName('product');
+    function searchProducts() {
+        let input = document.getElementById('searchInput');
+        let filter = input.value.toLowerCase();
+        let cards = document.getElementsByClassName('product-card');
 
-for(let i=0;i<products.length;i++){
-let txtValue=products[i].textContent||products[i].innerText;
-if(txtValue.toLowerCase().indexOf(filter)>-1){
-products[i].style.display="";
-}else{
-products[i].style.display="none";
-}
-}
-}
+        for (let i = 0; i < cards.length; i++) {
+            let name = cards[i].getElementsByClassName('product-name')[0].innerText;
+            if (name.toLowerCase().indexOf(filter) > -1) {
+                cards[i].style.display = "flex";
+            } else {
+                cards[i].style.display = "none";
+            }
+        }
+    }
 </script>
 
 </body>
