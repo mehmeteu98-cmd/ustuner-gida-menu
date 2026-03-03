@@ -8,12 +8,14 @@
         /* Genel Ayarlar */
         body { margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #f4f7f6; color: #333; overflow-x: hidden; }
         
-        /* Mobil Uyumlu Giriş Ekranı */
+        /* Mobil Uyumlu ve Görselle Birebir Giriş Ekranı */
         #welcome-screen { 
             position: fixed; 
             top: 0; left: 0; 
             width: 100%; height: 100vh; 
-            background: linear-gradient(rgba(11, 31, 59, 0.85), rgba(11, 31, 59, 0.85)), url('https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG'); 
+            /* Karartma katmanı ve senin yüklediğin arkaplan.JPG */
+            background: linear-gradient(rgba(11, 31, 59, 0.88), rgba(11, 31, 59, 0.88)), 
+                        url('https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/arkaplan.JPG'); 
             background-size: cover; 
             background-position: center; 
             display: flex; 
@@ -25,36 +27,53 @@
             z-index: 1000; 
             transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); 
         }
+
+        /* Arka plandaki şeffaf logo (Filigran etkisi) */
+        #welcome-screen::before {
+            content: "";
+            position: absolute;
+            width: 85vw;
+            height: 85vw;
+            background-image: url('https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG'); 
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.12; 
+            z-index: -1;
+        }
+
         #welcome-screen.hide { transform: translateY(-100%); }
         
+        /* Üst Logo Ayarı */
+        .top-logo { width: 60px; margin-bottom: 20px; }
+
         .date-box { 
-            font-size: 14px; 
+            font-size: 13px; 
             letter-spacing: 1px;
-            margin-bottom: 25px; 
-            border: 1px solid rgba(255,255,255,0.4); 
-            padding: 6px 20px; 
+            margin-bottom: 15px; 
+            border: 1px solid rgba(255,255,255,0.3); 
+            padding: 5px 18px; 
             border-radius: 50px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
         }
 
         #welcome-screen h1 {
-            font-size: 11vw; 
+            font-size: 10vw; 
             margin: 0;
             font-weight: 700;
-            text-shadow: 2px 2px 15px rgba(0,0,0,0.6);
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
         }
 
-        #welcome-screen p {
-            font-size: 4.5vw;
-            margin: 12px 0 35px 0;
+        #welcome-screen p.slogan {
+            font-size: 4vw;
+            margin: 10px 0 30px 0;
             font-style: italic;
-            color: rgba(255,255,255,0.9);
-            max-width: 80%;
+            color: rgba(255,255,255,0.8);
         }
 
         .welcome-sub {
             color: #FFC107; 
-            font-size: 7vw; 
+            font-size: 6.5vw; 
             font-weight: 600;
             margin-bottom: 35px;
         }
@@ -63,20 +82,16 @@
             background: #C9A227; 
             color: #0B1F3B; 
             border: none; 
-            padding: 18px 55px; 
+            padding: 18px 50px; 
             border-radius: 50px; 
             font-weight: bold; 
-            font-size: 18px; 
+            font-size: 17px; 
             cursor: pointer; 
-            box-shadow: 0 5px 20px rgba(201, 162, 39, 0.4);
+            box-shadow: 0 4px 15px rgba(201, 162, 39, 0.4);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            transition: 0.3s;
         }
-        
-        .enter-btn:active { transform: scale(0.95); }
 
-        /* Menü İçerik Alanı */
+        /* Liste ve İçerik Tasarımı (Kategoriler) */
         .header-banner { width: 100%; height: auto; display: block; }
         .search-container { padding: 15px 20px; position: sticky; top: 0; background: #f4f7f6; z-index: 10; }
         .search-container input { width: 100%; padding: 12px 18px; border: 2px solid #0B1F3B; border-radius: 25px; font-size: 16px; box-sizing: border-box; outline: none; }
@@ -87,18 +102,17 @@
         .product-list { display: none; padding: 10px 5px; }
         .category-wrapper.active .product-list { display: block; }
         .product-card { background: white; display: flex; justify-content: space-between; align-items: center; padding: 12px; margin-bottom: 8px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .product-name { font-weight: 500; font-size: 14px; }
         .product-price { font-weight: bold; color: #C9A227; font-size: 15px; white-space: nowrap; }
-        
         .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 14px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 100; font-size: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
 
 <div id="welcome-screen">
+    <img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" class="top-logo">
     <div id="date" class="date-box"></div>
     <h1>Üstüner Gıda</h1>
-    <p>"Güvenli ve Taze Alışverişin Adresi"</p>
+    <p class="slogan">"Güvenli ve Taze Alışverişin Adresi"</p>
     <div class="welcome-sub">Hoş Geldiniz</div>
     <button class="enter-btn" onclick="enterSite()">Menüyü Görüntüle</button>
 </div>
@@ -110,7 +124,6 @@
 </div>
 
 <div class="menu-section">
-
     <div class="category-wrapper">
         <div class="category-header" onclick="toggleCategory(this)"><h2>🫧 Temizlik & Deterjan</h2><span>▼</span></div>
         <div class="product-list">
@@ -123,26 +136,8 @@
             <div class="product-card"><span>Bingo matik 10 kg</span><span class="product-price">396 ₺</span></div>
             <div class="product-card"><span>Bingo sıvı 2600 ml</span><span class="product-price">183 ₺</span></div>
             <div class="product-card"><span>Bingo sıvı 1755 ml</span><span class="product-price">136 ₺</span></div>
-            <div class="product-card"><span>Bingo giysi şampuanı 3 lt</span><span class="product-price">154 ₺</span></div>
-            <div class="product-card"><span>Bingo giysi şampuanı 4 lt</span><span class="product-price">209 ₺</span></div>
-            <div class="product-card"><span>Yumoş konsantre</span><span class="product-price">110 ₺</span></div>
-            <div class="product-card"><span>Yumoş standart 5 lt</span><span class="product-price">138 ₺</span></div>
-            <div class="product-card"><span>Bingo soft 5 lt</span><span class="product-price">138 ₺</span></div>
             <div class="product-card"><span>Domestos 750 ml</span><span class="product-price">58 ₺</span></div>
-            <div class="product-card"><span>Domestos 1850 ml</span><span class="product-price">116 ₺</span></div>
-            <div class="product-card"><span>Domestos 3240 ml</span><span class="product-price">174 ₺</span></div>
-            <div class="product-card"><span>Ace 2 lt</span><span class="product-price">63 ₺</span></div>
-            <div class="product-card"><span>Ace 4 lt</span><span class="product-price">101 ₺</span></div>
-            <div class="product-card"><span>Pril gold 54 lü</span><span class="product-price">397 ₺</span></div>
-            <div class="product-card"><span>Pril hepsi bir arada 80 li</span><span class="product-price">397 ₺</span></div>
-            <div class="product-card"><span>Pril 4 kg</span><span class="product-price">145 ₺</span></div>
-            <div class="product-card"><span>Pril 675 ml</span><span class="product-price">43 ₺</span></div>
             <div class="product-card"><span>Fairy 2600 ml</span><span class="product-price">201 ₺</span></div>
-            <div class="product-card"><span>Fairy 1350 ml</span><span class="product-price">115 ₺</span></div>
-            <div class="product-card"><span>Fairy 650 ml</span><span class="product-price">56 ₺</span></div>
-            <div class="product-card"><span>Camsil matik 500 ml</span><span class="product-price">32 ₺</span></div>
-            <div class="product-card"><span>Marc yüzey tem. 2500 ml</span><span class="product-price">98 ₺</span></div>
-            <div class="product-card"><span>Bingo yüzey tem. 2500 ml</span><span class="product-price">78 ₺</span></div>
             <div class="product-card"><span>Asperox sarı/mavi güç</span><span class="product-price">65 ₺</span></div>
         </div>
     </div>
@@ -151,25 +146,9 @@
         <div class="category-header" onclick="toggleCategory(this)"><h2>🧴 Kağıt & Kişisel Bakım</h2><span>▼</span></div>
         <div class="product-list">
             <div class="product-card"><span>Papia 16 tk</span><span class="product-price">132 ₺</span></div>
-            <div class="product-card"><span>Familia 16 tk</span><span class="product-price">112 ₺</span></div>
             <div class="product-card"><span>Familia 32 tk</span><span class="product-price">216 ₺</span></div>
-            <div class="product-card"><span>Solo 16 tk</span><span class="product-price">123 ₺</span></div>
-            <div class="product-card"><span>Solo 32 tk</span><span class="product-price">232 ₺</span></div>
-            <div class="product-card"><span>Selpak 16 tk</span><span class="product-price">162 ₺</span></div>
-            <div class="product-card"><span>Papia 6 lı havlu</span><span class="product-price">106 ₺</span></div>
-            <div class="product-card"><span>Familia 12 li havlu</span><span class="product-price">162 ₺</span></div>
-            <div class="product-card"><span>Solo 12 li havlu</span><span class="product-price">182 ₺</span></div>
             <div class="product-card"><span>Molfix jumbo paket</span><span class="product-price">121 ₺</span></div>
-            <div class="product-card"><span>Bebem jumbo paket</span><span class="product-price">106 ₺</span></div>
-            <div class="product-card"><span>Bebem fırsat paketi</span><span class="product-price">168 ₺</span></div>
-            <div class="product-card"><span>Bebem ultra fırsat paketi</span><span class="product-price">319 ₺</span></div>
-            <div class="product-card"><span>Clear şampuan 485 ml</span><span class="product-price">95 ₺</span></div>
-            <div class="product-card"><span>Elidor şampuan 400 ml</span><span class="product-price">72 ₺</span></div>
-            <div class="product-card"><span>Hacı Şakir 4x150 gr</span><span class="product-price">84 ₺</span></div>
-            <div class="product-card"><span>Duru banyo 4x150 gr</span><span class="product-price">78 ₺</span></div>
             <div class="product-card"><span>Sleepy Islak Mendil</span><span class="product-price">28 ₺</span></div>
-            <div class="product-card"><span>Orkid Platinum Çeşitleri</span><span class="product-price">68 ₺</span></div>
-            <div class="product-card"><span>Canbebe Islak Havlu</span><span class="product-price">24 ₺</span></div>
         </div>
     </div>
 
@@ -188,7 +167,6 @@
             <div class="product-card"><span>Bor Şeker 5kg</span><span class="product-price">175 ₺</span></div>
         </div>
     </div>
-
 </div>
 
 <a href="https://wa.me/905444465503?text=Merhaba%2C%20Üstüner%20Gıda%20ürün%20listesi%20üzerinden%20sipariş%20vermek%20istiyorum." class="whatsapp-float" target="_blank">Sipariş Ver (WhatsApp)</a>
