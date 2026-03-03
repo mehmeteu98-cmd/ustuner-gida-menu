@@ -6,122 +6,133 @@
     <title>Üstüner Gıda - Dijital Menü</title>
     <style>
         body { margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #f4f7f6; color: #333; overflow-x: hidden; }
-        
-        /* GİRİŞ EKRANI (Welcome Screen) */
-        #welcome-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: linear-gradient(rgba(11, 31, 59, 0.9), rgba(11, 31, 59, 0.9)), 
-                        url('https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG');
-            background-size: cover; background-position: center;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; text-align: center; z-index: 1000; transition: transform 0.6s ease-in-out;
-        }
+        #welcome-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: linear-gradient(rgba(11, 31, 59, 0.9), rgba(11, 31, 59, 0.9)), url('https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; z-index: 1000; transition: transform 0.6s ease-in-out; }
         #welcome-screen.hide { transform: translateY(-100%); }
         .date-box { font-size: 14px; opacity: 0.9; margin-bottom: 10px; border: 1px solid white; padding: 5px 15px; border-radius: 20px; }
-        .welcome-title { font-size: 28px; margin: 0; }
-        .welcome-desc { font-size: 16px; margin: 15px 30px; opacity: 0.8; font-style: italic; }
-        .enter-btn { background: #C9A227; color: #0B1F3B; border: none; padding: 15px 40px; border-radius: 30px; font-weight: bold; font-size: 18px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-
-        /* ANA İÇERİK */
+        .enter-btn { background: #C9A227; color: #0B1F3B; border: none; padding: 15px 40px; border-radius: 30px; font-weight: bold; font-size: 18px; cursor: pointer; margin-top: 20px; }
         .header-banner { width: 100%; height: auto; display: block; }
         .search-container { padding: 15px 20px; position: sticky; top: 0; background: #f4f7f6; z-index: 10; }
         .search-container input { width: 100%; padding: 12px 18px; border: 2px solid #0B1F3B; border-radius: 25px; font-size: 16px; box-sizing: border-box; outline: none; }
         .menu-section { padding: 0 15px 100px 15px; }
         .category-wrapper { margin-bottom: 10px; }
         .category-header { background: #fff; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-left: 5px solid #C9A227; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .category-header h2 { margin: 0; font-size: 18px; color: #0B1F3B; text-transform: uppercase; }
-        .arrow { transition: 0.3s; color: #0B1F3B; }
+        .category-header h2 { margin: 0; font-size: 17px; color: #0B1F3B; text-transform: uppercase; }
         .product-list { display: none; padding: 10px 5px; }
         .category-wrapper.active .product-list { display: block; }
-        .category-wrapper.active .arrow { transform: rotate(180deg); }
         .product-card { background: white; display: flex; justify-content: space-between; align-items: center; padding: 12px; margin-bottom: 8px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .product-name { font-weight: 500; font-size: 14px; }
-        .product-price { font-weight: bold; color: #C9A227; font-size: 16px; }
-        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 14px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 100; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .product-price { font-weight: bold; color: #C9A227; font-size: 15px; white-space: nowrap; }
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 14px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 100; font-size: 14px; }
     </style>
 </head>
 <body>
 
 <div id="welcome-screen">
     <div id="date" class="date-box"></div>
-    <h1 class="welcome-title">Üstüner Gıda'ya Hoş Geldiniz</h1>
-    <p class="welcome-desc">"Tazelikten Gelen Güven, Mahallenizin Esnafı."</p>
-    <button class="enter-btn" onclick="enterSite()">Fiyat Listesini Gör</button>
+    <h1 style="margin:0;">Üstüner Gıda</h1>
+    <p style="font-style:italic; opacity:0.8;">"Güvenli ve Taze Alışverişin Adresi"</p>
+    <button class="enter-btn" onclick="enterSite()">Menüyü Görüntüle</button>
 </div>
 
-<img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" alt="Üstüner Gıda" class="header-banner">
+<img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" class="header-banner">
 
 <div class="search-container">
     <input type="text" id="searchInput" placeholder="Ürün ara..." onkeyup="searchProducts()">
 </div>
 
 <div class="menu-section">
+
     <div class="category-wrapper">
-        <div class="category-header" onclick="toggleCategory(this)"><h2>🔥 Kampanyalar</h2><span class="arrow">▼</span></div>
+        <div class="category-header" onclick="toggleCategory(this)"><h2>🫧 Temizlik & Deterjan</h2><span>▼</span></div>
         <div class="product-list">
-            <div class="product-card"><span>Bingo Matik 10kg</span><span style="color:#ff4d4d; font-size:12px; text-decoration:line-through; margin-right:5px;">440 ₺</span><span class="product-price">395 ₺</span></div>
-            <div class="product-card"><span>Eker Yoğurt 2kg</span><span style="color:#ff4d4d; font-size:12px; text-decoration:line-through; margin-right:5px;">110 ₺</span><span class="product-price">99 ₺</span></div>
+            <div class="product-card"><span>Bingo matik 1,5 kg</span><span class="product-price">97 ₺</span></div>
+            <div class="product-card"><span>Bingo matik 4 kg</span><span class="product-price">188 ₺</span></div>
+            <div class="product-card"><span>Bingo matik 6 kg</span><span class="product-price">272 ₺</span></div>
+            <div class="product-card"><span>Bingo matik 7 kg</span><span class="product-price">332 ₺</span></div>
+            <div class="product-card"><span>Bingo matik 8 kg</span><span class="product-price">332 ₺</span></div>
+            <div class="product-card"><span>Bingo matik 9 kg</span><span class="product-price">367 ₺</span></div>
+            <div class="product-card"><span>Bingo matik 10 kg</span><span class="product-price">396 ₺</span></div>
+            <div class="product-card"><span>Bingo sıvı 2600 ml</span><span class="product-price">183 ₺</span></div>
+            <div class="product-card"><span>Bingo sıvı 1755 ml</span><span class="product-price">136 ₺</span></div>
+            <div class="product-card"><span>Bingo giysi şampuanı 3 lt</span><span class="product-price">154 ₺</span></div>
+            <div class="product-card"><span>Bingo giysi şampuanı 4 lt</span><span class="product-price">209 ₺</span></div>
+            <div class="product-card"><span>Yumoş konsantre</span><span class="product-price">110 ₺</span></div>
+            <div class="product-card"><span>Yumoş standart 5 lt</span><span class="product-price">138 ₺</span></div>
+            <div class="product-card"><span>Bingo soft 5 lt</span><span class="product-price">138 ₺</span></div>
+            <div class="product-card"><span>Domestos 750 ml</span><span class="product-price">58 ₺</span></div>
+            <div class="product-card"><span>Domestos 1850 ml</span><span class="product-price">116 ₺</span></div>
+            <div class="product-card"><span>Domestos 3240 ml</span><span class="product-price">174 ₺</span></div>
+            <div class="product-card"><span>Ace 2 lt</span><span class="product-price">63 ₺</span></div>
+            <div class="product-card"><span>Ace 4 lt</span><span class="product-price">101 ₺</span></div>
+            <div class="product-card"><span>Pril gold 54 lü</span><span class="product-price">397 ₺</span></div>
+            <div class="product-card"><span>Pril hepsi bir arada 80 li</span><span class="product-price">397 ₺</span></div>
+            <div class="product-card"><span>Pril 4 kg</span><span class="product-price">145 ₺</span></div>
+            <div class="product-card"><span>Pril 675 ml</span><span class="product-price">43 ₺</span></div>
+            <div class="product-card"><span>Fairy 2600 ml</span><span class="product-price">201 ₺</span></div>
+            <div class="product-card"><span>Fairy 1350 ml</span><span class="product-price">115 ₺</span></div>
+            <div class="product-card"><span>Fairy 650 ml</span><span class="product-price">56 ₺</span></div>
+            <div class="product-card"><span>Camsil matik 500 ml</span><span class="product-price">32 ₺</span></div>
+            <div class="product-card"><span>Marc yüzey tem. 2500 ml</span><span class="product-price">98 ₺</span></div>
+            <div class="product-card"><span>Bingo yüzey tem. 2500 ml</span><span class="product-price">78 ₺</span></div>
+            <div class="product-card"><span>Asperox sarı/mavi güç</span><span class="product-price">65 ₺</span></div>
         </div>
     </div>
 
     <div class="category-wrapper">
-        <div class="category-header" onclick="toggleCategory(this)"><h2>🫧 Temizlik Ürünleri</h2><span class="arrow">▼</span></div>
+        <div class="category-header" onclick="toggleCategory(this)"><h2>🧴 Kağıt & Kişisel Bakım</h2><span>▼</span></div>
         <div class="product-list">
-            <div class="product-card"><span class="product-name">Bingo matik 4 kg</span><span class="product-price">188 ₺</span></div>
-            <div class="product-card"><span class="product-name">Bingo matik 10 kg</span><span class="product-price">396 ₺</span></div>
-            <div class="product-card"><span class="product-name">Domestos 750 ml</span><span class="product-price">58 ₺</span></div>
-            <div class="product-card"><span class="product-name">Pril 4 kg</span><span class="product-price">145 ₺</span></div>
-            <div class="product-card"><span class="product-name">Fairy 2600 ml</span><span class="product-price">201 ₺</span></div>
+            <div class="product-card"><span>Papia 16 tk</span><span class="product-price">132 ₺</span></div>
+            <div class="product-card"><span>Familia 16 tk</span><span class="product-price">112 ₺</span></div>
+            <div class="product-card"><span>Familia 32 tk</span><span class="product-price">216 ₺</span></div>
+            <div class="product-card"><span>Solo 16 tk</span><span class="product-price">123 ₺</span></div>
+            <div class="product-card"><span>Solo 32 tk</span><span class="product-price">232 ₺</span></div>
+            <div class="product-card"><span>Selpak 16 tk</span><span class="product-price">162 ₺</span></div>
+            <div class="product-card"><span>Papia 6 lı havlu</span><span class="product-price">106 ₺</span></div>
+            <div class="product-card"><span>Familia 12 li havlu</span><span class="product-price">162 ₺</span></div>
+            <div class="product-card"><span>Solo 12 li havlu</span><span class="product-price">182 ₺</span></div>
+            <div class="product-card"><span>Molfix jumbo paket</span><span class="product-price">121 ₺</span></div>
+            <div class="product-card"><span>Bebem jumbo paket</span><span class="product-price">106 ₺</span></div>
+            <div class="product-card"><span>Bebem fırsat paketi</span><span class="product-price">168 ₺</span></div>
+            <div class="product-card"><span>Bebem ultra fırsat paketi</span><span class="product-price">319 ₺</span></div>
+            <div class="product-card"><span>Clear şampuan 485 ml</span><span class="product-price">95 ₺</span></div>
+            <div class="product-card"><span>Elidor şampuan 400 ml</span><span class="product-price">72 ₺</span></div>
+            <div class="product-card"><span>Hacı Şakir 4x150 gr</span><span class="product-price">84 ₺</span></div>
+            <div class="product-card"><span>Duru banyo 4x150 gr</span><span class="product-price">78 ₺</span></div>
+            <div class="product-card"><span>Sleepy Islak Mendil</span><span class="product-price">28 ₺</span></div>
+            <div class="product-card"><span>Orkid Platinum Çeşitleri</span><span class="product-price">68 ₺</span></div>
+            <div class="product-card"><span>Canbebe Islak Havlu</span><span class="product-price">24 ₺</span></div>
         </div>
     </div>
 
     <div class="category-wrapper">
-        <div class="category-header" onclick="toggleCategory(this)"><h2>🧴 Kişisel Bakım & Kağıt</h2><span class="arrow">▼</span></div>
+        <div class="category-header" onclick="toggleCategory(this)"><h2>🥤 İçecekler</h2><span>▼</span></div>
         <div class="product-list">
-            <div class="product-card"><span class="product-name">Papia 16 tk</span><span class="product-price">132 ₺</span></div>
-            <div class="product-card"><span class="product-name">Solo 32 tk</span><span class="product-price">232 ₺</span></div>
-            <div class="product-card"><span class="product-name">Molfix jumbo paket</span><span class="product-price">121 ₺</span></div>
-            <div class="product-card"><span class="product-name">Sleepy Islak Mendil</span><span class="product-price">28 ₺</span></div>
+            <div class="product-card"><span>Coca Cola 2.5L</span><span class="product-price">55 ₺</span></div>
+            <div class="product-card"><span>Eker Ayran 1L</span><span class="product-price">35 ₺</span></div>
+        </div>
+    </div>
+    <div class="category-wrapper">
+        <div class="category-header" onclick="toggleCategory(this)"><h2>🌾 Temel Gıda</h2><span>▼</span></div>
+        <div class="product-list">
+            <div class="product-card"><span>Efsane Pirinç 2.5kg</span><span class="product-price">135 ₺</span></div>
+            <div class="product-card"><span>Bor Şeker 5kg</span><span class="product-price">175 ₺</span></div>
         </div>
     </div>
 
-    <div class="category-wrapper">
-        <div class="category-header" onclick="toggleCategory(this)"><h2>🥤 İçecekler</h2><span class="arrow">▼</span></div>
-        <div class="product-list">
-            <div class="product-card"><span class="product-name">Coca Cola 2.5L</span><span class="product-price">55 ₺</span></div>
-            <div class="product-card"><span class="product-name">Eker Ayran 1L</span><span class="product-price">35 ₺</span></div>
-        </div>
-    </div>
-
-    <div class="category-wrapper">
-        <div class="category-header" onclick="toggleCategory(this)"><h2>🌾 Temel Gıda</h2><span class="arrow">▼</span></div>
-        <div class="product-list">
-            <div class="product-card"><span class="product-name">Efsane Pirinç 2.5kg</span><span class="product-price">135 ₺</span></div>
-            <div class="product-card"><span class="product-name">Bor Şeker 5kg</span><span class="product-price">175 ₺</span></div>
-        </div>
-    </div>
 </div>
 
 <a href="https://wa.me/905444465503" class="whatsapp-float" target="_blank">Sipariş Ver (WhatsApp)</a>
 
 <script>
-    // Giriş butonuna basınca ekranı kaydır
-    function enterSite() {
-        document.getElementById('welcome-screen').classList.add('hide');
-    }
-
-    // Günün tarihini göster
+    function enterSite() { document.getElementById('welcome-screen').classList.add('hide'); }
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     document.getElementById('date').innerHTML = new Date().toLocaleDateString('tr-TR', options);
-
     function toggleCategory(header) { header.parentElement.classList.toggle('active'); }
-    
     function searchProducts() {
         let input = document.getElementById('searchInput');
         let filter = input.value.toLowerCase();
         let cards = document.getElementsByClassName('product-card');
-        let wrappers = document.getElementsByClassName('category-wrapper');
-        if (filter === "") { for (let w of wrappers) w.classList.remove('active'); return; }
+        if (filter === "") return;
         for (let i = 0; i < cards.length; i++) {
             let name = cards[i].innerText;
             if (name.toLowerCase().indexOf(filter) > -1) {
