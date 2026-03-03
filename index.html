@@ -1,113 +1,130 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Üstüner Toptan Gıda</title>
-<style>
-body { margin:0; font-family: Arial, sans-serif; background:#f4f7f6; color:#333; overflow-x:hidden; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Üstüner Gıda - Dijital Menü</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Arial, sans-serif; background: #f4f7f6; color: #333; overflow-x: hidden; }
+        
+        /* Modern Giriş Ekranı (İlk koddaki stil) */
+        #welcome-screen { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100vh; 
+            background: linear-gradient(rgba(11, 31, 59, 0.88), rgba(11, 31, 59, 0.88)), 
+                        url('https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/arkaplan.JPG'); 
+            background-size: cover; 
+            background-position: center; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            color: white; 
+            text-align: center; 
+            z-index: 1000; 
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); 
+        }
+        #welcome-screen.hide { transform: translateY(-100%); }
+        
+        .top-logo { width: 120px; margin-bottom: 20px; border-radius: 4px; }
+        .date-box { font-size: 13px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.3); padding: 5px 18px; border-radius: 50px; background: rgba(255,255,255,0.05); }
+        #welcome-screen h1 { font-size: 10vw; margin: 0; font-weight: 700; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        #welcome-screen p.slogan { font-size: 4vw; margin: 10px 0 30px 0; font-style: italic; color: rgba(255,255,255,0.8); }
+        .welcome-sub { color: #FFC107; font-size: 7vw; font-weight: 600; margin-bottom: 35px; }
+        .enter-btn { background: #C9A227; color: #0B1F3B; border: none; padding: 18px 50px; border-radius: 50px; font-weight: bold; font-size: 17px; cursor: pointer; box-shadow: 0 4px 15px rgba(201, 162, 39, 0.4); text-transform: uppercase; }
 
-/* GİRİŞ EKRANI */
-#welcome {
-  position:fixed; top:0; left:0; width:100%; height:100vh;
-  background: linear-gradient(rgba(11,31,59,0.88), rgba(11,31,59,0.88)),
-              url('https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/arkaplan.JPG');
-  background-size:cover;
-  display:flex; flex-direction:column; justify-content:center; align-items:center;
-  color:white; text-align:center; z-index:1000; transition: transform 0.8s ease;
-}
-#welcome.hide { transform: translateY(-100%); }
-
-#welcome img { width:150px; margin-bottom:20px; border-radius:4px; }
-#welcome h1 { font-size:10vw; margin:0; font-weight:700; text-shadow:2px2px10px rgba(0,0,0,0.5); }
-#welcome p { font-size:4vw; margin:10px 0; font-style:italic; color:rgba(255,255,255,0.8); }
-#welcome button { background:#C9A227; color:#0B1F3B; border:none; padding:18px 50px; border-radius:50px; font-weight:bold; font-size:17px; cursor:pointer; box-shadow:0 4px 15px rgba(201,162,39,0.4); text-transform:uppercase; }
-
-/* SEARCH */
-.search-container { padding:15px 20px; position:sticky; top:0; background:#f4f7f6; z-index:10; }
-.search-container input { width:100%; padding:12px 18px; border:2px solid #0B1F3B; border-radius:25px; font-size:16px; outline:none; }
-
-/* MENU */
-.menu-section { padding:0 15px 100px 15px; }
-.category-wrapper { margin-bottom:10px; }
-.category-header {
-  background:#fff; padding:15px; border-radius:12px; display:flex; justify-content:space-between; align-items:center;
-  cursor:pointer; border-left:5px solid #C9A227; box-shadow:0 2px 4px rgba(0,0,0,0.05);
-}
-.category-header h2 { margin:0; font-size:17px; color:#0B1F3B; text-transform:uppercase; }
-.product-list { display:none; padding:10px 5px; }
-.category-wrapper.active .product-list { display:block; }
-.product-card { background:white; display:flex; justify-content:space-between; align-items:center; padding:12px; margin-bottom:8px; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
-.product-price { font-weight:bold; color:#C9A227; font-size:15px; white-space:nowrap; }
-
-/* WhatsApp sabit buton */
-.whatsapp{ position:fixed; right:16px; bottom:16px; width:56px; height:56px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:#25D366; box-shadow:0 6px 18px rgba(37,211,102,0.3); text-decoration:none; }
-.whatsapp svg{ display:block; width:28px; height:28px; }
-</style>
+        /* İçerik Alanı */
+        .header-banner { width: 100%; height: auto; display: block; }
+        .search-container { padding: 15px 20px; position: sticky; top: 0; background: #f4f7f6; z-index: 10; }
+        .search-container input { width: 100%; padding: 12px 18px; border: 2px solid #0B1F3B; border-radius: 25px; font-size: 16px; box-sizing: border-box; outline: none; }
+        .menu-section { padding: 0 15px 100px 15px; }
+        .category-wrapper { margin-bottom: 10px; }
+        .category-header { background: #fff; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-left: 5px solid #C9A227; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .category-header h2 { margin: 0; font-size: 17px; color: #0B1F3B; text-transform: uppercase; }
+        .product-list { display: none; padding: 10px 5px; }
+        .category-wrapper.active .product-list { display: block; }
+        .product-card { background: white; display: flex; justify-content: space-between; align-items: center; padding: 12px; margin-bottom: 8px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .product-price { font-weight: bold; color: #C9A227; font-size: 15px; white-space: nowrap; }
+        
+        /* WhatsApp Sabit Buton */
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 14px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 100; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 8px; }
+    </style>
 </head>
 <body>
 
-<!-- Giriş Ekranı -->
-<div id="welcome">
-  <img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" alt="Üstüner Gıda">
-  <h1>Üstüner Gıda</h1>
-  <p>"Güvenli ve Taze Alışverişin Adresi"</p>
-  <button onclick="enterSite()">Menüyü Görüntüle</button>
+<div id="welcome-screen">
+    <img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" class="top-logo">
+    <div id="date" class="date-box"></div>
+    <h1>Üstüner Gıda</h1>
+    <p class="slogan">"Güvenli ve Taze Alışverişin Adresi"</p>
+    <div class="welcome-sub">Hoş Geldiniz.🤗</div>
+    <button class="enter-btn" onclick="enterSite()">Menüyü Görüntüle</button>
 </div>
 
-<!-- Arama -->
+<img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" class="header-banner">
+
 <div class="search-container">
-  <input type="text" id="searchInput" placeholder="Ürün ara..." onkeyup="searchProducts()">
+    <input type="text" id="searchInput" placeholder="Ürün ara..." onkeyup="searchProducts()">
 </div>
 
-<!-- Menü JSON ile yüklenecek -->
-<div class="menu-section" id="menu-root"></div>
+<div class="menu-section" id="menu-root">
+    </div>
 
-<!-- WhatsApp sabit buton -->
-<a href="https://wa.me/905444465503?text=Merhaba%2C%20Üstüner%20Gıda%20ürün%20listesi%20üzerinden%20sipariş%20vermek%20istiyorum." target="_blank" class="whatsapp" aria-label="WhatsApp sipariş">
-<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M20.5 3.5C18.2 1.2 15.1 0 12 0 5.4 0 0 5.4 0 12c0 2 0.5 3.9 1.6 5.6L0 24l6.7-1.7C8.4 23.6 10.1 24 12 24 18.6 24 24 18.6 24 12 24 8.9 22.8 5.8 20.5 3.5z" fill="#25D366"/>
-<path d="M17.2 14.1c-0.3-0.1-1.8-0.9-2.1-1-0.3-0.1-0.5-0.1-0.8 0.1-0.3 0.2-1.2 0.9-1.5 1.1-0.3 0.2-0.6 0.1-1-0.2-0.4-0.3-1.6-1-2.9-1.8-1.1-0.6-1.9-1.3-2.1-1.7-0.2-0.4-0.1-0.8 0.1-1.1 0.2-0.3 0.3-0.5 0.5-0.8 0.2-0.3 0.2-0.6 0.3-1 0.1-0.4 0-0.8-0.1-1-0.2-0.3-0.8-0.7-1.6-1.1-0.8-0.4-1.5-0.9-2-1.4 0.5-0.1 1.1-0.2 1.8-0.2 1.1 0 2.1 0.3 3 0.9 0.9 0.6 1.8 1.4 2.6 2.3 0.8 0.9 1.4 1.9 1.8 2.9 0.4 1 0.6 2 0.6 3.1 0 0.6-0.1 1.1-0.3 1.6-0.2 0.4-0.6 0.6-1 0.5z" fill="#fff"/>
-</svg>
+<a href="https://wa.me/905444465503?text=Merhaba%2C%20Üstüner%20Gıda%20ürün%20listesi%20üzerinden%20sipariş%20vermek%20istiyorum." class="whatsapp-float" target="_blank">
+    <span>Sipariş Ver (WhatsApp)</span>
 </a>
 
 <script>
-// Giriş ekranı
-function enterSite(){ document.getElementById('welcome').classList.add('hide'); }
+    // Giriş Ekranı ve Tarih
+    function enterSite() { document.getElementById('welcome-screen').classList.add('hide'); }
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('date').innerHTML = new Date().toLocaleDateString('tr-TR', options);
 
-// Arama fonksiyonu
-function searchProducts(){
-  let input=document.getElementById('searchInput').value.toLowerCase();
-  let cards=document.getElementsByClassName('product-card');
-  for(let i=0;i<cards.length;i++){
-    let name=cards[i].innerText.toLowerCase();
-    if(name.indexOf(input)>-1){
-      cards[i].style.display='flex';
-      if(input!=='') cards[i].closest('.category-wrapper').classList.add('active');
-    } else cards[i].style.display='none';
-  }
-}
+    // Arama Fonksiyonu
+    function searchProducts() {
+        let input = document.getElementById('searchInput');
+        let filter = input.value.toLowerCase();
+        let cards = document.getElementsByClassName('product-card');
+        for (let i = 0; i < cards.length; i++) {
+            let name = cards[i].innerText;
+            if (name.toLowerCase().indexOf(filter) > -1) {
+                cards[i].style.display = "flex";
+                if(filter !== "") cards[i].closest('.category-wrapper').classList.add('active');
+            } else { cards[i].style.display = "none"; }
+        }
+    }
 
-// JSON’dan kategori ve ürünleri yükleme
-fetch('data.json')
-.then(res=>res.json())
-.then(data=>{
-  const root=document.getElementById('menu-root');
-  data.categories.forEach(cat=>{
-    const cw=document.createElement('div'); cw.className='category-wrapper';
-    const ch=document.createElement('div'); ch.className='category-header';
-    ch.innerHTML=`<h2>${cat.name}</h2><span>▼</span>`;
-    ch.addEventListener('click',()=>cw.classList.toggle('active'));
-    const pl=document.createElement('div'); pl.className='product-list';
-    cat.products.forEach(p=>{
-      const pc=document.createElement('div'); pc.className='product-card';
-      pc.innerHTML=`<span>${p.name}</span><span class="product-price">${p.price} ₺</span>`;
-      pl.appendChild(pc);
-    });
-    cw.appendChild(ch); cw.appendChild(pl); root.appendChild(cw);
-  });
-})
-.catch(err=>console.error('data.json yüklenemedi:',err));
+    // JSON'dan Veri Çekme ve HTML Oluşturma
+    fetch('data.json')
+    .then(response => response.json())
+    .then(data => {
+        const root = document.getElementById('menu-root');
+        data.categories.forEach(cat => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'category-wrapper';
+            
+            const header = document.createElement('div');
+            header.className = 'category-header';
+            header.innerHTML = `<h2>${cat.name}</h2><span>▼</span>`;
+            header.onclick = function() { this.parentElement.classList.toggle('active'); };
+            
+            const list = document.createElement('div');
+            list.className = 'product-list';
+            
+            cat.products.forEach(prod => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `<span>${prod.name}</span><span class="product-price">${prod.price} ₺</span>`;
+                list.appendChild(card);
+            });
+            
+            wrapper.appendChild(header);
+            wrapper.appendChild(list);
+            root.appendChild(wrapper);
+        });
+    })
+    .catch(error => console.error('Hata:', error));
 </script>
 </body>
 </html>
