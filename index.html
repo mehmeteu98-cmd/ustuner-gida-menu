@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Üstüner Gıda - Ürün Listesi</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:#ffffff;
+color:#0B1F3B;
+}
+
+header{
+background:#0B1F3B;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+header h1{
+margin:0;
+font-size:22px;
+}
+
+header p{
+margin:5px 0 0 0;
+font-size:13px;
+opacity:0.8;
+}
+
+.search{
+padding:15px;
+}
+
+.search input{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+font-size:14px;
+}
+
+.category{
+padding:15px;
+}
+
+.category h2{
+border-bottom:2px solid #C9A227;
+padding-bottom:5px;
+font-size:18px;
+}
+
+.product{
+display:flex;
+justify-content:space-between;
+padding:10px 0;
+border-bottom:1px solid #eee;
+font-size:14px;
+}
+
+.price{
+font-weight:bold;
+color:#C9A227;
+}
+
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:white;
+padding:15px 18px;
+border-radius:50px;
+text-decoration:none;
+font-size:14px;
+box-shadow:0 4px 8px rgba(0,0,0,0.2);
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Üstüner Gıda</h1>
+<p>Fiyatlar Günlük Güncellenmektedir</p>
+</header>
+
+<div class="search">
+<input type="text" id="searchInput" placeholder="Ürün ara..." onkeyup="searchProducts()">
+</div>
+
+<div class="category">
+<h2>İçecekler</h2>
+
+<div class="product">
+<span>Coca Cola 1L</span>
+<span class="price">35 ₺</span>
+</div>
+
+<div class="product">
+<span>Ayran 1L</span>
+<span class="price">22 ₺</span>
+</div>
+
+</div>
+
+<div class="category">
+<h2>Temel Gıda</h2>
+
+<div class="product">
+<span>Toz Şeker 5kg</span>
+<span class="price">185 ₺</span>
+</div>
+
+<div class="product">
+<span>Pirinç 2.5kg</span>
+<span class="price">140 ₺</span>
+</div>
+
+</div>
+
+<a class="whatsapp" href="https://wa.me/905444466503?text=Merhaba%2C%20Üstüner%20Gıda%20ürün%20listesi%20üzerinden%20sipariş%20vermek%20istiyorum." target="_blank">
+WhatsApp
+</a>
+
+<script>
+function searchProducts(){
+let input=document.getElementById('searchInput');
+let filter=input.value.toLowerCase();
+let products=document.getElementsByClassName('product');
+
+for(let i=0;i<products.length;i++){
+let txtValue=products[i].textContent||products[i].innerText;
+if(txtValue.toLowerCase().indexOf(filter)>-1){
+products[i].style.display="";
+}else{
+products[i].style.display="none";
+}
+}
+}
+</script>
+
+</body>
+</html>
