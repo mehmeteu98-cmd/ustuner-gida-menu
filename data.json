@@ -1,17 +1,77 @@
 {
-  "categories": [
+  "categories":[
     {
-      "name": "🫧 Temizlik & Deterjan",
-      "products": [
-        { "name": "Bingo matik 4 kg", "price": 188 },
-        { "name": "Domestos 1850 ml", "price": 116 }
+      "name":"🫧 Temizlik & Deterjan",
+      "products":[
+        {"name":"Bingo matik 1,5 kg","price":97},
+        {"name":"Bingo matik 4 kg","price":188},
+        {"name":"Bingo matik 6 kg","price":272},
+        {"name":"Bingo matik 7 kg","price":332},
+        {"name":"Bingo matik 8 kg","price":332},
+        {"name":"Bingo matik 9 kg","price":367},
+        {"name":"Bingo matik 10 kg","price":396},
+        {"name":"Bingo sıvı 2600 ml","price":183},
+        {"name":"Bingo sıvı 1755 ml","price":136},
+        {"name":"Bingo giysi şampuanı 3 lt","price":154},
+        {"name":"Bingo giysi şampuanı 4 lt","price":209},
+        {"name":"Yumoş konsantre","price":110},
+        {"name":"Yumoş standart 5 lt","price":138},
+        {"name":"Bingo soft 5 lt","price":138},
+        {"name":"Domestos 750 ml","price":58},
+        {"name":"Domestos 1850 ml","price":116},
+        {"name":"Domestos 3240 ml","price":174},
+        {"name":"Ace 2 lt","price":63},
+        {"name":"Ace 4 lt","price":101},
+        {"name":"Pril gold 54 lü","price":397},
+        {"name":"Pril hepsi bir arada 80 li","price":397},
+        {"name":"Pril 4 kg","price":145},
+        {"name":"Pril 675 ml","price":43},
+        {"name":"Fairy 2600 ml","price":201},
+        {"name":"Fairy 1350 ml","price":115},
+        {"name":"Fairy 650 ml","price":56},
+        {"name":"Camsil matik 500 ml","price":32},
+        {"name":"Marc yüzey tem. 2500 ml","price":98},
+        {"name":"Bingo yüzey tem. 2500 ml","price":78},
+        {"name":"Asperox sarı/mavi güç","price":65}
       ]
     },
     {
-      "name": "🧴 Kağıt & Kişisel Bakım",
-      "products": [
-        { "name": "Papia 16 tk", "price": 132 },
-        { "name": "Solo 32 tk", "price": 232 }
+      "name":"🧴 Kağıt & Kişisel Bakım",
+      "products":[
+        {"name":"Papia 16 tk","price":132},
+        {"name":"Familia 16 tk","price":112},
+        {"name":"Familia 32 tk","price":216},
+        {"name":"Solo 16 tk","price":123},
+        {"name":"Solo 32 tk","price":232},
+        {"name":"Selpak 16 tk","price":162},
+        {"name":"Papia 6 lı havlu","price":106},
+        {"name":"Familia 12 li havlu","price":162},
+        {"name":"Solo 12 li havlu","price":182},
+        {"name":"Molfix jumbo paket","price":121},
+        {"name":"Bebem jumbo paket","price":106},
+        {"name":"Bebem fırsat paketi","price":168},
+        {"name":"Bebem ultra fırsat paketi","price":319},
+        {"name":"Clear şampuan 485 ml","price":95},
+        {"name":"Elidor şampuan 400 ml","price":72},
+        {"name":"Hacı Şakir 4x150 gr","price":84},
+        {"name":"Duru banyo 4x150 gr","price":78},
+        {"name":"Sleepy Islak Mendil","price":28},
+        {"name":"Orkid Platinum Çeşitleri","price":68},
+        {"name":"Canbebe Islak Havlu","price":24}
+      ]
+    },
+    {
+      "name":"🥤 İçecekler",
+      "products":[
+        {"name":"Coca Cola 2.5L","price":55},
+        {"name":"Eker Ayran 1L","price":35}
+      ]
+    },
+    {
+      "name":"🌾 Temel Gıda",
+      "products":[
+        {"name":"Efsane Pirinç 2.5kg","price":135},
+        {"name":"Bor Şeker 5kg","price":175}
       ]
     }
   ]
