@@ -13,7 +13,6 @@
             position: fixed; 
             top: 0; left: 0; 
             width: 100%; height: 100vh; 
-            /* Arka plan karartması artırıldı, yazıların okunurluğu için */
             background: linear-gradient(rgba(11, 31, 59, 0.85), rgba(11, 31, 59, 0.85)), url('https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG'); 
             background-size: cover; 
             background-position: center; 
@@ -39,7 +38,7 @@
         }
 
         #welcome-screen h1 {
-            font-size: 11vw; /* Mobilde görkemli durur */
+            font-size: 11vw; 
             margin: 0;
             font-weight: 700;
             text-shadow: 2px 2px 15px rgba(0,0,0,0.6);
@@ -54,11 +53,10 @@
         }
 
         .welcome-sub {
-            color: #FFC107; /* İstediğin sarı tonu */
-            font-size: 7vw; /* 24px-32px dengesi */
+            color: #FFC107; 
+            font-size: 7vw; 
             font-weight: 600;
             margin-bottom: 35px;
-            text-transform: none;
         }
 
         .enter-btn { 
@@ -92,7 +90,6 @@
         .product-name { font-weight: 500; font-size: 14px; }
         .product-price { font-weight: bold; color: #C9A227; font-size: 15px; white-space: nowrap; }
         
-        /* WhatsApp Butonu */
         .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 14px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 100; font-size: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
     </style>
 </head>
@@ -113,6 +110,7 @@
 </div>
 
 <div class="menu-section">
+
     <div class="category-wrapper">
         <div class="category-header" onclick="toggleCategory(this)"><h2>🫧 Temizlik & Deterjan</h2><span>▼</span></div>
         <div class="product-list">
@@ -174,6 +172,23 @@
             <div class="product-card"><span>Canbebe Islak Havlu</span><span class="product-price">24 ₺</span></div>
         </div>
     </div>
+
+    <div class="category-wrapper">
+        <div class="category-header" onclick="toggleCategory(this)"><h2>🥤 İçecekler</h2><span>▼</span></div>
+        <div class="product-list">
+            <div class="product-card"><span>Coca Cola 2.5L</span><span class="product-price">55 ₺</span></div>
+            <div class="product-card"><span>Eker Ayran 1L</span><span class="product-price">35 ₺</span></div>
+        </div>
+    </div>
+
+    <div class="category-wrapper">
+        <div class="category-header" onclick="toggleCategory(this)"><h2>🌾 Temel Gıda</h2><span>▼</span></div>
+        <div class="product-list">
+            <div class="product-card"><span>Efsane Pirinç 2.5kg</span><span class="product-price">135 ₺</span></div>
+            <div class="product-card"><span>Bor Şeker 5kg</span><span class="product-price">175 ₺</span></div>
+        </div>
+    </div>
+
 </div>
 
 <a href="https://wa.me/905444465503?text=Merhaba%2C%20Üstüner%20Gıda%20ürün%20listesi%20üzerinden%20sipariş%20vermek%20istiyorum." class="whatsapp-float" target="_blank">Sipariş Ver (WhatsApp)</a>
