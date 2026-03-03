@@ -4,196 +4,110 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Üstüner Toptan Gıda</title>
-
 <style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#f4f6f9;
-}
+body { margin:0; font-family: Arial, sans-serif; background:#f4f7f6; color:#333; overflow-x:hidden; }
 
 /* GİRİŞ EKRANI */
-#welcome{
-  position:fixed;
-  width:100%;
-  height:100vh;
-  background:#0f172a;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  z-index:1000;
+#welcome {
+  position:fixed; top:0; left:0; width:100%; height:100vh;
+  background: linear-gradient(rgba(11,31,59,0.88), rgba(11,31,59,0.88)),
+              url('https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/arkaplan.JPG');
+  background-size:cover;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  color:white; text-align:center; z-index:1000; transition: transform 0.8s ease;
 }
+#welcome.hide { transform: translateY(-100%); }
 
-#welcome button{
-  margin-top:20px;
-  padding:10px 20px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:16px;
-}
-
-/* HEADER */
-header{
-  background:#0f172a;
-  color:white;
-  text-align:center;
-  padding:15px;
-  font-size:20px;
-  font-weight:bold;
-}
+#welcome img { width:150px; margin-bottom:20px; border-radius:4px; }
+#welcome h1 { font-size:10vw; margin:0; font-weight:700; text-shadow:2px2px10px rgba(0,0,0,0.5); }
+#welcome p { font-size:4vw; margin:10px 0; font-style:italic; color:rgba(255,255,255,0.8); }
+#welcome button { background:#C9A227; color:#0B1F3B; border:none; padding:18px 50px; border-radius:50px; font-weight:bold; font-size:17px; cursor:pointer; box-shadow:0 4px 15px rgba(201,162,39,0.4); text-transform:uppercase; }
 
 /* SEARCH */
-.search-box{
-  width:90%;
-  margin:15px auto;
-  display:block;
-  padding:10px;
-  border-radius:8px;
-  border:1px solid #ddd;
-}
+.search-container { padding:15px 20px; position:sticky; top:0; background:#f4f7f6; z-index:10; }
+.search-container input { width:100%; padding:12px 18px; border:2px solid #0B1F3B; border-radius:25px; font-size:16px; outline:none; }
 
 /* MENU */
-.container{
-  padding:10px;
+.menu-section { padding:0 15px 100px 15px; }
+.category-wrapper { margin-bottom:10px; }
+.category-header {
+  background:#fff; padding:15px; border-radius:12px; display:flex; justify-content:space-between; align-items:center;
+  cursor:pointer; border-left:5px solid #C9A227; box-shadow:0 2px 4px rgba(0,0,0,0.05);
 }
+.category-header h2 { margin:0; font-size:17px; color:#0B1F3B; text-transform:uppercase; }
+.product-list { display:none; padding:10px 5px; }
+.category-wrapper.active .product-list { display:block; }
+.product-card { background:white; display:flex; justify-content:space-between; align-items:center; padding:12px; margin-bottom:8px; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+.product-price { font-weight:bold; color:#C9A227; font-size:15px; white-space:nowrap; }
 
-.menu-section{
-  background:white;
-  margin-bottom:15px;
-  border-radius:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.05);
-  overflow:hidden;
-}
-
-.category-header{
-  padding:12px;
-  background:#e2e8f0;
-  display:flex;
-  justify-content:space-between;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-.products{
-  display:none;
-  padding:10px 15px;
-}
-
-.menu-item{
-  display:flex;
-  justify-content:space-between;
-  padding:8px 0;
-  border-bottom:1px solid #eee;
-}
-
-.menu-item:last-child{
-  border-bottom:none;
-}
-
-/* WHATSAPP SABİT BUTON */
-.whatsapp{
-  position:fixed;
-  right:15px;
-  bottom:15px;
-  background:#25D366;
-  color:white;
-  padding:15px;
-  border-radius:50%;
-  font-size:20px;
-  text-decoration:none;
-  box-shadow:0 4px 10px rgba(0,0,0,0.3);
-}
+/* WhatsApp sabit buton */
+.whatsapp{ position:fixed; right:16px; bottom:16px; width:56px; height:56px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:#25D366; box-shadow:0 6px 18px rgba(37,211,102,0.3); text-decoration:none; }
+.whatsapp svg{ display:block; width:28px; height:28px; }
 </style>
 </head>
-
 <body>
 
-<!-- GİRİŞ -->
+<!-- Giriş Ekranı -->
 <div id="welcome">
-  <h1>Üstüner Toptan Gıda</h1>
-  <button onclick="startMenu()">Menüye Giriş</button>
+  <img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" alt="Üstüner Gıda">
+  <h1>Üstüner Gıda</h1>
+  <p>"Güvenli ve Taze Alışverişin Adresi"</p>
+  <button onclick="enterSite()">Menüyü Görüntüle</button>
 </div>
 
-<header>Üstüner Toptan Gıda</header>
-
-<input type="text" id="search" class="search-box" placeholder="Ürün ara...">
-
-<div class="container">
-  <div id="menu-container"></div>
+<!-- Arama -->
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="Ürün ara..." onkeyup="searchProducts()">
 </div>
 
-<!-- SABİT WHATSAPP -->
-<a class="whatsapp"
-   href="https://wa.me/905444465503?text=Merhaba,%20bilgi%20almak%20istiyorum."
-   target="_blank">W</a>
+<!-- Menü JSON ile yüklenecek -->
+<div class="menu-section" id="menu-root"></div>
+
+<!-- WhatsApp sabit buton -->
+<a href="https://wa.me/905444465503?text=Merhaba%2C%20Üstüner%20Gıda%20ürün%20listesi%20üzerinden%20sipariş%20vermek%20istiyorum." target="_blank" class="whatsapp" aria-label="WhatsApp sipariş">
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M20.5 3.5C18.2 1.2 15.1 0 12 0 5.4 0 0 5.4 0 12c0 2 0.5 3.9 1.6 5.6L0 24l6.7-1.7C8.4 23.6 10.1 24 12 24 18.6 24 24 18.6 24 12 24 8.9 22.8 5.8 20.5 3.5z" fill="#25D366"/>
+<path d="M17.2 14.1c-0.3-0.1-1.8-0.9-2.1-1-0.3-0.1-0.5-0.1-0.8 0.1-0.3 0.2-1.2 0.9-1.5 1.1-0.3 0.2-0.6 0.1-1-0.2-0.4-0.3-1.6-1-2.9-1.8-1.1-0.6-1.9-1.3-2.1-1.7-0.2-0.4-0.1-0.8 0.1-1.1 0.2-0.3 0.3-0.5 0.5-0.8 0.2-0.3 0.2-0.6 0.3-1 0.1-0.4 0-0.8-0.1-1-0.2-0.3-0.8-0.7-1.6-1.1-0.8-0.4-1.5-0.9-2-1.4 0.5-0.1 1.1-0.2 1.8-0.2 1.1 0 2.1 0.3 3 0.9 0.9 0.6 1.8 1.4 2.6 2.3 0.8 0.9 1.4 1.9 1.8 2.9 0.4 1 0.6 2 0.6 3.1 0 0.6-0.1 1.1-0.3 1.6-0.2 0.4-0.6 0.6-1 0.5z" fill="#fff"/>
+</svg>
+</a>
 
 <script>
+// Giriş ekranı
+function enterSite(){ document.getElementById('welcome').classList.add('hide'); }
 
-function startMenu(){
-  document.getElementById("welcome").style.display="none";
+// Arama fonksiyonu
+function searchProducts(){
+  let input=document.getElementById('searchInput').value.toLowerCase();
+  let cards=document.getElementsByClassName('product-card');
+  for(let i=0;i<cards.length;i++){
+    let name=cards[i].innerText.toLowerCase();
+    if(name.indexOf(input)>-1){
+      cards[i].style.display='flex';
+      if(input!=='') cards[i].closest('.category-wrapper').classList.add('active');
+    } else cards[i].style.display='none';
+  }
 }
 
-fetch("data.json")
+// JSON’dan kategori ve ürünleri yükleme
+fetch('data.json')
 .then(res=>res.json())
 .then(data=>{
-
-  const container=document.getElementById("menu-container");
-  const searchInput=document.getElementById("search");
-
-  function renderMenu(filter=""){
-    container.innerHTML="";
-
-    data.categories.forEach(category=>{
-
-      const filtered=category.products.filter(p=>
-        p.name.toLowerCase().includes(filter.toLowerCase())
-      );
-
-      if(filtered.length===0) return;
-
-      const section=document.createElement("div");
-      section.classList.add("menu-section");
-
-      const header=document.createElement("div");
-      header.classList.add("category-header");
-      header.innerHTML=`<span>${category.name}</span><span>▼</span>`;
-
-      const productsDiv=document.createElement("div");
-      productsDiv.classList.add("products");
-
-      header.onclick=()=>{
-        productsDiv.style.display=
-          productsDiv.style.display==="block"?"none":"block";
-      };
-
-      filtered.forEach(product=>{
-        const item=document.createElement("div");
-        item.classList.add("menu-item");
-        item.innerHTML=`
-          <span>${product.name}</span>
-          <span>${product.price} ₺</span>
-        `;
-        productsDiv.appendChild(item);
-      });
-
-      section.appendChild(header);
-      section.appendChild(productsDiv);
-      container.appendChild(section);
-
+  const root=document.getElementById('menu-root');
+  data.categories.forEach(cat=>{
+    const cw=document.createElement('div'); cw.className='category-wrapper';
+    const ch=document.createElement('div'); ch.className='category-header';
+    ch.innerHTML=`<h2>${cat.name}</h2><span>▼</span>`;
+    ch.addEventListener('click',()=>cw.classList.toggle('active'));
+    const pl=document.createElement('div'); pl.className='product-list';
+    cat.products.forEach(p=>{
+      const pc=document.createElement('div'); pc.className='product-card';
+      pc.innerHTML=`<span>${p.name}</span><span class="product-price">${p.price} ₺</span>`;
+      pl.appendChild(pc);
     });
-  }
-
-  renderMenu();
-
-  searchInput.addEventListener("input",(e)=>{
-    renderMenu(e.target.value);
+    cw.appendChild(ch); cw.appendChild(pl); root.appendChild(cw);
   });
-
-});
+})
+.catch(err=>console.error('data.json yüklenemedi:',err));
 </script>
-
 </body>
 </html>
