@@ -10,8 +10,8 @@ function saveCart() {
     updateCartUI();
 }
 
-function addToCart(name, price) {
-    // Fiyatı sayıya dönüştür
+// Global Erişim Garantili Fonksiyonlar
+window.addToCart = function(name, price) {
     let cleanPrice = price.toString().replace(/[^\d,.]/g, '').replace(',', '.');
     let numericPrice = parseFloat(cleanPrice) || 0;
     
@@ -21,9 +21,9 @@ function addToCart(name, price) {
     if (typeof gtag === "function") {
         gtag('event', 'add_to_cart', { currency: 'TRY', value: numericPrice, items: [{ item_name: name, price: numericPrice }] });
     }
-}
+};
 
-function updateCartUI() {
+window.updateCartUI = function() {
     const cartBar = document.getElementById('cart-bar');
     const cartCount = document.getElementById('cart-count');
     const cartTotalText = document.getElementById('cart-total-text');
@@ -38,17 +38,17 @@ function updateCartUI() {
     } else {
         cartBar.style.display = 'none';
     }
-}
+};
 
-// SEPETİ TEMİZLEME FONKSİYONU
-function clearCart() {
+window.clearCart = function() {
     if (confirm("Sepetteki tüm ürünler temizlensin mi?")) {
         cart = [];
+        localStorage.removeItem("cart"); // Tarayıcı hafızasını zorla temizle
         saveCart();
     }
-}
+};
 
-function sendToWhatsApp() {
+window.sendToWhatsApp = function() {
     if (cart.length === 0) {
         alert("Sepetiniz boş!");
         return;
@@ -66,4 +66,4 @@ function sendToWhatsApp() {
     const url = "https://api.whatsapp.com/send?phone=" + phone + "&text=" + message;
     
     window.open(url, '_blank');
-}
+};
