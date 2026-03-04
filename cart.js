@@ -1,6 +1,6 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// Sayfa yüklendiğinde sepetin durumunu kontrol et
+// Sayfa yüklenince sepeti kontrol et
 document.addEventListener("DOMContentLoaded", function() {
     updateCartUI();
 });
@@ -11,20 +11,15 @@ function saveCart() {
 }
 
 function addToCart(name, price) {
-    // Fiyatın içindeki ₺, nokta veya boşlukları temizleyip sayıya çevirir
+    // Fiyatı sayıya dönüştür
     let cleanPrice = price.toString().replace(/[^\d,.]/g, '').replace(',', '.');
     let numericPrice = parseFloat(cleanPrice) || 0;
     
     cart.push({ name: name, price: numericPrice });
     saveCart();
 
-    // Google Analytics olayını tetikle
     if (typeof gtag === "function") {
-        gtag('event', 'add_to_cart', {
-            currency: 'TRY',
-            value: numericPrice,
-            items: [{ item_name: name, price: numericPrice }]
-        });
+        gtag('event', 'add_to_cart', { currency: 'TRY', value: numericPrice, items: [{ item_name: name, price: numericPrice }] });
     }
 }
 
@@ -36,14 +31,20 @@ function updateCartUI() {
     if (!cartBar) return;
 
     if (cart.length > 0) {
-        cartBar.style.display = 'flex'; // Sepette ürün varsa barı göster
+        cartBar.style.display = 'flex';
         cartCount.innerText = cart.length;
-        
-        // Toplam fiyatı hesapla
         let total = cart.reduce((sum, item) => sum + item.price, 0);
         cartTotalText.innerText = `Toplam: ${total.toFixed(2).replace('.', ',')} ₺`;
     } else {
-        cartBar.style.display = 'none'; // Sepet boşsa barı gizle
+        cartBar.style.display = 'none';
+    }
+}
+
+// SEPETİ TEMİZLEME FONKSİYONU
+function clearCart() {
+    if (confirm("Sepetteki tüm ürünler temizlensin mi?")) {
+        cart = [];
+        saveCart();
     }
 }
 
@@ -53,31 +54,16 @@ function sendToWhatsApp() {
         return;
     }
 
-    let message = "*📦 ÜSTÜNER GIDA - YENİ SİPARİŞ*%0A";
-    message += "---------------------------------%0A";
-    
+    let message = "*📦 ÜSTÜNER GIDA SİPARİŞİ*%0A%0A";
     let total = 0;
-    // Ürünleri tek tek listeye ekle
     cart.forEach((item, index) => {
-        message += `*${index + 1}.* ${item.name} _(${item.price.toFixed(2).replace('.', ',')} ₺)_%0A`;
+        message += `*${index + 1}.* ${item.name} (${item.price.toFixed(2).replace('.', ',')} ₺)%0A`;
         total += item.price;
     });
 
-    message += "---------------------------------%0A";
-    message += `*TOPLAM TUTAR: ${total.toFixed(2).replace('.', ',')} ₺*%0A`;
-    message += "---------------------------------%0A";
-    message += "_Siparişim hakkında bilgi almak istiyorum._";
-
+    message += `%0A*TOPLAM: ${total.toFixed(2).replace('.', ',')} ₺*`;
     const phone = "905444465503";
-    // WhatsApp API URL'i
     const url = "https://api.whatsapp.com/send?phone=" + phone + "&text=" + message;
-
-    // Tarayıcıda yeni sekme olarak WhatsApp'ı aç
+    
     window.open(url, '_blank');
-
-    // Sipariş gönderildikten sonra sepeti temizlemek istersen:
-    if(confirm("Sipariş listesi WhatsApp'a aktarıldı. Sepeti temizlemek ister misiniz?")) {
-        cart = [];
-        saveCart();
-    }
 }
