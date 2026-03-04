@@ -169,7 +169,16 @@ text=Merhaba%2C%20Üstüner%20Gıda%
             cat.products.forEach(prod => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                card.innerHTML = `<span>${prod.name}</span><span class="product-price">${prod.price} ₺</span>`;
+                card.innerHTML = `
+<div>
+<div>${prod.name}</div>
+<div class="product-price">${prod.price} ₺</div>
+</div>
+<button onclick="addToCart('${prod.name}','${prod.price}')"
+style="background:#C9A227;border:none;padding:6px 12px;border-radius:20px;font-weight:bold;cursor:pointer">
+Sepete Ekle
+</button>
+`;
                 list.appendChild(card);
             });
             wrapper.appendChild(header);
