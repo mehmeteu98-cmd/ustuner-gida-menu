@@ -26,7 +26,12 @@
         }
         #welcome-screen.hide { transform: translateY(-100%); }
         
+        /* Sağ Üst - Tarih */
         .date-box { position: absolute; top: 15px; right: 15px; font-size: 11px; border: 1px solid rgba(255,255,255,0.25); padding: 3px 12px; border-radius: 50px; background: rgba(255,255,255,0.1); backdrop-filter: blur(4px); z-index: 1001; }
+        
+        /* Sol Üst - Dolar Kuru */
+        .currency-box { position: absolute; top: 15px; left: 15px; font-size: 11px; border: 1px solid rgba(255,193,7,0.4); padding: 3px 12px; border-radius: 50px; background: rgba(255,255,255,0.1); backdrop-filter: blur(4px); z-index: 1001; color: #FFC107; font-weight: bold; }
+
         .top-logo { width: 99%; max-width: 500px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.6)); }
         #welcome-screen h1 { font-size: 12vw; margin: 10px 0 5px 0; font-weight: 800; text-shadow: 2px 4px 12px rgba(0,0,0,0.7); }
         .welcome-sub { color: #FFC107; font-size: 8.5vw; font-weight: 700; margin-bottom: 45px; }
@@ -58,6 +63,7 @@
 <body>
 
 <div id="welcome-screen">
+    <div id="usd-rate" class="currency-box">USD: Yükleniyor...</div>
     <div id="date" class="date-box"></div>
     <img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" class="top-logo">
     <h1>Üstüner Gıda</h1>
@@ -91,6 +97,20 @@
     function enterSite() { document.getElementById('welcome-screen').classList.add('hide'); }
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     document.getElementById('date').innerHTML = new Date().toLocaleDateString('tr-TR', options);
+
+    // Dolar Kuru Çekme Fonksiyonu
+    async function getUsdRate() {
+        try {
+            const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+            const data = await response.json();
+            const rate = data.rates.TRY;
+            document.getElementById('usd-rate').innerHTML = `USD: ${rate.toFixed(2)} ₺`;
+        } catch (error) {
+            document.getElementById('usd-rate').innerHTML = `USD: --`;
+            console.error('Kur çekilemedi:', error);
+        }
+    }
+    getUsdRate();
 
     function searchProducts() {
         let input = document.getElementById('searchInput');
