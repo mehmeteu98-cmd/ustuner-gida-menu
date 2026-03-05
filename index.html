@@ -1,64 +1,17 @@
-// cart.js
+Menüyü Görüntüle
 
-let cart = [];
 
-// Sepete ürün ekleme
-function addToCart(name, price) {
-  cart.push({ name, price });
-  renderCart();
-}
 
-// Sepetten ürün silme
-function removeFromCart(index) {
-  cart.splice(index, 1);
-  renderCart();
-}
 
-// Sepeti ekranda gösterme
-function renderCart() {
-  const cartContainer = document.getElementById("cart-container");
-  cartContainer.innerHTML = "";
 
-  if (cart.length === 0) {
-    cartContainer.innerHTML = "<p>Sepetiniz boş</p>";
-    return;
-  }
 
-  cart.forEach((item, index) => {
-    const div = document.createElement("div");
-    div.className = "cart-item";
-    div.innerHTML = `
-      <span>${item.name} - ${item.price} ₺</span>
-      <button onclick="removeFromCart(${index})" 
-        style="margin-left:10px;background:red;color:white;border:none;border-radius:5px;cursor:pointer">
-        ❌
-      </button>
-    `;
-    cartContainer.appendChild(div);
-  });
 
-  // Gönder butonu
-  const sendBtn = document.createElement("button");
-  sendBtn.innerText = "WhatsApp’tan Gönder";
-  sendBtn.style = "margin-top:15px;padding:10px 20px;background:#25D366;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:bold";
-  sendBtn.onclick = sendCart;
-  cartContainer.appendChild(sendBtn);
-}
 
-// WhatsApp’a gönderme
-function sendCart() {
-  if (cart.length === 0) {
-    alert("Sepetiniz boş!");
-    return;
-  }
 
-  let message = "Sepetim:%0A";
-  cart.forEach(item => {
-    message += `- ${item.name} (${item.price} ₺)%0A`;
-  });
 
-  // Burada kendi WhatsApp numaranı gir
-  let phoneNumber = "905XXXXXXXXX"; 
-  let url = `https://wa.me/${phoneNumber}?text=${message}`;
-  window.open(url, "_blank");
-}
+
+
+
+
+
+Bu benim web sitem ve bu kodun içerisindeki hiçbir ayarı bozmadan sepete ekledigim ürünleri gösteren bir sepet ve istediğim zaman bu sepeti silebilme için yanında sil işareti ve sepet eklendikten sonra gönder tuşuna bastığımda WhatsApp’tan sepetteki bütün ürünleri göndermesini ayarlar mısın
