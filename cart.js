@@ -35,9 +35,8 @@ function showAddedAnimation(productName){
   let notif = document.createElement("div");
   notif.innerText = productName + " sepete eklendi";
   notif.style.position="fixed";
-  notif.style.bottom="160px";
-  notif.style.left="50%";
-  notif.style.transform="translateX(-50%)";
+  notif.style.bottom="40px";
+  notif.style.right="40px";
   notif.style.background="#0B1F3B";
   notif.style.color="white";
   notif.style.padding="10px 18px";
@@ -49,27 +48,20 @@ function showAddedAnimation(productName){
   notif.style.transition="all .4s";
   document.body.appendChild(notif);
 
-  setTimeout(()=>{notif.style.opacity="1";notif.style.bottom="180px";},50);
+  setTimeout(()=>{notif.style.opacity="1";},50);
   setTimeout(()=>{notif.style.opacity="0";},2000);
   setTimeout(()=>{notif.remove();},2400);
 }
 
 // Sepeti UI’da göster
 window.updateCartUI = function () {
-  const cartBar=document.getElementById("cart-bar");
-  const cartCount=document.getElementById("cart-count");
-  const cartTotalText=document.getElementById("cart-total-text");
   const cartContainer=document.getElementById("cart-container");
-
-  if(!cartBar || !cartContainer) return;
+  if(!cartContainer) return;
 
   cartContainer.innerHTML = "";
 
   if(cart.length>0){
-    cartBar.style.display="flex";
-    cartCount.innerText=cart.length;
     let total=cart.reduce((sum,item)=>sum+item.price,0);
-    cartTotalText.innerText="Toplam: "+total.toFixed(2).replace('.',',')+" ₺";
 
     cart.forEach((item,index)=>{
       const div=document.createElement("div");
@@ -85,20 +77,24 @@ window.updateCartUI = function () {
       cartContainer.appendChild(div);
     });
 
+    const totalText=document.createElement("div");
+    totalText.style="margin-top:10px;font-weight:bold;color:#0B1F3B";
+    totalText.innerText="Toplam: "+total.toFixed(2).replace('.',',')+" ₺";
+    cartContainer.appendChild(totalText);
+
     const sendBtn=document.createElement("button");
     sendBtn.innerText="WhatsApp’tan Gönder";
-    sendBtn.style="margin-top:15px;padding:10px 20px;background:#25D366;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:bold";
+    sendBtn.style="margin-top:15px;padding:10px 20px;background:#25D366;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:bold;width:100%";
     sendBtn.onclick=sendToWhatsApp;
     cartContainer.appendChild(sendBtn);
 
     const clearBtn=document.createElement("button");
     clearBtn.innerText="Sepeti Temizle";
-    clearBtn.style="margin-top:10px;margin-left:10px;padding:8px 15px;background:#C9A227;color:#0B1F3B;border:none;border-radius:8px;cursor:pointer;font-weight:bold";
+    clearBtn.style="margin-top:10px;padding:8px 15px;background:#C9A227;color:#0B1F3B;border:none;border-radius:8px;cursor:pointer;font-weight:bold;width:100%";
     clearBtn.onclick=clearCart;
     cartContainer.appendChild(clearBtn);
 
   } else {
-    cartBar.style.display="none";
     cartContainer.innerHTML="<p>Sepetiniz boş</p>";
   }
 };
@@ -138,4 +134,15 @@ window.sendToWhatsApp=function(){
   const phone="905444465503"; // kendi numaran
   const url="https://api.whatsapp.com/send?phone="+phone+"&text="+message;
   window.open(url,"_blank");
+};
+
+// Sepet panelini aç/kapat
+window.toggleCart = function(){
+  const panel=document.getElementById("cart-panel");
+  if(panel.style.right==="0px"){
+    panel.style.right="-400px";
+  }else{
+    panel.style.right="0px";
+    updateCartUI();
+  }
 };
