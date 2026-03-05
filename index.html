@@ -1,17 +1,375 @@
-Menüyü Görüntüle
+<!DOCTYPE html>
+<html lang="tr">
+<head>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-532PMVY2KK"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-532PMVY2KK');
+</script>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Üstüner Gıda - Dijital Menü</title>
 
+<style>
 
+body{
+margin:0;
+padding:0;
+font-family:'Segoe UI',Roboto,Arial,sans-serif;
+background:#f4f7f6;
+color:#333;
+overflow-x:hidden;
+}
 
+/* ---------- Açılış ekranı ---------- */
 
+#welcome-screen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:
+linear-gradient(rgba(11,31,59,0.88),rgba(11,31,59,0.88)),
+url('https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/arkaplan.JPG');
+background-size:cover;
+background-position:center;
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
+align-items:center;
+color:white;
+text-align:center;
+z-index:1000;
+padding-top:50px;
+backdrop-filter:blur(3px);
+transition:transform .9s cubic-bezier(.77,0,.175,1);
+}
 
+#welcome-screen.hide{
+transform:translateY(-100%);
+}
 
+/* ---------- Üst bilgi kutuları ---------- */
 
+.top-info-container{
+position:absolute;
+top:15px;
+left:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+padding:0 15px;
+box-sizing:border-box;
+}
 
+.info-pill{
+font-size:11px;
+border:1px solid rgba(255,255,255,0.3);
+padding:6px 14px;
+border-radius:50px;
+background:rgba(0,0,0,0.2);
+backdrop-filter:blur(8px);
+color:white;
+font-weight:500;
+display:flex;
+align-items:center;
+gap:6px;
+}
 
+.usd-pill{
+border-color:rgba(201,162,39,0.6);
+color:#FFC107;
+font-weight:bold;
+}
 
+/* ---------- Logo animasyonu ---------- */
 
+@keyframes logoFadeZoom{
+0%{opacity:0;transform:scale(.7);}
+100%{opacity:1;transform:scale(1);}
+}
 
-Bu benim web sitem ve bu kodun içerisindeki hiçbir ayarı bozmadan sepete ekledigim ürünleri gösteren bir sepet ve istediğim zaman bu sepeti silebilme için yanında sil işareti ve sepet eklendikten sonra gönder tuşuna bastığımda WhatsApp’tan sepetteki bütün ürünleri göndermesini ayarlar mısın
+.top-logo{
+width:95%;
+max-width:500px;
+margin-bottom:20px;
+animation:logoFadeZoom 1.5s ease forwards;
+}
+
+/* ---------- Başlık animasyonu ---------- */
+
+@keyframes titleSlide{
+0%{opacity:0;transform:translateY(40px);}
+100%{opacity:1;transform:translateY(0);}
+}
+
+#welcome-screen h1{
+font-size:12vw;
+margin:10px 0;
+font-weight:800;
+text-shadow:2px 4px 12px rgba(0,0,0,0.7);
+animation:titleSlide 1.2s ease forwards;
+}
+
+.welcome-sub{
+color:#FFC107;
+font-size:8vw;
+font-weight:700;
+margin-bottom:45px;
+animation:titleSlide 1.6s ease forwards;
+}
+
+/* ---------- Buton animasyonu ---------- */
+
+@keyframes pulse{
+0%{box-shadow:0 0 0 0 rgba(201,162,39,0.7);}
+70%{box-shadow:0 0 0 20px rgba(201,162,39,0);}
+100%{box-shadow:0 0 0 0 rgba(201,162,39,0);}
+}
+
+.enter-btn{
+background:#C9A227;
+color:#0B1F3B;
+border:none;
+padding:22px 70px;
+border-radius:50px;
+font-weight:800;
+font-size:19px;
+cursor:pointer;
+text-transform:uppercase;
+animation:pulse 2s infinite;
+}
+
+/* ---------- Menü ---------- */
+
+.header-banner{
+width:100%;
+display:block;
+}
+
+.search-container{
+padding:15px 20px;
+position:sticky;
+top:0;
+background:#f4f7f6;
+z-index:10;
+}
+
+.search-container input{
+width:100%;
+padding:12px 18px;
+border:2px solid #0B1F3B;
+border-radius:25px;
+font-size:16px;
+outline:none;
+}
+
+.menu-section{
+padding:0 15px 140px 15px;
+}
+
+.category-wrapper{
+margin-bottom:10px;
+}
+
+.category-header{
+background:#fff;
+padding:15px;
+border-radius:12px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+cursor:pointer;
+border-left:5px solid #C9A227;
+box-shadow:0 2px 4px rgba(0,0,0,0.05);
+}
+
+.category-header h2{
+margin:0;
+font-size:17px;
+color:#0B1F3B;
+text-transform:uppercase;
+}
+
+.product-list{
+display:none;
+padding:10px 5px;
+}
+
+.category-wrapper.active .product-list{
+display:block;
+}
+
+/* ---------- Ürün kart animasyonu ---------- */
+
+@keyframes cardAppear{
+0%{opacity:0;transform:translateY(20px);}
+100%{opacity:1;transform:translateY(0);}
+}
+
+.product-card{
+background:white;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px;
+margin-bottom:8px;
+border-radius:8px;
+box-shadow:0 1px 3px rgba(0,0,0,0.05);
+animation:cardAppear .4s ease forwards;
+}
+
+.product-price{
+font-weight:bold;
+color:#C9A227;
+font-size:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="welcome-screen">
+
+<div class="top-info-container">
+
+<div class="info-pill usd-pill">
+💵 <span id="usd-rate">USD: ...</span>
+</div>
+
+<div id="date" class="info-pill"></div>
+
+</div>
+
+<img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" class="top-logo">
+
+<h1>Üstüner Gıda</h1>
+
+<div class="welcome-sub">Hoş Geldiniz</div>
+
+<button class="enter-btn" onclick="enterSite()">Menüyü Görüntüle</button>
+
+</div>
+
+<img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" class="header-banner">
+
+<div class="search-container">
+<input type="text" id="searchInput" placeholder="Ürün ara..." onkeyup="searchProducts()">
+</div>
+
+<div class="menu-section" id="menu-root"></div>
+
+<script>
+
+/* Menü açılış */
+
+function enterSite(){
+document.getElementById('welcome-screen').classList.add('hide');
+}
+
+/* Tarih */
+
+const options={weekday:'long',year:'numeric',month:'long',day:'numeric'};
+document.getElementById('date').innerHTML=new Date().toLocaleDateString('tr-TR',options);
+
+/* USD kuru */
+
+async function getUsdRate(){
+try{
+const res=await fetch("https://api.frankfurter.app/latest?from=USD&to=TRY");
+const data=await res.json();
+document.getElementById("usd-rate").innerText="USD: "+data.rates.TRY.toFixed(2)+" ₺";
+}catch(e){
+document.getElementById("usd-rate").innerText="USD veri yok";
+}
+}
+
+getUsdRate();
+setInterval(getUsdRate,60000);
+
+/* Arama */
+
+function searchProducts(){
+
+let input=document.getElementById('searchInput');
+let filter=input.value.toLowerCase();
+let cards=document.getElementsByClassName('product-card');
+
+for(let i=0;i<cards.length;i++){
+
+let name=cards[i].innerText.toLowerCase();
+
+if(name.indexOf(filter)>-1){
+cards[i].style.display="flex";
+}else{
+cards[i].style.display="none";
+}
+
+}
+
+}
+
+/* Menü yükleme */
+
+fetch('data.json')
+.then(response=>response.json())
+.then(data=>{
+
+const root=document.getElementById('menu-root');
+
+data.categories.forEach(cat=>{
+
+const wrapper=document.createElement('div');
+wrapper.className='category-wrapper';
+
+const header=document.createElement('div');
+header.className='category-header';
+
+header.innerHTML=`<h2>${cat.name}</h2><span>▼</span>`;
+header.onclick=function(){this.parentElement.classList.toggle('active');};
+
+const list=document.createElement('div');
+list.className='product-list';
+
+cat.products.forEach(prod=>{
+
+const card=document.createElement('div');
+card.className='product-card';
+
+card.innerHTML=`
+<div>
+<div>${prod.name}</div>
+<div class="product-price">${prod.price} ₺</div>
+</div>
+<button onclick="addToCart('${prod.name}','${prod.price}')"
+style="background:#C9A227;border:none;padding:8px 15px;border-radius:20px;font-weight:bold;cursor:pointer">
+Ekle
+</button>
+`;
+
+list.appendChild(card);
+
+});
+
+wrapper.appendChild(header);
+wrapper.appendChild(list);
+root.appendChild(wrapper);
+
+});
+
+});
+
+</script>
+
+<script src="cart.js?v=1.2"></script>
+
+</body>
+</html>
