@@ -26,11 +26,20 @@
         }
         #welcome-screen.hide { transform: translateY(-100%); }
         
-        /* Sağ Üst - Tarih */
-        .date-box { position: absolute; top: 15px; right: 15px; font-size: 11px; border: 1px solid rgba(255,255,255,0.25); padding: 5px 12px; border-radius: 50px; background: rgba(255,255,255,0.1); backdrop-filter: blur(4px); z-index: 1001; }
-        
-        /* Sol Üst - Dolar Kuru */
-        .currency-box { position: absolute; top: 15px; left: 15px; font-size: 11px; border: 1px solid rgba(201, 162, 39, 0.5); padding: 5px 12px; border-radius: 50px; background: rgba(255,255,255,0.1); backdrop-filter: blur(4px); z-index: 1001; color: #FFC107; font-weight: bold; min-width: 80px; }
+        /* Üst Bar Kutuları (Dolar ve Tarih) */
+        .top-info-container {
+            position: absolute; top: 15px; left: 0; width: 100%;
+            display: flex; justify-content: space-between; padding: 0 15px;
+            box-sizing: border-box; z-index: 1001;
+        }
+
+        .info-pill {
+            font-size: 11px; border: 1px solid rgba(255,255,255,0.3); padding: 6px 14px; 
+            border-radius: 50px; background: rgba(0,0,0,0.2); backdrop-filter: blur(8px);
+            color: white; font-weight: 500;
+        }
+
+        .usd-pill { border-color: rgba(201, 162, 39, 0.6); color: #FFC107; font-weight: bold; }
 
         .top-logo { width: 99%; max-width: 500px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.6)); }
         #welcome-screen h1 { font-size: 12vw; margin: 10px 0 5px 0; font-weight: 800; text-shadow: 2px 4px 12px rgba(0,0,0,0.7); }
@@ -63,8 +72,11 @@
 <body>
 
 <div id="welcome-screen">
-    <div id="usd-rate" class="currency-box">USD: ..</div>
-    <div id="date" class="date-box"></div>
+    <div class="top-info-container">
+        <div id="usd-rate" class="info-pill usd-pill">USD: --</div>
+        <div id="date" class="info-pill">Tarih..</div>
+    </div>
+
     <img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" class="top-logo">
     <h1>Üstüner Gıda</h1>
     <div class="welcome-sub">Hoş Geldiniz.</div>
@@ -100,30 +112,19 @@
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     document.getElementById('date').innerHTML = new Date().toLocaleDateString('tr-TR', options);
 
-    // Daha Güçlü Dolar Kuru Fonksiyonu
+    // Dolar Kuru Çekme - Hızlı API
     async function getUsdRate() {
         try {
-            // Alternatif ve hızlı bir API servisi
-            const response = await fetch('https://open.er-api.com/v6/latest/USD');
-            const data = await response.json();
-            const rate = data.rates.TRY;
-            if(rate) {
-                document.getElementById('usd-rate').innerHTML = `USD: ${rate.toFixed(2)} ₺`;
+            const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+            const data = await res.json();
+            if(data.rates && data.rates.TRY) {
+                document.getElementById('usd-rate').innerText = "USD: " + data.rates.TRY.toFixed(2) + " ₺";
             }
-        } catch (error) {
-            console.log('Kur yükleme denemesi 2...');
-            // İlk API hata verirse ikincisini dene
-            fetch('https://api.exchangerate-api.com/v4/latest/USD')
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById('usd-rate').innerHTML = `USD: ${data.rates.TRY.toFixed(2)} ₺`;
-                })
-                .catch(e => {
-                    document.getElementById('usd-rate').innerHTML = `USD: --`;
-                });
+        } catch (e) {
+            console.log("USD çekilemedi, alternatif deneniyor...");
+            document.getElementById('usd-rate').innerText = "USD: --";
         }
     }
-    
     getUsdRate();
 
     function searchProducts() {
