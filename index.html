@@ -794,7 +794,7 @@ function checkoutWhatsApp(){
     return;
   }
 
-  let msg = '🛒 *Sipariş vermek istiyorum*\n\n';
+  let msg = '🛒 *Merhaba Sepetteki Ürünleri Sipariş Vermek İstiyorum*\n\n';
   cart.forEach(item => {
     msg += `• ${item.name} x${item.qty} — ${(item.price * item.qty).toLocaleString('tr-TR', {minimumFractionDigits:2})} ₺\n`;
   });
