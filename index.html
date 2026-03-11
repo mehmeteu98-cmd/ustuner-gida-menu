@@ -562,6 +562,195 @@ body {
 /* ═══ BOŞLUK DOLGU ═══ */
 .bottom-spacer { height: 30px; }
 
+/* ═══ TÜKENMIŞ ÜRÜN ═══ */
+.product-card.out-of-stock {
+  opacity: 0.45;
+  position: relative;
+}
+.product-card.out-of-stock .product-name {
+  text-decoration: line-through;
+  text-decoration-color: #e53935;
+  text-decoration-thickness: 2px;
+}
+.product-card.out-of-stock::after {
+  content: 'TÜKENDİ';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) rotate(-12deg);
+  background: rgba(229,57,53,0.12);
+  color: #e53935;
+  border: 1.5px solid rgba(229,57,53,0.35);
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 2px;
+  padding: 3px 10px; border-radius: 4px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.product-card.out-of-stock .add-btn {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+  background: #9ca3af;
+}
+
+/* ═══ ADMIN PANELİ ═══ */
+#admin-overlay {
+  position: fixed; inset: 0;
+  background: rgba(11,31,59,0.85);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+}
+#admin-overlay.open { display: flex; }
+
+#admin-panel {
+  background: #fff;
+  width: 100%; max-width: 520px;
+  max-height: 88vh;
+  border-radius: 24px 24px 0 0;
+  display: flex; flex-direction: column;
+  animation: slideUp .35s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+#admin-login {
+  padding: 32px 28px;
+  text-align: center;
+}
+#admin-login h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--navy); font-size: 22px; margin-bottom: 6px;
+}
+#admin-login p { color: var(--text-muted); font-size: 13px; margin-bottom: 24px; }
+#admin-pass-input {
+  width: 100%; padding: 13px 18px;
+  border: 2px solid var(--border);
+  border-radius: 12px; font-size: 16px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none; margin-bottom: 12px;
+  transition: border-color .2s;
+  text-align: center; letter-spacing: 4px;
+}
+#admin-pass-input:focus { border-color: var(--gold); }
+#admin-login-btn {
+  width: 100%; padding: 13px;
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: white; border: none; border-radius: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: opacity .2s;
+}
+#admin-login-btn:hover { opacity: .88; }
+#admin-login-error {
+  color: #e53935; font-size: 12px;
+  margin-top: 8px; display: none;
+}
+#admin-close-btn {
+  position: absolute; top: 16px; right: 16px;
+  background: rgba(0,0,0,0.08); border: none;
+  width: 32px; height: 32px; border-radius: 50%;
+  font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+
+#admin-content { display: none; flex-direction: column; flex: 1; overflow: hidden; }
+
+#admin-header {
+  padding: 18px 20px 12px;
+  border-bottom: 1px solid #f3f4f6;
+  flex-shrink: 0;
+}
+#admin-header h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--navy); font-size: 18px; margin-bottom: 2px;
+}
+#admin-header p { font-size: 12px; color: var(--text-muted); }
+
+#admin-search {
+  padding: 10px 20px;
+  flex-shrink: 0;
+}
+#admin-search input {
+  width: 100%; padding: 9px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px; font-size: 14px;
+  font-family: 'DM Sans', sans-serif; outline: none;
+  transition: border-color .2s;
+}
+#admin-search input:focus { border-color: var(--gold); }
+
+#admin-list {
+  overflow-y: auto; flex: 1; padding: 0 20px 24px;
+}
+#admin-list::-webkit-scrollbar { width: 4px; }
+#admin-list::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+
+.admin-cat-label {
+  font-size: 11px; font-weight: 700;
+  color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 1px; padding: 14px 0 6px;
+  border-bottom: 1px solid #f3f4f6;
+  margin-bottom: 4px;
+}
+
+.admin-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 0;
+  border-bottom: 1px solid #f9fafb;
+  gap: 10px;
+}
+.admin-row-name {
+  font-size: 13px; font-weight: 500;
+  color: var(--text); flex: 1;
+  line-height: 1.3;
+}
+.admin-row-name.oos { color: #9ca3af; text-decoration: line-through; text-decoration-color: #e53935; }
+
+/* Toggle switch */
+.toggle-wrap { flex-shrink: 0; }
+.toggle-input { display: none; }
+.toggle-label {
+  display: flex; align-items: center; cursor: pointer;
+  gap: 8px; user-select: none;
+}
+.toggle-track {
+  width: 42px; height: 24px;
+  border-radius: 12px;
+  background: #e5e7eb;
+  position: relative;
+  transition: background .25s;
+  flex-shrink: 0;
+}
+.toggle-input:checked + .toggle-label .toggle-track { background: #22c55e; }
+.toggle-thumb {
+  position: absolute; top: 3px; left: 3px;
+  width: 18px; height: 18px;
+  border-radius: 50%; background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: left .25s;
+}
+.toggle-input:checked + .toggle-label .toggle-thumb { left: 21px; }
+.toggle-text {
+  font-size: 11px; font-weight: 700;
+  color: #9ca3af; min-width: 36px;
+}
+.toggle-input:checked + .toggle-label .toggle-text { color: #22c55e; }
+
+#admin-stats-bar {
+  padding: 10px 20px;
+  background: #f9fafb;
+  border-top: 1px solid #f3f4f6;
+  font-size: 12px; color: var(--text-muted);
+  display: flex; justify-content: space-between;
+  flex-shrink: 0;
+}
+#admin-stats-bar span { font-weight: 700; color: var(--navy); }
+
 /* ═══ SEARCH RESULT EMPTY ═══ */
 .no-results {
   text-align: center; padding: 40px 20px;
@@ -622,7 +811,7 @@ body {
 
 <header class="site-header">
   <div class="header-inner">
-    <div class="header-logo">
+    <div class="header-logo" id="adminTrigger">
       <img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" alt="Üstüner Gıda">
     </div>
     <div class="header-meta">
@@ -708,6 +897,44 @@ body {
       </button>
       <button id="btn-clear" onclick="clearCart()">🗑 Temizle</button>
     </div>
+  </div>
+</div>
+
+<!-- ADMİN OVERLAY -->
+
+<div id="admin-overlay" onclick="adminOverlayClick(event)">
+  <div id="admin-panel" style="position:relative;">
+    <button id="admin-close-btn" onclick="closeAdmin()">✕</button>
+
+```
+<!-- GİRİŞ EKRANI -->
+<div id="admin-login">
+  <h2>🔐 Yönetici Paneli</h2>
+  <p>Stok yönetimine erişmek için şifrenizi girin</p>
+  <input type="password" id="admin-pass-input" placeholder="••••••" maxlength="20"
+         onkeydown="if(event.key==='Enter') adminDoLogin()">
+  <button id="admin-login-btn" onclick="adminDoLogin()">Giriş Yap</button>
+  <div id="admin-login-error">❌ Hatalı şifre, tekrar deneyin.</div>
+</div>
+
+<!-- PANEL İÇERİĞİ -->
+<div id="admin-content">
+  <div id="admin-header">
+    <h2>📦 Stok Yönetimi</h2>
+    <p>Tükenmiş ürünleri kapatın, yenileri gelince açın. Değişiklikler otomatik kaydedilir.</p>
+  </div>
+  <div id="admin-search">
+    <input type="text" id="adminSearch" placeholder="🔍 Ürün ara..." oninput="renderAdminList()">
+  </div>
+  <div id="admin-list"></div>
+  <div id="admin-stats-bar">
+    <div>Toplam: <span id="as-total">0</span> ürün</div>
+    <div>Tükenmiş: <span id="as-oos">0</span> ürün</div>
+    <div>Mevcut: <span id="as-in">0</span> ürün</div>
+  </div>
+</div>
+```
+
   </div>
 </div>
 
@@ -1323,6 +1550,163 @@ function checkoutWhatsApp(){
   msg+=`\n*Toplam: ${calcTotal().toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2})} ₺*`;
   window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`,'_blank');
 }
+
+/* ══════════════════════════════════════════
+   ADMİN PANELİ & STOK SİSTEMİ
+══════════════════════════════════════════ */
+const ADMIN_PASSWORD = 'ustuner2024'; // ← Şifrenizi buradan değiştirin
+
+function getStockData(){
+  try { return JSON.parse(localStorage.getItem('ug_stock') || '{}'); }
+  catch(e){ return {}; }
+}
+function saveStockData(data){
+  localStorage.setItem('ug_stock', JSON.stringify(data));
+}
+function isInStock(productName){
+  const d = getStockData();
+  return d[productName] !== false;
+}
+function setStock(productName, inStock){
+  const d = getStockData();
+  d[productName] = inStock;
+  saveStockData(d);
+}
+
+function applyStockToCard(card){
+  const name = card.dataset.name;
+  if(!isInStock(name)){
+    card.classList.add('out-of-stock');
+  } else {
+    card.classList.remove('out-of-stock');
+  }
+}
+function applyAllStock(){
+  document.querySelectorAll('.product-card').forEach(applyStockToCard);
+}
+
+/* Logo'ya 5x tık ile admin aç */
+let adminTapCount = 0, adminTapTimer = null;
+document.getElementById('adminTrigger').addEventListener('click', function(){
+  adminTapCount++;
+  clearTimeout(adminTapTimer);
+  adminTapTimer = setTimeout(()=>{ adminTapCount = 0; }, 2500);
+  if(adminTapCount >= 5){
+    adminTapCount = 0;
+    openAdmin();
+  }
+});
+
+function openAdmin(){
+  document.getElementById('admin-overlay').classList.add('open');
+  document.getElementById('admin-login').style.display = 'block';
+  document.getElementById('admin-content').style.display = 'none';
+  document.getElementById('admin-pass-input').value = '';
+  document.getElementById('admin-login-error').style.display = 'none';
+  setTimeout(()=>document.getElementById('admin-pass-input').focus(), 350);
+}
+function closeAdmin(){
+  document.getElementById('admin-overlay').classList.remove('open');
+}
+function adminOverlayClick(e){
+  if(e.target === document.getElementById('admin-overlay')) closeAdmin();
+}
+
+function adminDoLogin(){
+  const val = document.getElementById('admin-pass-input').value;
+  if(val === ADMIN_PASSWORD){
+    document.getElementById('admin-login').style.display = 'none';
+    document.getElementById('admin-content').style.display = 'flex';
+    document.getElementById('adminSearch').value = '';
+    renderAdminList();
+  } else {
+    document.getElementById('admin-login-error').style.display = 'block';
+    document.getElementById('admin-pass-input').value = '';
+    document.getElementById('admin-pass-input').focus();
+    document.getElementById('admin-pass-input').style.borderColor = '#e53935';
+    setTimeout(()=>{
+      document.getElementById('admin-pass-input').style.borderColor = '';
+    }, 1200);
+  }
+}
+
+function renderAdminList(){
+  const filter = (document.getElementById('adminSearch').value || '').toLowerCase();
+  const listEl = document.getElementById('admin-list');
+  listEl.innerHTML = '';
+  const stockData = getStockData();
+  let total = 0, oos = 0;
+
+  MENU_DATA.categories.forEach(cat => {
+    const filtered = cat.products.filter(p =>
+      !filter || p.name.toLowerCase().includes(filter)
+    );
+    if(filtered.length === 0) return;
+
+    const label = document.createElement('div');
+    label.className = 'admin-cat-label';
+    label.textContent = cat.icon + ' ' + cat.name;
+    listEl.appendChild(label);
+
+    filtered.forEach(prod => {
+      total++;
+      const inStock = prod.name in stockData ? stockData[prod.name] : true;
+      if(!inStock) oos++;
+
+      const row = document.createElement('div');
+      row.className = 'admin-row';
+      const uid = 'tog_' + Math.random().toString(36).slice(2);
+
+      row.innerHTML = `
+        <div class="admin-row-name ${inStock ? '' : 'oos'}">${prod.name}</div>
+        <div class="toggle-wrap">
+          <input type="checkbox" class="toggle-input" id="${uid}" ${inStock ? 'checked' : ''}>
+          <label class="toggle-label" for="${uid}">
+            <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            <span class="toggle-text">${inStock ? 'AÇIK' : 'KAPALI'}</span>
+          </label>
+        </div>`;
+
+      const checkbox = row.querySelector('.toggle-input');
+      checkbox.addEventListener('change', function(){
+        const nowInStock = this.checked;
+        setStock(prod.name, nowInStock);
+        row.querySelector('.admin-row-name').className = 'admin-row-name' + (nowInStock ? '' : ' oos');
+        row.querySelector('.toggle-text').textContent = nowInStock ? 'AÇIK' : 'KAPALI';
+        // Menü kartını güncelle
+        document.querySelectorAll('.product-card').forEach(card => {
+          if(card.dataset.name === prod.name) applyStockToCard(card);
+        });
+        updateAdminStats();
+      });
+
+      listEl.appendChild(row);
+    });
+  });
+
+  document.getElementById('as-total').textContent = total;
+  document.getElementById('as-oos').textContent = oos;
+  document.getElementById('as-in').textContent = total - oos;
+}
+
+function updateAdminStats(){
+  const stockData = getStockData();
+  let total = 0, oos = 0;
+  MENU_DATA.categories.forEach(cat => {
+    cat.products.forEach(p => {
+      total++;
+      const inStock = p.name in stockData ? stockData[p.name] : true;
+      if(!inStock) oos++;
+    });
+  });
+  document.getElementById('as-total').textContent = total;
+  document.getElementById('as-oos').textContent = oos;
+  document.getElementById('as-in').textContent = total - oos;
+}
+
+/* Sayfa açıldığında stok durumlarını uygula */
+// (buildMenu çalıştıktan sonra DOM hazır, observer beklemeden doğrudan çağır)
+setTimeout(applyAllStock, 100);
 
 renderCart();
 </script>
