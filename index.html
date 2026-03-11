@@ -577,14 +577,14 @@ body {
 .product-card.out-of-stock::after {
   content: 'TÜKENDİ';
   position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%) rotate(-12deg);
-  background: rgba(229,57,53,0.12);
+  top: 50%; right: 52px;
+  transform: translateY(-50%) rotate(-8deg);
+  background: rgba(229,57,53,0.1);
   color: #e53935;
   border: 1.5px solid rgba(229,57,53,0.35);
-  font-size: 10px; font-weight: 800;
+  font-size: 9px; font-weight: 800;
   letter-spacing: 2px;
-  padding: 3px 10px; border-radius: 4px;
+  padding: 3px 8px; border-radius: 4px;
   pointer-events: none;
   white-space: nowrap;
 }
@@ -712,6 +712,34 @@ body {
   line-height: 1.3;
 }
 .admin-row-name.oos { color: #9ca3af; text-decoration: line-through; text-decoration-color: #e53935; }
+
+/* Fiyat düzenleme */
+.price-edit-wrap {
+  display: flex; align-items: center; gap: 4px;
+  flex-shrink: 0;
+}
+.price-edit-input {
+  width: 72px; padding: 5px 8px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px; font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600; color: var(--navy);
+  outline: none; text-align: right;
+  transition: border-color .2s;
+  -moz-appearance: textfield;
+}
+.price-edit-input::-webkit-outer-spin-button,
+.price-edit-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.price-edit-input:focus { border-color: var(--gold); }
+.price-edit-input.saved {
+  border-color: #22c55e;
+  background: #f0fdf4;
+  transition: border-color .1s, background .1s;
+}
+.price-lira {
+  font-size: 12px; font-weight: 700;
+  color: var(--gold); flex-shrink: 0;
+}
 
 /* Toggle switch */
 .toggle-wrap { flex-shrink: 0; }
@@ -1099,6 +1127,7 @@ function buildMenu(data){
   const root = document.getElementById('menu-root');
   const chips = document.getElementById('filterChips');
   let totalProducts = 0;
+  const priceData = getPriceData();
 
   data.categories.forEach((cat) => {
     if(!cat.products || cat.products.length === 0) return;
@@ -1142,14 +1171,15 @@ function buildMenu(data){
         ? `<img class="product-img" src="${prod.image}" alt="${prod.name}" onerror="this.style.display='none'">`
         : '';
 
+      const displayPrice = prod.name in priceData ? priceData[prod.name] : prod.price;
       const safeName = prod.name.replace(/'/g,"\\'");
       card.innerHTML = `
         ${imgHtml}
         <div class="product-info">
           <div class="product-name">${prod.name}</div>
-          <div class="product-price">${prod.price} ₺</div>
+          <div class="product-price">${displayPrice} ₺</div>
         </div>
-        <button class="add-btn" onclick="addToCart('${safeName}','${prod.price}',this)">+</button>`;
+        <button class="add-btn" onclick="addToCart('${safeName}','${displayPrice}',this)">+</button>`;
 
       list.appendChild(card);
     });
@@ -1286,6 +1316,17 @@ function setStock(productName, inStock){
   saveStockData(d);
 }
 
+/* ── FİYAT STORAGE ── */
+function getPriceData(){
+  try { return JSON.parse(localStorage.getItem('ug_prices') || '{}'); }
+  catch(e){ return {}; }
+}
+function setPrice(productName, price){
+  const d = getPriceData();
+  d[productName] = price;
+  localStorage.setItem('ug_prices', JSON.stringify(d));
+}
+
 function applyStockToCard(card){
   const name = card.dataset.name;
   if(!isInStock(name)){
@@ -1358,7 +1399,7 @@ function renderAdminList(){
 
     const label = document.createElement('div');
     label.className = 'admin-cat-label';
-    label.textContent = cat.icon + ' ' + cat.name;
+    label.textContent = (cat.icon || '') + ' ' + cat.name;
     listEl.appendChild(label);
 
     filtered.forEach(prod => {
@@ -1369,9 +1410,15 @@ function renderAdminList(){
       const row = document.createElement('div');
       row.className = 'admin-row';
       const uid = 'tog_' + Math.random().toString(36).slice(2);
+      const priceData = getPriceData();
+      const currentPrice = prod.name in priceData ? priceData[prod.name] : prod.price;
 
       row.innerHTML = `
         <div class="admin-row-name ${inStock ? '' : 'oos'}">${prod.name}</div>
+        <div class="price-edit-wrap">
+          <input type="number" class="price-edit-input" value="${currentPrice}" min="0" step="0.5" data-original="${currentPrice}">
+          <span class="price-lira">₺</span>
+        </div>
         <div class="toggle-wrap">
           <input type="checkbox" class="toggle-input" id="${uid}" ${inStock ? 'checked' : ''}>
           <label class="toggle-label" for="${uid}">
@@ -1380,13 +1427,31 @@ function renderAdminList(){
           </label>
         </div>`;
 
+      /* Fiyat kaydet — input'tan çıkınca */
+      const priceInput = row.querySelector('.price-edit-input');
+      priceInput.addEventListener('change', function(){
+        const newPrice = parseFloat(this.value);
+        if(isNaN(newPrice) || newPrice < 0){ this.value = currentPrice; return; }
+        setPrice(prod.name, newPrice);
+        prod.price = newPrice; // MENU_DATA'yı da güncelle
+        // Menü kartındaki fiyatı anında güncelle
+        document.querySelectorAll('.product-card').forEach(card => {
+          if(card.dataset.name === prod.name){
+            card.querySelector('.product-price').textContent = newPrice + ' ₺';
+          }
+        });
+        // Yeşil flash
+        this.classList.add('saved');
+        setTimeout(() => this.classList.remove('saved'), 1200);
+      });
+
+      /* Stok toggle */
       const checkbox = row.querySelector('.toggle-input');
       checkbox.addEventListener('change', function(){
         const nowInStock = this.checked;
         setStock(prod.name, nowInStock);
         row.querySelector('.admin-row-name').className = 'admin-row-name' + (nowInStock ? '' : ' oos');
         row.querySelector('.toggle-text').textContent = nowInStock ? 'AÇIK' : 'KAPALI';
-        // Menü kartını güncelle
         document.querySelectorAll('.product-card').forEach(card => {
           if(card.dataset.name === prod.name) applyStockToCard(card);
         });
