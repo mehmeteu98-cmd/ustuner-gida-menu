@@ -43,7 +43,8 @@
           "variants": [
             {
               "label": "1755 ml",
-              "price": 3500
+              "price": 3500,
+              "inStock": false
             },
             {
               "label": "2600 ml",
