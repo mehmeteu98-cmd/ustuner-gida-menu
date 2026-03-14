@@ -14,27 +14,27 @@
             },
             {
               "label": "4 kg",
-              "price": 188
+              "price": 150
             },
             {
               "label": "6 kg",
-              "price": 272
+              "price": 200
             },
             {
               "label": "7 kg",
-              "price": 332
+              "price": 250
             },
             {
               "label": "8 kg",
-              "price": 332
+              "price": 300
             },
             {
               "label": "9 kg",
-              "price": 367
+              "price": 350
             },
             {
               "label": "10 kg",
-              "price": 396
+              "price": 400
             }
           ]
         },
