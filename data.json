@@ -4,357 +4,628 @@
       "name": "Temizlik & Deterjan",
       "icon": "🫧",
       "products": [
-        { "name": "Bingo matik 1,5 kg", "price": 100, "image": "https://i.ibb.co/SwGjq314/bingo-matik-1-5-kg-parfumsuz-10-lu-koli-kc237477-1-0ea6910ff92c4a29ad18af07dc4bb1a7.avif" },
-        { "name": "Bingo matik 4 kg", "price": 188 },
-        { "name": "Bingo matik 6 kg", "price": 272 },
-        { "name": "Bingo matik 7 kg", "price": 332 },
-        { "name": "Bingo matik 8 kg", "price": 332 },
-        { "name": "Bingo matik 9 kg", "price": 367 },
-        { "name": "Bingo matik 10 kg", "price": 396 },
-        { "name": "Bingo sıvı 2600 ml", "price": 183 },
-        { "name": "Bingo sıvı 1755 ml", "price": 136 },
-        { "name": "Bingo giysi şampuanı 3 lt", "price": 154 },
-        { "name": "Bingo giysi şampuanı 4 lt", "price": 209 },
-        { "name": "Yumoş konsantre", "price": 110 },
-        { "name": "Yumoş standart 5 lt", "price": 138 },
-        { "name": "Bingo soft 5 lt", "price": 138 },
-        { "name": "Domestos 750 ml", "price": 58 },
-        { "name": "Domestos 1850 ml", "price": 116 },
-        { "name": "Domestos 3240 ml", "price": 174 },
-        { "name": "Ace 2 lt", "price": 63 },
-        { "name": "Ace 4 lt", "price": 101 },
-        { "name": "Pril gold 54 lü", "price": 397 },
-        { "name": "Pril hepsi bir arada 80 li", "price": 397 },
-        { "name": "Pril 4 kg", "price": 145 },
-        { "name": "Pril 675 ml", "price": 43 },
-        { "name": "Fairy 2600 ml", "price": 201 },
-        { "name": "Fairy 1350 ml", "price": 115 },
-        { "name": "Fairy 650 ml", "price": 56 },
-        { "name": "Camsil matik 500 ml", "price": 32 },
-        { "name": "Marc yüzey tem. 2500 ml", "price": 98 },
-        { "name": "Bingo yüzey tem. 2500 ml", "price": 78 },
-        { "name": "Asperox sarı/mavi güç", "price": 65 }
+        {
+          "name": "Bingo Matik",
+          "image": "https://i.ibb.co/SwGjq314/bingo-matik-1-5-kg-parfumsuz-10-lu-koli-kc237477-1-0ea6910ff92c4a29ad18af07dc4bb1a7.avif",
+          "variants": [
+            { "label": "1,5 kg", "price": 100 },
+            { "label": "4 kg",   "price": 188 },
+            { "label": "6 kg",   "price": 272 },
+            { "label": "7 kg",   "price": 332 },
+            { "label": "8 kg",   "price": 332 },
+            { "label": "9 kg",   "price": 367 },
+            { "label": "10 kg",  "price": 396 }
+          ]
+        },
+        {
+          "name": "Bingo Sıvı",
+          "variants": [
+            { "label": "1755 ml", "price": 136 },
+            { "label": "2600 ml", "price": 183 }
+          ]
+        },
+        {
+          "name": "Bingo Giysi Şampuanı",
+          "variants": [
+            { "label": "3 lt", "price": 154 },
+            { "label": "4 lt", "price": 209 }
+          ]
+        },
+        {
+          "name": "Yumoş",
+          "variants": [
+            { "label": "Konsantre", "price": 110 },
+            { "label": "Standart 5 lt", "price": 138 }
+          ]
+        },
+        { "name": "Bingo Soft 5 lt", "price": 138 },
+        {
+          "name": "Domestos",
+          "variants": [
+            { "label": "750 ml",  "price": 58 },
+            { "label": "1850 ml", "price": 116 },
+            { "label": "3240 ml", "price": 174 }
+          ]
+        },
+        {
+          "name": "Ace",
+          "variants": [
+            { "label": "2 lt", "price": 63 },
+            { "label": "4 lt", "price": 101 }
+          ]
+        },
+        {
+          "name": "Pril Tablet",
+          "variants": [
+            { "label": "Gold 54 lü",          "price": 397 },
+            { "label": "Hepsi Bir Arada 80 li","price": 397 }
+          ]
+        },
+        {
+          "name": "Pril Toz / Sıvı",
+          "variants": [
+            { "label": "675 ml", "price": 43 },
+            { "label": "4 kg",   "price": 145 }
+          ]
+        },
+        {
+          "name": "Fairy",
+          "variants": [
+            { "label": "650 ml",  "price": 56 },
+            { "label": "1350 ml", "price": 115 },
+            { "label": "2600 ml", "price": 201 }
+          ]
+        },
+        { "name": "Camsil Matik 500 ml", "price": 32 },
+        {
+          "name": "Yüzey Temizleyici",
+          "variants": [
+            { "label": "Bingo 2500 ml", "price": 78 },
+            { "label": "Marc 2500 ml",  "price": 98 }
+          ]
+        },
+        { "name": "Asperox Sarı/Mavi Güç", "price": 65 }
       ]
     },
     {
       "name": "Kağıt & Kişisel Bakım",
       "icon": "🧴",
       "products": [
-        { "name": "Papia 16 tk", "price": 132 },
-        { "name": "Familia 16 tk", "price": 112 },
-        { "name": "Familia 32 tk", "price": 216 },
-        { "name": "Solo 16 tk", "price": 123 },
-        { "name": "Solo 32 tk", "price": 232 },
-        { "name": "Selpak 16 tk", "price": 162 },
-        { "name": "Papia 6 lı havlu", "price": 106 },
-        { "name": "Familia 12 li havlu", "price": 162 },
-        { "name": "Solo 12 li havlu", "price": 182 },
-        { "name": "Molfix jumbo paket", "price": 121 },
-        { "name": "Bebem jumbo paket", "price": 106 },
-        { "name": "Bebem fırsat paketi", "price": 168 },
-        { "name": "Bebem ultra fırsat paketi", "price": 319 },
-        { "name": "Clear şampuan 485 ml", "price": 95 },
-        { "name": "Elidor şampuan 400 ml", "price": 72 },
-        { "name": "Hacı Şakir 4x150 gr", "price": 84 },
-        { "name": "Duru banyo 4x150 gr", "price": 78 },
-        { "name": "Sleepy Islak Mendil", "price": 28 },
+        {
+          "name": "Tuvalet Kağıdı Papia",
+          "variants": [
+            { "label": "16'lı", "price": 132 }
+          ]
+        },
+        {
+          "name": "Tuvalet Kağıdı Familia",
+          "variants": [
+            { "label": "16'lı", "price": 112 },
+            { "label": "32'li", "price": 216 }
+          ]
+        },
+        {
+          "name": "Tuvalet Kağıdı Solo",
+          "variants": [
+            { "label": "16'lı", "price": 123 },
+            { "label": "32'li", "price": 232 }
+          ]
+        },
+        { "name": "Tuvalet Kağıdı Selpak 16'lı", "price": 162 },
+        {
+          "name": "Kağıt Havlu",
+          "variants": [
+            { "label": "Papia 6'lı",    "price": 106 },
+            { "label": "Familia 12'li", "price": 162 },
+            { "label": "Solo 12'li",    "price": 182 }
+          ]
+        },
+        {
+          "name": "Bebek Bezi Molfix",
+          "variants": [
+            { "label": "Jumbo Paket", "price": 121 }
+          ]
+        },
+        {
+          "name": "Bebek Bezi Bebem",
+          "variants": [
+            { "label": "Jumbo Paket",       "price": 106 },
+            { "label": "Fırsat Paketi",      "price": 168 },
+            { "label": "Ultra Fırsat Paketi","price": 319 }
+          ]
+        },
+        { "name": "Clear Şampuan 485 ml",     "price": 95 },
+        { "name": "Elidor Şampuan 400 ml",    "price": 72 },
+        { "name": "Hacı Şakir Sabun 4×150 gr","price": 84 },
+        { "name": "Duru Banyo Sabunu 4×150 gr","price": 78 },
+        { "name": "Sleepy Islak Mendil",      "price": 28 },
         { "name": "Orkid Platinum Çeşitleri", "price": 68 },
-        { "name": "Canbebe Islak Havlu", "price": 24 }
+        { "name": "Canbebe Islak Havlu",      "price": 24 }
       ]
     },
     {
       "name": "İçecekler",
       "icon": "🥤",
       "products": [
-        { "name": "Coca Cola 2.5L", "price": 55 },
-        { "name": "Eker Ayran 1L", "price": 35 },
-        { "name": "Su 0.5 L (24'lü koli)", "price": 95 },
-        { "name": "Su 1.5 L (12'li koli)", "price": 130 },
-        { "name": "Kola 330 ml Kutu (24'lü)", "price": 420 },
-        { "name": "Kola 1 L", "price": 50 },
-        { "name": "Kola 1.5 L", "price": 65 },
-        { "name": "Gazlı İçecek Limonata 330 ml Kutu", "price": 22 },
-        { "name": "Gazlı İçecek Portakal 330 ml Kutu", "price": 22 },
-        { "name": "Meyve Suyu Şeftali (200 ml)", "price": 18 },
-        { "name": "Meyve Suyu Vişne (200 ml)", "price": 18 },
-        { "name": "Meyve Suyu Elma (1 L)", "price": 45 },
-        { "name": "Meyve Suyu Portakal (1 L)", "price": 48 },
-        { "name": "Ice Tea Şeftali (330 ml Kutu)", "price": 28 },
-        { "name": "Ice Tea Limon (330 ml Kutu)", "price": 28 },
-        { "name": "Enerji İçeceği (250 ml Kutu)", "price": 35 },
-        { "name": "Soda Sade (200 ml)", "price": 12 },
-        { "name": "Soda Limonlu (200 ml)", "price": 13 }
+        {
+          "name": "Kola",
+          "variants": [
+            { "label": "330 ml Kutu (24'lü)", "price": 420 },
+            { "label": "1 L",                 "price": 50 },
+            { "label": "1,5 L",               "price": 65 },
+            { "label": "2,5 L",               "price": 55 }
+          ]
+        },
+        { "name": "Eker Ayran 1 L", "price": 35 },
+        {
+          "name": "Su",
+          "variants": [
+            { "label": "0,5 L (24'lü koli)", "price": 95 },
+            { "label": "1,5 L (12'li koli)", "price": 130 }
+          ]
+        },
+        {
+          "name": "Gazlı İçecek Kutu 330 ml",
+          "variants": [
+            { "label": "Limonata",  "price": 22 },
+            { "label": "Portakal",  "price": 22 }
+          ]
+        },
+        {
+          "name": "Meyve Suyu 200 ml",
+          "variants": [
+            { "label": "Şeftali", "price": 18 },
+            { "label": "Vişne",   "price": 18 }
+          ]
+        },
+        {
+          "name": "Meyve Suyu 1 L",
+          "variants": [
+            { "label": "Elma",     "price": 45 },
+            { "label": "Portakal", "price": 48 }
+          ]
+        },
+        {
+          "name": "Ice Tea Kutu 330 ml",
+          "variants": [
+            { "label": "Şeftali", "price": 28 },
+            { "label": "Limon",   "price": 28 }
+          ]
+        },
+        { "name": "Enerji İçeceği 250 ml Kutu", "price": 35 },
+        {
+          "name": "Soda 200 ml",
+          "variants": [
+            { "label": "Sade",    "price": 12 },
+            { "label": "Limonlu", "price": 13 }
+          ]
+        }
       ]
     },
     {
       "name": "Temel Gıda",
       "icon": "🌾",
       "products": [
-        { "name": "Efsane Pirinç 2.5kg", "price": 135 },
-        { "name": "Bor Şeker 5kg", "price": 175 },
-        { "name": "Un (1 kg)", "price": 35 },
-        { "name": "Un (5 kg)", "price": 160 },
-        { "name": "Un (25 kg)", "price": 720 },
-        { "name": "Pirinç Baldo (1 kg)", "price": 65 },
-        { "name": "Pirinç Baldo (5 kg)", "price": 300 },
-        { "name": "Pirinç Osmancık (1 kg)", "price": 55 },
-        { "name": "Bulgur Köftelik (1 kg)", "price": 40 },
-        { "name": "Bulgur Pilavlık (1 kg)", "price": 40 },
-        { "name": "Mercimek Kırmızı (1 kg)", "price": 55 },
-        { "name": "Mercimek Yeşil (1 kg)", "price": 60 },
-        { "name": "Nohut (1 kg)", "price": 65 },
-        { "name": "Kuru Fasulye (1 kg)", "price": 70 },
-        { "name": "Şeker (1 kg)", "price": 38 },
-        { "name": "Şeker (5 kg)", "price": 180 },
-        { "name": "Tuz İyotlu (1 kg)", "price": 15 },
-        { "name": "İrmik (1 kg)", "price": 35 },
-        { "name": "Mısır Unu (1 kg)", "price": 38 },
-        { "name": "Nişasta (500 g)", "price": 28 }
+        { "name": "Efsane Pirinç 2,5 kg", "price": 135 },
+        {
+          "name": "Pirinç Baldo",
+          "variants": [
+            { "label": "1 kg", "price": 65 },
+            { "label": "5 kg", "price": 300 }
+          ]
+        },
+        { "name": "Pirinç Osmancık 1 kg", "price": 55 },
+        { "name": "Bulgur Köftelik 1 kg",  "price": 40 },
+        { "name": "Bulgur Pilavlık 1 kg",  "price": 40 },
+        { "name": "Mercimek Kırmızı 1 kg", "price": 55 },
+        { "name": "Mercimek Yeşil 1 kg",   "price": 60 },
+        { "name": "Nohut 1 kg",            "price": 65 },
+        { "name": "Kuru Fasulye 1 kg",     "price": 70 },
+        {
+          "name": "Şeker",
+          "variants": [
+            { "label": "1 kg", "price": 38 },
+            { "label": "5 kg", "price": 180 }
+          ]
+        },
+        { "name": "Bor Şeker 5 kg",  "price": 175 },
+        {
+          "name": "Un",
+          "variants": [
+            { "label": "1 kg",  "price": 35 },
+            { "label": "5 kg",  "price": 160 },
+            { "label": "25 kg", "price": 720 }
+          ]
+        },
+        { "name": "Tuz İyotlu 1 kg", "price": 15 },
+        { "name": "İrmik 1 kg",       "price": 35 },
+        { "name": "Mısır Unu 1 kg",   "price": 38 },
+        { "name": "Nişasta 500 g",    "price": 28 }
       ]
     },
     {
       "name": "Yağ & Zeytinyağı",
       "icon": "🫙",
       "products": [
-        { "name": "Ayçiçeği Yağı (1 L)", "price": 70 },
-        { "name": "Ayçiçeği Yağı (2 L)", "price": 135 },
-        { "name": "Ayçiçeği Yağı (5 L)", "price": 320 },
-        { "name": "Mısırözü Yağı (1 L)", "price": 75 },
-        { "name": "Mısırözü Yağı (2 L)", "price": 140 },
-        { "name": "Zeytinyağı Riviera (1 L)", "price": 180 },
-        { "name": "Zeytinyağı Riviera (2 L)", "price": 350 },
-        { "name": "Zeytinyağı Sızma (750 ml)", "price": 250 },
-        { "name": "Zeytinyağı Sızma (5 L)", "price": 1500 },
-        { "name": "Tereyağı (250 g)", "price": 75 },
-        { "name": "Margarin (250 g)", "price": 50 },
-        { "name": "Margarin (500 g)", "price": 90 }
-      ]
-    },
-    {
-      "name": "Konserve & Salça",
-      "icon": "🥫",
-      "products": [
-        { "name": "Domates Salçası (830 g)", "price": 65 },
-        { "name": "Domates Salçası (4,5 kg)", "price": 280 },
-        { "name": "Biber Salçası (830 g)", "price": 70 },
-        { "name": "Karışık Salça (830 g)", "price": 68 },
-        { "name": "Konserve Domates (400 g)", "price": 25 },
-        { "name": "Konserve Domates Bütün (400 g)", "price": 28 },
-        { "name": "Konserve Mısır (425 g)", "price": 35 },
-        { "name": "Konserve Bezelye (425 g)", "price": 38 },
-        { "name": "Konserve Fasulye (420 g)", "price": 42 },
-        { "name": "Konserve Ton Balığı (160 g)", "price": 65 },
-        { "name": "Konserve Ton Balığı (80 g)", "price": 38 },
-        { "name": "Konserve Sardalya (120 g)", "price": 30 },
-        { "name": "Domates Sosu Fırın (380 g)", "price": 40 },
-        { "name": "Ketçap (420 g)", "price": 45 },
-        { "name": "Mayonez (500 g)", "price": 55 },
-        { "name": "Hardal (270 g)", "price": 35 }
-      ]
-    },
-    {
-      "name": "Makarna & Çorba",
-      "icon": "🍝",
-      "products": [
-        { "name": "Spagetti (500 g)", "price": 30 },
-        { "name": "Spagetti (1 kg)", "price": 55 },
-        { "name": "Penne Makarna (500 g)", "price": 30 },
-        { "name": "Fiyonk Makarna (500 g)", "price": 30 },
-        { "name": "Arpa Şehriye (500 g)", "price": 28 },
-        { "name": "Tel Şehriye (500 g)", "price": 28 },
-        { "name": "Erişte (500 g)", "price": 32 },
-        { "name": "Hazır Çorba Domates (76 g)", "price": 22 },
-        { "name": "Hazır Çorba Mercimek (76 g)", "price": 22 },
-        { "name": "Hazır Çorba Ezogelin (76 g)", "price": 22 },
-        { "name": "Hazır Çorba Tarhana (60 g)", "price": 25 },
-        { "name": "Hazır Çorba Sebze (76 g)", "price": 22 }
-      ]
-    },
-    {
-      "name": "Baharatlar & Çeşniler",
-      "icon": "🌶️",
-      "products": [
-        { "name": "Karabiber Toz (80 g)", "price": 35 },
-        { "name": "Kırmızıbiber Toz (80 g)", "price": 30 },
-        { "name": "Kimyon (70 g)", "price": 28 },
-        { "name": "Pul Biber (80 g)", "price": 32 },
-        { "name": "Nane (50 g)", "price": 20 },
-        { "name": "Kekik (40 g)", "price": 22 },
-        { "name": "Köri (70 g)", "price": 38 },
-        { "name": "Tarçın (70 g)", "price": 35 },
-        { "name": "Zencefil (70 g)", "price": 38 },
-        { "name": "Zerdeçal (70 g)", "price": 35 },
-        { "name": "Baharat Karışımı Köfte (70 g)", "price": 28 },
-        { "name": "Baharat Karışımı Et (70 g)", "price": 28 },
-        { "name": "Sumak (80 g)", "price": 30 },
-        { "name": "Sirke Üzüm (1 L)", "price": 35 },
-        { "name": "Sirke Elma (1 L)", "price": 38 },
-        { "name": "Nar Ekşisi (700 ml)", "price": 65 }
+        {
+          "name": "Ayçiçeği Yağı",
+          "variants": [
+            { "label": "1 L", "price": 70 },
+            { "label": "2 L", "price": 135 },
+            { "label": "5 L", "price": 320 }
+          ]
+        },
+        {
+          "name": "Mısırözü Yağı",
+          "variants": [
+            { "label": "1 L", "price": 75 },
+            { "label": "2 L", "price": 140 }
+          ]
+        },
+        {
+          "name": "Zeytinyağı Riviera",
+          "variants": [
+            { "label": "1 L", "price": 180 },
+            { "label": "2 L", "price": 350 }
+          ]
+        },
+        {
+          "name": "Zeytinyağı Sızma",
+          "variants": [
+            { "label": "750 ml", "price": 250 },
+            { "label": "5 L",    "price": 1500 }
+          ]
+        },
+        { "name": "Tereyağı 250 g", "price": 75 },
+        {
+          "name": "Margarin",
+          "variants": [
+            { "label": "250 g", "price": 50 },
+            { "label": "500 g", "price": 90 }
+          ]
+        }
       ]
     },
     {
       "name": "Süt & Süt Ürünleri",
       "icon": "🥛",
       "products": [
-        { "name": "UHT Süt Tam Yağlı (1 L)", "price": 45 },
-        { "name": "UHT Süt Yarım Yağlı (1 L)", "price": 43 },
-        { "name": "UHT Süt Yağsız (1 L)", "price": 40 },
-        { "name": "Toz Süt (2 kg)", "price": 280 },
-        { "name": "Krema (200 ml)", "price": 55 },
-        { "name": "Ayran (200 ml)", "price": 20 },
-        { "name": "Ayran (1 L)", "price": 55 },
-        { "name": "Yoğurt (500 g)", "price": 45 },
-        { "name": "Yoğurt (1 kg)", "price": 80 },
-        { "name": "Beyaz Peynir (600 g)", "price": 95 },
-        { "name": "Kaşar Peyniri (350 g)", "price": 110 },
-        { "name": "Lor Peyniri (350 g)", "price": 60 },
-        { "name": "Süzme Yoğurt (500 g)", "price": 65 },
-        { "name": "Labne (250 g)", "price": 60 }
+        {
+          "name": "UHT Süt",
+          "variants": [
+            { "label": "Tam Yağlı 1 L",    "price": 45 },
+            { "label": "Yarım Yağlı 1 L",  "price": 43 },
+            { "label": "Yağsız 1 L",       "price": 40 }
+          ]
+        },
+        { "name": "Toz Süt 2 kg", "price": 280 },
+        { "name": "Krema 200 ml", "price": 55 },
+        {
+          "name": "Ayran",
+          "variants": [
+            { "label": "200 ml", "price": 20 },
+            { "label": "1 L",    "price": 55 }
+          ]
+        },
+        {
+          "name": "Yoğurt",
+          "variants": [
+            { "label": "500 g", "price": 45 },
+            { "label": "1 kg",  "price": 80 }
+          ]
+        },
+        { "name": "Süzme Yoğurt 500 g", "price": 65 },
+        { "name": "Labne 250 g",         "price": 60 },
+        { "name": "Beyaz Peynir 600 g",  "price": 95 },
+        { "name": "Kaşar Peyniri 350 g", "price": 110 },
+        { "name": "Lor Peyniri 350 g",   "price": 60 }
       ]
     },
     {
       "name": "Kahvaltılık & Reçel",
       "icon": "🍯",
       "products": [
-        { "name": "Bal Çiçek (450 g)", "price": 160 },
-        { "name": "Bal Çiçek (850 g)", "price": 290 },
-        { "name": "Reçel Çilek (370 g)", "price": 55 },
-        { "name": "Reçel Kayısı (370 g)", "price": 50 },
-        { "name": "Reçel Vişne (370 g)", "price": 55 },
-        { "name": "Reçel Üzüm (370 g)", "price": 50 },
-        { "name": "Fındık Kreması (350 g)", "price": 75 },
-        { "name": "Fındık Kreması (700 g)", "price": 140 },
-        { "name": "Tahin (350 g)", "price": 60 },
-        { "name": "Pekmez Üzüm (700 g)", "price": 80 },
-        { "name": "Pekmez Dut (700 g)", "price": 90 },
-        { "name": "Zeytin Siyah (400 g)", "price": 65 },
-        { "name": "Zeytin Yeşil (400 g)", "price": 65 },
-        { "name": "Helva Tahin (350 g)", "price": 55 },
-        { "name": "Helva Fıstıklı (350 g)", "price": 65 }
+        {
+          "name": "Bal Çiçek",
+          "variants": [
+            { "label": "450 g", "price": 160 },
+            { "label": "850 g", "price": 290 }
+          ]
+        },
+        {
+          "name": "Reçel",
+          "variants": [
+            { "label": "Çilek 370 g",  "price": 55 },
+            { "label": "Kayısı 370 g", "price": 50 },
+            { "label": "Vişne 370 g",  "price": 55 },
+            { "label": "Üzüm 370 g",   "price": 50 }
+          ]
+        },
+        {
+          "name": "Fındık Kreması",
+          "variants": [
+            { "label": "350 g", "price": 75 },
+            { "label": "700 g", "price": 140 }
+          ]
+        },
+        { "name": "Tahin 350 g",       "price": 60 },
+        { "name": "Pekmez Üzüm 700 g", "price": 80 },
+        { "name": "Pekmez Dut 700 g",  "price": 90 },
+        {
+          "name": "Zeytin",
+          "variants": [
+            { "label": "Siyah 400 g", "price": 65 },
+            { "label": "Yeşil 400 g", "price": 65 }
+          ]
+        },
+        {
+          "name": "Helva",
+          "variants": [
+            { "label": "Tahin 350 g",   "price": 55 },
+            { "label": "Fıstıklı 350 g","price": 65 }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Konserve & Salça",
+      "icon": "🥫",
+      "products": [
+        {
+          "name": "Domates Salçası",
+          "variants": [
+            { "label": "830 g",   "price": 65 },
+            { "label": "4,5 kg",  "price": 280 }
+          ]
+        },
+        { "name": "Biber Salçası 830 g",  "price": 70 },
+        { "name": "Karışık Salça 830 g",  "price": 68 },
+        {
+          "name": "Konserve Domates",
+          "variants": [
+            { "label": "Doğranmış 400 g", "price": 25 },
+            { "label": "Bütün 400 g",     "price": 28 }
+          ]
+        },
+        { "name": "Konserve Mısır 425 g",    "price": 35 },
+        { "name": "Konserve Bezelye 425 g",  "price": 38 },
+        { "name": "Konserve Fasulye 420 g",  "price": 42 },
+        {
+          "name": "Konserve Ton Balığı",
+          "variants": [
+            { "label": "80 g",  "price": 38 },
+            { "label": "160 g", "price": 65 }
+          ]
+        },
+        { "name": "Konserve Sardalya 120 g", "price": 30 },
+        { "name": "Domates Sosu Fırın 380 g","price": 40 },
+        { "name": "Ketçap 420 g",            "price": 45 },
+        { "name": "Mayonez 500 g",           "price": 55 },
+        { "name": "Hardal 270 g",            "price": 35 }
+      ]
+    },
+    {
+      "name": "Makarna & Çorba",
+      "icon": "🍝",
+      "products": [
+        {
+          "name": "Spagetti",
+          "variants": [
+            { "label": "500 g", "price": 30 },
+            { "label": "1 kg",  "price": 55 }
+          ]
+        },
+        { "name": "Penne Makarna 500 g",  "price": 30 },
+        { "name": "Fiyonk Makarna 500 g", "price": 30 },
+        { "name": "Arpa Şehriye 500 g",   "price": 28 },
+        { "name": "Tel Şehriye 500 g",    "price": 28 },
+        { "name": "Erişte 500 g",         "price": 32 },
+        {
+          "name": "Hazır Çorba",
+          "variants": [
+            { "label": "Domates 76 g",   "price": 22 },
+            { "label": "Mercimek 76 g",  "price": 22 },
+            { "label": "Ezogelin 76 g",  "price": 22 },
+            { "label": "Tarhana 60 g",   "price": 25 },
+            { "label": "Sebze 76 g",     "price": 22 }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Baharatlar & Çeşniler",
+      "icon": "🌶️",
+      "products": [
+        { "name": "Karabiber Toz 80 g",       "price": 35 },
+        { "name": "Kırmızıbiber Toz 80 g",    "price": 30 },
+        { "name": "Kimyon 70 g",              "price": 28 },
+        { "name": "Pul Biber 80 g",           "price": 32 },
+        { "name": "Nane 50 g",                "price": 20 },
+        { "name": "Kekik 40 g",               "price": 22 },
+        { "name": "Köri 70 g",                "price": 38 },
+        { "name": "Tarçın 70 g",              "price": 35 },
+        { "name": "Zencefil 70 g",            "price": 38 },
+        { "name": "Zerdeçal 70 g",            "price": 35 },
+        { "name": "Baharat Karışımı Köfte 70 g","price": 28 },
+        { "name": "Baharat Karışımı Et 70 g", "price": 28 },
+        { "name": "Sumak 80 g",               "price": 30 },
+        {
+          "name": "Sirke",
+          "variants": [
+            { "label": "Üzüm 1 L", "price": 35 },
+            { "label": "Elma 1 L", "price": 38 }
+          ]
+        },
+        { "name": "Nar Ekşisi 700 ml", "price": 65 }
       ]
     },
     {
       "name": "Çay & Kahve",
       "icon": "☕",
       "products": [
-        { "name": "Siyah Çay (500 g)", "price": 90 },
-        { "name": "Siyah Çay (1 kg)", "price": 170 },
-        { "name": "Çay Demlik Poşet (48'li)", "price": 65 },
-        { "name": "Bitki Çayı Papatya (20'li)", "price": 38 },
-        { "name": "Bitki Çayı Ihlamur (20'li)", "price": 38 },
-        { "name": "Bitki Çayı Ada Çayı (20'li)", "price": 40 },
-        { "name": "Türk Kahvesi (100 g)", "price": 55 },
-        { "name": "Türk Kahvesi (250 g)", "price": 120 },
-        { "name": "Hazır Kahve (3ü1 Arada) (48'li)", "price": 95 },
-        { "name": "Filtre Kahve (250 g)", "price": 150 },
-        { "name": "Kakao İçeceği (500 g)", "price": 110 },
-        { "name": "Nescafe (50 g)", "price": 95 }
+        {
+          "name": "Siyah Çay",
+          "variants": [
+            { "label": "500 g", "price": 90 },
+            { "label": "1 kg",  "price": 170 }
+          ]
+        },
+        { "name": "Çay Demlik Poşet 48'li", "price": 65 },
+        {
+          "name": "Bitki Çayı",
+          "variants": [
+            { "label": "Papatya 20'li",  "price": 38 },
+            { "label": "Ihlamur 20'li",  "price": 38 },
+            { "label": "Ada Çayı 20'li", "price": 40 }
+          ]
+        },
+        {
+          "name": "Türk Kahvesi",
+          "variants": [
+            { "label": "100 g", "price": 55 },
+            { "label": "250 g", "price": 120 }
+          ]
+        },
+        { "name": "Hazır Kahve 3'ü1 Arada 48'li", "price": 95 },
+        { "name": "Filtre Kahve 250 g",            "price": 150 },
+        { "name": "Kakao İçeceği 500 g",           "price": 110 },
+        { "name": "Nescafe 50 g",                  "price": 95 }
       ]
     },
     {
       "name": "Atıştırmalık & Kuruyemiş",
       "icon": "🥜",
       "products": [
-        { "name": "Fındık (250 g)", "price": 85 },
-        { "name": "Fındık (500 g)", "price": 160 },
-        { "name": "Ceviz (250 g)", "price": 90 },
-        { "name": "Badem (250 g)", "price": 100 },
-        { "name": "Kaju (100 g)", "price": 75 },
-        { "name": "Antep Fıstığı (200 g)", "price": 130 },
-        { "name": "Kabak Çekirdeği (200 g)", "price": 50 },
-        { "name": "Ayçiçeği Çekirdeği (200 g)", "price": 35 },
-        { "name": "Kuru Üzüm (250 g)", "price": 45 },
-        { "name": "Kuru Kayısı (250 g)", "price": 70 },
-        { "name": "Kuru Erik (250 g)", "price": 55 },
-        { "name": "Hurma (500 g)", "price": 75 },
-        { "name": "Leblebi (250 g)", "price": 40 },
-        { "name": "Cips Sade (150 g)", "price": 38 },
-        { "name": "Cips Baharatlı (150 g)", "price": 38 },
-        { "name": "Popcorn Tuzlu (100 g)", "price": 30 },
-        { "name": "Krakerler (100 g)", "price": 28 },
-        { "name": "Grisini (125 g)", "price": 32 }
+        {
+          "name": "Fındık",
+          "variants": [
+            { "label": "250 g", "price": 85 },
+            { "label": "500 g", "price": 160 }
+          ]
+        },
+        { "name": "Ceviz 250 g",              "price": 90 },
+        { "name": "Badem 250 g",              "price": 100 },
+        { "name": "Kaju 100 g",               "price": 75 },
+        { "name": "Antep Fıstığı 200 g",      "price": 130 },
+        { "name": "Kabak Çekirdeği 200 g",    "price": 50 },
+        { "name": "Ayçiçeği Çekirdeği 200 g", "price": 35 },
+        { "name": "Kuru Üzüm 250 g",          "price": 45 },
+        { "name": "Kuru Kayısı 250 g",         "price": 70 },
+        { "name": "Kuru Erik 250 g",           "price": 55 },
+        { "name": "Hurma 500 g",              "price": 75 },
+        { "name": "Leblebi 250 g",            "price": 40 },
+        {
+          "name": "Cips",
+          "variants": [
+            { "label": "Sade 150 g",      "price": 38 },
+            { "label": "Baharatlı 150 g", "price": 38 }
+          ]
+        },
+        { "name": "Popcorn Tuzlu 100 g", "price": 30 },
+        { "name": "Krakerler 100 g",     "price": 28 },
+        { "name": "Grisini 125 g",       "price": 32 }
       ]
     },
     {
       "name": "Şekerleme & Çikolata",
       "icon": "🍫",
       "products": [
-        { "name": "Bitter Çikolata (80 g)", "price": 45 },
-        { "name": "Sütlü Çikolata (80 g)", "price": 42 },
-        { "name": "Fındıklı Çikolata (80 g)", "price": 48 },
-        { "name": "Çikolatalı Gofret (40 g)", "price": 18 },
-        { "name": "Çikolatalı Bar (45 g)", "price": 22 },
-        { "name": "Şeker Meyve Aromalı (200 g)", "price": 30 },
-        { "name": "Şeker Sert (200 g)", "price": 25 },
-        { "name": "Lokum Sade (350 g)", "price": 55 },
-        { "name": "Lokum Fıstıklı (350 g)", "price": 75 },
-        { "name": "Çikolatalı Bisküvi (Paket)", "price": 28 },
-        { "name": "Krem Bisküvi (Paket)", "price": 22 },
-        { "name": "Sade Bisküvi (Paket)", "price": 18 }
+        {
+          "name": "Çikolata",
+          "variants": [
+            { "label": "Bitter 80 g",   "price": 45 },
+            { "label": "Sütlü 80 g",    "price": 42 },
+            { "label": "Fındıklı 80 g", "price": 48 }
+          ]
+        },
+        { "name": "Çikolatalı Gofret 40 g",  "price": 18 },
+        { "name": "Çikolatalı Bar 45 g",     "price": 22 },
+        {
+          "name": "Şeker",
+          "variants": [
+            { "label": "Meyve Aromalı 200 g", "price": 30 },
+            { "label": "Sert 200 g",          "price": 25 }
+          ]
+        },
+        {
+          "name": "Lokum",
+          "variants": [
+            { "label": "Sade 350 g",   "price": 55 },
+            { "label": "Fıstıklı 350 g","price": 75 }
+          ]
+        },
+        { "name": "Çikolatalı Bisküvi", "price": 28 },
+        { "name": "Krem Bisküvi",       "price": 22 },
+        { "name": "Sade Bisküvi",       "price": 18 }
       ]
     },
     {
       "name": "Dondurulmuş Gıda",
       "icon": "🧊",
       "products": [
-        { "name": "Dondurulmuş Bezelye (1 kg)", "price": 60 },
-        { "name": "Dondurulmuş Mısır (1 kg)", "price": 55 },
-        { "name": "Dondurulmuş Karışık Sebze (1 kg)", "price": 65 },
-        { "name": "Dondurulmuş Ispanak (500 g)", "price": 45 },
-        { "name": "Dondurulmuş Bamya (500 g)", "price": 50 },
-        { "name": "Dondurulmuş Patates Kızartmalık (1 kg)", "price": 65 },
-        { "name": "Dondurulmuş Pizza (360 g)", "price": 110 },
-        { "name": "Dondurulmuş Köfte (500 g)", "price": 130 },
-        { "name": "Dondurulmuş Tavuk Nugget (500 g)", "price": 115 }
+        { "name": "Dondurulmuş Bezelye 1 kg",          "price": 60 },
+        { "name": "Dondurulmuş Mısır 1 kg",            "price": 55 },
+        { "name": "Dondurulmuş Karışık Sebze 1 kg",    "price": 65 },
+        { "name": "Dondurulmuş Ispanak 500 g",         "price": 45 },
+        { "name": "Dondurulmuş Bamya 500 g",           "price": 50 },
+        { "name": "Dondurulmuş Patates Kızartmalık 1 kg","price": 65 },
+        { "name": "Dondurulmuş Pizza 360 g",           "price": 110 },
+        { "name": "Dondurulmuş Köfte 500 g",           "price": 130 },
+        { "name": "Dondurulmuş Tavuk Nugget 500 g",    "price": 115 }
       ]
     },
     {
       "name": "Fırın & Pastane Ürünleri",
       "icon": "🍞",
       "products": [
-        { "name": "Ekmek Yufkası (500 g)", "price": 55 },
-        { "name": "Lavaş (5'li)", "price": 40 },
-        { "name": "Tost Ekmeği (450 g)", "price": 45 },
-        { "name": "Pide Ekmeği", "price": 20 },
-        { "name": "Simit (adet)", "price": 15 },
-        { "name": "Galeta Unu (500 g)", "price": 35 },
-        { "name": "Hazır Kek Karışımı (400 g)", "price": 55 },
-        { "name": "Hazır Waffle Karışımı (400 g)", "price": 60 },
-        { "name": "Kabartma Tozu (5'li paket)", "price": 25 },
-        { "name": "Vanilya (5'li paket)", "price": 20 },
-        { "name": "Kakao Tozu (200 g)", "price": 55 }
+        { "name": "Ekmek Yufkası 500 g",        "price": 55 },
+        { "name": "Lavaş 5'li",                 "price": 40 },
+        { "name": "Tost Ekmeği 450 g",          "price": 45 },
+        { "name": "Pide Ekmeği",                "price": 20 },
+        { "name": "Simit",                      "price": 15 },
+        { "name": "Galeta Unu 500 g",           "price": 35 },
+        { "name": "Hazır Kek Karışımı 400 g",   "price": 55 },
+        { "name": "Hazır Waffle Karışımı 400 g","price": 60 },
+        { "name": "Kabartma Tozu 5'li Paket",   "price": 25 },
+        { "name": "Vanilya 5'li Paket",         "price": 20 },
+        { "name": "Kakao Tozu 200 g",           "price": 55 }
       ]
     },
     {
       "name": "Mutfak Gereçleri & Tek Kullanım",
       "icon": "🍽️",
       "products": [
-        { "name": "Plastik Tabak (25'li)", "price": 30 },
-        { "name": "Plastik Bardak (50'li)", "price": 25 },
-        { "name": "Plastik Çatal-Kaşık-Bıçak Seti (50'li)", "price": 45 },
-        { "name": "Kağıt Bardak (50'li)", "price": 35 },
-        { "name": "Kağıt Tabak (25'li)", "price": 30 },
-        { "name": "Alüminyum Folyo (30 m)", "price": 40 },
-        { "name": "Streç Film (30 m)", "price": 35 },
-        { "name": "Fırın Kağıdı (10 m)", "price": 30 },
-        { "name": "Poşet Torba (100'lü)", "price": 20 },
-        { "name": "Fermuar Poşet (20'li)", "price": 22 },
-        { "name": "Çay Bardağı Plastik (50'li)", "price": 28 }
+        { "name": "Plastik Tabak 25'li",              "price": 30 },
+        { "name": "Plastik Bardak 50'li",             "price": 25 },
+        { "name": "Plastik Çatal-Kaşık-Bıçak 50'li", "price": 45 },
+        { "name": "Kağıt Bardak 50'li",               "price": 35 },
+        { "name": "Kağıt Tabak 25'li",                "price": 30 },
+        { "name": "Alüminyum Folyo 30 m",             "price": 40 },
+        { "name": "Streç Film 30 m",                  "price": 35 },
+        { "name": "Fırın Kağıdı 10 m",               "price": 30 },
+        { "name": "Poşet Torba 100'lü",               "price": 20 },
+        { "name": "Fermuar Poşet 20'li",              "price": 22 },
+        { "name": "Çay Bardağı Plastik 50'li",        "price": 28 }
       ]
     },
     {
       "name": "Oyuncak",
       "icon": "🧸",
       "products": [
-        { "name": "Oyuncak Araba (Küçük)", "price": 45 },
-        { "name": "Oyuncak Araba (Büyük)", "price": 90 },
-        { "name": "Bebek Oyuncağı", "price": 60 },
-        { "name": "Puzzle (50 Parça)", "price": 55 },
-        { "name": "Renkli Kalemler (12'li)", "price": 35 },
-        { "name": "Boyama Kitabı", "price": 28 },
-        { "name": "Oyun Hamuru (6 Renk)", "price": 45 },
-        { "name": "Top (Orta Boy)", "price": 40 },
-        { "name": "Balon Seti (20'li)", "price": 25 }
+        {
+          "name": "Oyuncak Araba",
+          "variants": [
+            { "label": "Küçük", "price": 45 },
+            { "label": "Büyük", "price": 90 }
+          ]
+        },
+        { "name": "Bebek Oyuncağı",        "price": 60 },
+        { "name": "Puzzle 50 Parça",       "price": 55 },
+        { "name": "Renkli Kalemler 12'li", "price": 35 },
+        { "name": "Boyama Kitabı",         "price": 28 },
+        { "name": "Oyun Hamuru 6 Renk",    "price": 45 },
+        { "name": "Top Orta Boy",          "price": 40 },
+        { "name": "Balon Seti 20'li",      "price": 25 }
       ]
     }
   ]
