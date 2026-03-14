@@ -257,6 +257,31 @@ body {
   font-variant-numeric: tabular-nums;
   font-family: 'DM Sans', sans-serif;
 }
+/* ═══ VARYANT SEÇİCİ ═══ */
+.variant-row {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 6px 6px 10px;
+  border-top: 1px solid rgba(201,162,39,0.1);
+  animation: cardIn .2s ease forwards;
+}
+.variant-btn {
+  padding: 5px 12px; border-radius: 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 600;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer; transition: all .15s;
+  white-space: nowrap;
+}
+.variant-btn.selected {
+  background: var(--navy); color: var(--gold-light);
+  border-color: var(--navy);
+}
+.variant-btn:hover:not(.selected) {
+  border-color: var(--gold); color: var(--navy);
+}
+
 .search-wrap {
   padding: 16px 16px 8px;
   background: var(--cream);
@@ -1247,20 +1272,67 @@ function buildMenu(data){
       card.className = 'product-card';
       card.dataset.name = prod.name;
       card.style.animationDelay = (pi * 0.03) + 's';
+      card.style.flexWrap = 'wrap';
 
       const imgHtml = prod.image
         ? `<img class="product-img" src="${prod.image}" alt="${prod.name}" onerror="this.style.display='none'">`
         : '';
 
-      const displayPrice = prod.name in priceData ? priceData[prod.name] : prod.price;
-      const safeName = prod.name.replace(/'/g,"\\'");
-      card.innerHTML = `
-        ${imgHtml}
-        <div class="product-info">
-          <div class="product-name">${prod.name}</div>
-          <div class="product-price">${displayPrice} ₺</div>
-        </div>
-        <button class="add-btn" onclick="addToCart('${safeName}','${displayPrice}',this)">+</button>`;
+      if(prod.variants && prod.variants.length > 0){
+        /* Varyantlı ürün — ilk varyant seçili gelir */
+        const firstVariant = prod.variants[0];
+        const savedPrice = getPriceData()[prod.name + '|' + firstVariant.label];
+        const initPrice = savedPrice !== undefined ? savedPrice : firstVariant.price;
+        const safeName = prod.name.replace(/'/g,"\\'");
+
+        card.innerHTML = `
+          ${imgHtml}
+          <div class="product-info" style="flex:1;min-width:0;">
+            <div class="product-name">${prod.name}</div>
+            <div class="product-price" data-base="${initPrice}">${initPrice} ₺</div>
+          </div>
+          <button class="add-btn" onclick="addToCart('${safeName} — ${firstVariant.label.replace(/'/g,"\\'")}','${initPrice}',this)">+</button>`;
+
+        /* Varyant butonları satırı */
+        const vRow = document.createElement('div');
+        vRow.className = 'variant-row';
+        vRow.style.width = '100%';
+
+        prod.variants.forEach((v, vi) => {
+          const vBtn = document.createElement('button');
+          vBtn.className = 'variant-btn' + (vi === 0 ? ' selected' : '');
+          vBtn.textContent = v.label;
+          vBtn.addEventListener('click', function(){
+            const sp = getPriceData()[prod.name + '|' + v.label];
+            const p = sp !== undefined ? sp : v.price;
+            /* Fiyatı güncelle */
+            card.querySelector('.product-price').textContent = p + ' ₺';
+            card.querySelector('.product-price').dataset.base = p;
+            /* + butonunu güncelle */
+            const safeLabel = v.label.replace(/'/g,"\\'");
+            const safeN = prod.name.replace(/'/g,"\\'");
+            card.querySelector('.add-btn').setAttribute('onclick',
+              `addToCart('${safeN} — ${safeLabel}','${p}',this)`);
+            /* Seçili stil */
+            vRow.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('selected'));
+            this.classList.add('selected');
+          });
+          vRow.appendChild(vBtn);
+        });
+        card.appendChild(vRow);
+
+      } else {
+        /* Normal ürün */
+        const displayPrice = prod.name in priceData ? priceData[prod.name] : prod.price;
+        const safeName = prod.name.replace(/'/g,"\\'");
+        card.innerHTML = `
+          ${imgHtml}
+          <div class="product-info">
+            <div class="product-name">${prod.name}</div>
+            <div class="product-price">${displayPrice} ₺</div>
+          </div>
+          <button class="add-btn" onclick="addToCart('${safeName}','${displayPrice}',this)">+</button>`;
+      }
 
       list.appendChild(card);
     });
