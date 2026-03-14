@@ -247,7 +247,6 @@ body {
 .search-wrap {
   padding: 16px 16px 8px;
   background: var(--cream);
-  position: sticky; top: 89px; z-index: 90;
 }
 .search-inner {
   position: relative;
@@ -895,12 +894,10 @@ body {
     <img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" alt="Üstüner Gıda">
   </div>
   <div class="welcome-tagline">
-    <h1>Üstüner Gıda</h1>
-    <div class="sub">Dağıtım ve Pazarlama</div>
+    <h1>Hoş Geldiniz</h1>
   </div>
 
   <div class="welcome-text">
-    <div class="welcome-divider"><span>Hoş Geldiniz</span></div>
     <p class="welcome-desc">
       <strong>20 yılı aşkın tecrübemizle</strong> gıda, temizlik ve kişisel bakım ürünlerinde
       güvenilir çözüm ortağınızız.<br><br>
@@ -975,7 +972,7 @@ body {
     <p><strong>⚖️ Hukuki Not:</strong> Bu platform sipariş kolaylığı sağlamak amacıyla oluşturulmuştur. Kesinleşmiş sipariş, satış temsilcimizin yazılı onayı ile geçerlilik kazanır. Fiyat ve stok hataları için ticari sorumluluk kabul edilmez.</p>
   </div>
 </div>
-<p class="legal-footer-text">© 2024 Üstüner Gıda Dağıtım ve Pazarlama · Tüm hakları saklıdır.<br>Bu menü bilgilendirme amaçlıdır. Fiyatlar değişkenlik gösterebilir.</p>
+<p class="legal-footer-text" id="footerAdminTrigger" style="cursor:default;">© 2024 Üstüner Gıda Dağıtım ve Pazarlama · Tüm hakları saklıdır.<br>Bu menü bilgilendirme amaçlıdır. Fiyatlar değişkenlik gösterebilir.</p>
 
 <div class="bottom-spacer"></div>
 
@@ -1529,6 +1526,18 @@ function updateAdminStats(){
   document.getElementById('as-oos').textContent = oos;
   document.getElementById('as-in').textContent = total - oos;
 }
+
+/* Footer'a 5x tık ile admin aç */
+let footerTapCount = 0, footerTapTimer = null;
+document.getElementById('footerAdminTrigger').addEventListener('click', function(){
+  footerTapCount++;
+  clearTimeout(footerTapTimer);
+  footerTapTimer = setTimeout(()=>{ footerTapCount = 0; }, 2500);
+  if(footerTapCount >= 5){
+    footerTapCount = 0;
+    openAdmin();
+  }
+});
 
 renderCart();
 </script>
