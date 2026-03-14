@@ -238,7 +238,21 @@ body {
   font-weight: 400;
 }
 
-/* ═══ ARAMA ═══ */
+/* ═══ ANALOG SAAT ═══ */
+.header-clock {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+#analogClock {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.08), rgba(11,31,59,0.6));
+  border: 1.5px solid rgba(201,162,39,0.45);
+  box-shadow:
+    0 0 12px rgba(201,162,39,0.2),
+    inset 0 1px 3px rgba(255,255,255,0.07);
+  display: block;
+}
 .search-wrap {
   padding: 16px 16px 8px;
   background: var(--cream);
@@ -912,6 +926,9 @@ body {
     <div class="header-logo" id="adminTrigger" onclick="location.reload()">
       <img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" alt="Üstüner Gıda">
     </div>
+    <div class="header-clock">
+      <canvas id="analogClock" width="56" height="56"></canvas>
+    </div>
     <div class="header-meta">
       <div class="eur-badge" id="eur-header">💶 EUR: ...</div>
       <div class="usd-badge" id="usd-header">💵 USD: ...</div>
@@ -1521,6 +1538,111 @@ function updateAdminStats(){
   document.getElementById('as-oos').textContent = oos;
   document.getElementById('as-in').textContent = total - oos;
 }
+
+/* ── ANALOG SAAT ── */
+(function(){
+  const canvas = document.getElementById('analogClock');
+  const ctx = canvas.getContext('2d');
+  const SIZE = 56;
+  const CX = SIZE / 2, CY = SIZE / 2, R = SIZE / 2 - 2;
+
+  const GOLD       = '#C9A227';
+  const GOLD_LIGHT = '#e8bb3a';
+  const NAVY       = '#0B1F3B';
+  const WHITE_DIM  = 'rgba(255,255,255,0.75)';
+  const WHITE_FAINT= 'rgba(255,255,255,0.18)';
+
+  function drawClock(){
+    ctx.clearRect(0, 0, SIZE, SIZE);
+
+    /* Arka yüz */
+    ctx.beginPath();
+    ctx.arc(CX, CY, R, 0, Math.PI * 2);
+    const bg = ctx.createRadialGradient(CX - 6, CY - 6, 2, CX, CY, R);
+    bg.addColorStop(0, 'rgba(20,45,87,0.85)');
+    bg.addColorStop(1, 'rgba(11,31,59,0.95)');
+    ctx.fillStyle = bg;
+    ctx.fill();
+
+    /* Dış çember */
+    ctx.beginPath();
+    ctx.arc(CX, CY, R, 0, Math.PI * 2);
+    ctx.strokeStyle = GOLD;
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    /* Saat çizgileri */
+    for(let i = 0; i < 12; i++){
+      const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
+      const isMajor = i % 3 === 0;
+      const outer = R - 1;
+      const inner = isMajor ? R - 7 : R - 4;
+      ctx.beginPath();
+      ctx.moveTo(CX + Math.cos(angle) * outer, CY + Math.sin(angle) * inner);
+      ctx.lineTo(CX + Math.cos(angle) * outer, CY + Math.sin(angle) * inner);
+      ctx.moveTo(CX + Math.cos(angle) * outer, CY + Math.sin(angle) * outer);
+      /* düzelt */
+      ctx.moveTo(
+        CX + Math.cos(angle) * outer,
+        CY + Math.sin(angle) * outer
+      );
+      ctx.lineTo(
+        CX + Math.cos(angle) * inner,
+        CY + Math.sin(angle) * inner
+      );
+      ctx.strokeStyle = isMajor ? GOLD : WHITE_FAINT;
+      ctx.lineWidth = isMajor ? 1.4 : 0.8;
+      ctx.stroke();
+    }
+
+    const now = new Date();
+    const sec  = now.getSeconds() + now.getMilliseconds() / 1000;
+    const min  = now.getMinutes() + sec / 60;
+    const hour = (now.getHours() % 12) + min / 60;
+
+    function hand(angle, length, width, color, hasTip){
+      const a = angle - Math.PI / 2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(CX, CY);
+      ctx.lineTo(CX + Math.cos(a) * length, CY + Math.sin(a) * length);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+      if(hasTip){
+        /* Küçük arka çıkıntı */
+        ctx.beginPath();
+        ctx.moveTo(CX, CY);
+        ctx.lineTo(CX - Math.cos(a) * 4, CY - Math.sin(a) * 4);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width * 0.6;
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    /* Saat akrebi */
+    hand((hour / 12) * Math.PI * 2, R * 0.50, 2.2, WHITE_DIM, true);
+    /* Dakika akrebi */
+    hand((min / 60) * Math.PI * 2, R * 0.70, 1.6, WHITE_DIM, true);
+    /* Saniye akrebi */
+    hand((sec / 60) * Math.PI * 2, R * 0.76, 0.9, GOLD_LIGHT, false);
+
+    /* Merkez nokta */
+    ctx.beginPath();
+    ctx.arc(CX, CY, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = GOLD;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(CX, CY, 1, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+  }
+
+  drawClock();
+  setInterval(drawClock, 1000 / 30); /* ~30fps akıcı saniye akrebi */
+})();
 
 /* Footer'a 5x tık ile admin aç */
 let footerTapCount = 0, footerTapTimer = null;
