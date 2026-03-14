@@ -107,7 +107,7 @@ body {
 .usd-pill { border-color: rgba(201,162,39,0.5); color: var(--gold-light); }
 
 .welcome-logo-wrap {
-  position: relative; z-index: 2; margin-bottom: 32px;
+  position: relative; z-index: 2; margin-bottom: 16px;
   animation: logoReveal 1.2s cubic-bezier(.34,1.56,.64,1) forwards;
   opacity: 0;
 }
@@ -117,7 +117,7 @@ body {
 }
 
 .welcome-logo-wrap img {
-  width: 300px; max-width: 82vw;
+  width: 360px; max-width: 90vw;
   filter: drop-shadow(0 0 30px rgba(255,255,255,0.6)) drop-shadow(0 4px 20px rgba(201,162,39,0.5));
 }
 
@@ -139,7 +139,7 @@ body {
   font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
-  margin-bottom: 40px;
+  margin-bottom: 28px;
 }
 
 @keyframes fadeUp {
@@ -202,14 +202,22 @@ body {
 }
 
 .header-logo img {
-  height: 64px; width: auto;
+  height: 80px; width: auto;
   filter: drop-shadow(0 0 12px rgba(255,255,255,0.5)) drop-shadow(0 2px 8px rgba(201,162,39,0.4));
+  cursor: pointer;
 }
 
 .header-meta {
   display: flex; flex-direction: column; align-items: flex-end; gap: 2px;
 }
 .header-meta .usd-badge {
+  font-size: 11px; font-weight: 700;
+  color: var(--gold-light);
+  background: rgba(201,162,39,0.15);
+  padding: 3px 10px; border-radius: 20px;
+  border: 1px solid rgba(201,162,39,0.3);
+}
+.header-meta .eur-badge {
   font-size: 11px; font-weight: 700;
   color: var(--gold-light);
   background: rgba(201,162,39,0.15);
@@ -892,10 +900,11 @@ body {
 
 <header class="site-header">
   <div class="header-inner">
-    <div class="header-logo" id="adminTrigger">
+    <div class="header-logo" id="adminTrigger" onclick="goHome()">
       <img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" alt="Üstüner Gıda">
     </div>
     <div class="header-meta">
+      <div class="eur-badge" id="eur-header">💶 EUR: ...</div>
       <div class="usd-badge" id="usd-header">💵 USD: ...</div>
       <div class="date-badge" id="date-header"></div>
     </div>
@@ -1055,6 +1064,27 @@ async function getUsdRate(){
 getUsdRate();
 setInterval(getUsdRate, 60000);
 
+/* EUR */
+async function getEurRate(){
+  try {
+    const res = await fetch("https://api.frankfurter.app/latest?from=EUR&to=TRY");
+    const data = await res.json();
+    const rate = data.rates.TRY.toFixed(2) + ' ₺';
+    document.getElementById("eur-header").textContent = "💶 EUR: " + rate;
+  } catch(e) {
+    document.getElementById("eur-header").textContent = "EUR veri yok";
+  }
+}
+getEurRate();
+setInterval(getEurRate, 60000);
+
+/* Ana ekrana dön */
+function goHome(){
+  const ws = document.getElementById('welcome-screen');
+  ws.style.display = 'flex';
+  ws.classList.remove('hide');
+}
+
 /* ── MENU_DATA global (data.json'dan doldurulur) ── */
 let MENU_DATA = { categories: [] };
 
@@ -1071,7 +1101,6 @@ function searchProducts(){
       if(match) catVisible++;
     });
     totalVisible += catVisible;
-    // Auto-expand matching categories
     if(filter && catVisible > 0){
       wrapper.classList.add('active');
     } else if(filter && catVisible === 0){
@@ -1133,14 +1162,12 @@ function buildMenu(data){
     if(!cat.products || cat.products.length === 0) return;
     totalProducts += cat.products.length;
 
-    // Chip
     const chip = document.createElement('div');
     chip.className = 'chip';
     chip.textContent = (cat.icon || '') + ' ' + cat.name;
     chip.onclick = function(){ filterCategory(this, cat.name); };
     chips.appendChild(chip);
 
-    // Wrapper
     const wrapper = document.createElement('div');
     wrapper.className = 'category-wrapper';
     wrapper.dataset.cat = cat.name;
@@ -1297,7 +1324,7 @@ function checkoutWhatsApp(){
 /* ══════════════════════════════════════════
    ADMİN PANELİ & STOK SİSTEMİ
 ══════════════════════════════════════════ */
-const ADMIN_PASSWORD = 'ustuner2024'; // ← Şifrenizi buradan değiştirin
+const ADMIN_PASSWORD = 'ustuner2024';
 
 function getStockData(){
   try { return JSON.parse(localStorage.getItem('ug_stock') || '{}'); }
@@ -1339,13 +1366,17 @@ function applyAllStock(){
   document.querySelectorAll('.product-card').forEach(applyStockToCard);
 }
 
-/* Logo'ya 5x tık ile admin aç */
+/* Logo: tek tık → ana ekrana dön; 5 hızlı tık → admin */
 let adminTapCount = 0, adminTapTimer = null;
 document.getElementById('adminTrigger').addEventListener('click', function(){
   adminTapCount++;
   clearTimeout(adminTapTimer);
-  adminTapTimer = setTimeout(()=>{ adminTapCount = 0; }, 2500);
+  adminTapTimer = setTimeout(()=>{
+    if(adminTapCount === 1){ goHome(); }
+    adminTapCount = 0;
+  }, 400);
   if(adminTapCount >= 5){
+    clearTimeout(adminTapTimer);
     adminTapCount = 0;
     openAdmin();
   }
@@ -1427,25 +1458,21 @@ function renderAdminList(){
           </label>
         </div>`;
 
-      /* Fiyat kaydet — input'tan çıkınca */
       const priceInput = row.querySelector('.price-edit-input');
       priceInput.addEventListener('change', function(){
         const newPrice = parseFloat(this.value);
         if(isNaN(newPrice) || newPrice < 0){ this.value = currentPrice; return; }
         setPrice(prod.name, newPrice);
-        prod.price = newPrice; // MENU_DATA'yı da güncelle
-        // Menü kartındaki fiyatı anında güncelle
+        prod.price = newPrice;
         document.querySelectorAll('.product-card').forEach(card => {
           if(card.dataset.name === prod.name){
             card.querySelector('.product-price').textContent = newPrice + ' ₺';
           }
         });
-        // Yeşil flash
         this.classList.add('saved');
         setTimeout(() => this.classList.remove('saved'), 1200);
       });
 
-      /* Stok toggle */
       const checkbox = row.querySelector('.toggle-input');
       checkbox.addEventListener('change', function(){
         const nowInStock = this.checked;
@@ -1481,8 +1508,6 @@ function updateAdminStats(){
   document.getElementById('as-oos').textContent = oos;
   document.getElementById('as-in').textContent = total - oos;
 }
-
-/* Sayfa açıldığında stok durumlarını uygula — buildMenu tamamlandıktan sonra tetiklenir */
 
 renderCart();
 </script>
