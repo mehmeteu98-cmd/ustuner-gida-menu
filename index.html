@@ -96,7 +96,7 @@ body {
   padding: 0 16px; z-index: 2;
 }
 .top-info-left {
-  display: flex; flex-direction: column; gap: 5px;
+  display: flex; flex-direction: row; gap: 6px;
 }
 .info-pill {
   font-size: 11px; font-weight: 600;
@@ -916,7 +916,7 @@ body {
 
 <header class="site-header">
   <div class="header-inner">
-    <div class="header-logo" id="adminTrigger" onclick="goHome()">
+    <div class="header-logo" id="adminTrigger" onclick="location.reload()">
       <img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" alt="Üstüner Gıda">
     </div>
     <div class="header-meta">
@@ -1386,19 +1386,19 @@ function applyAllStock(){
   document.querySelectorAll('.product-card').forEach(applyStockToCard);
 }
 
-/* Logo: tek tık → ana ekrana dön; 5 hızlı tık → admin */
+/* Logo: tek tık → sayfayı yenile; 5 hızlı tık → admin */
 let adminTapCount = 0, adminTapTimer = null;
-document.getElementById('adminTrigger').addEventListener('click', function(){
+document.getElementById('adminTrigger').addEventListener('click', function(e){
   adminTapCount++;
   clearTimeout(adminTapTimer);
-  adminTapTimer = setTimeout(()=>{
-    if(adminTapCount === 1){ goHome(); }
-    adminTapCount = 0;
-  }, 400);
   if(adminTapCount >= 5){
-    clearTimeout(adminTapTimer);
     adminTapCount = 0;
+    e.stopImmediatePropagation();
     openAdmin();
+  } else {
+    adminTapTimer = setTimeout(()=>{
+      adminTapCount = 0;
+    }, 600);
   }
 });
 
