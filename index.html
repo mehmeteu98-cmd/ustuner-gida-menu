@@ -1076,7 +1076,7 @@ function enterSite(){
 /* Tarih & saat */
 const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
 const dateStr = new Date().toLocaleDateString('tr-TR', opts);
-document.getElementById('date').innerHTML = '  ' + dateStr;
+document.getElementById('date').innerHTML = '📅 ' + dateStr;
 document.getElementById('date-header').textContent = dateStr;
 
 /* USD */
@@ -1148,6 +1148,15 @@ function searchProducts(){
   document.getElementById('noResults').style.display = (filter && totalVisible === 0) ? 'block' : 'none';
   if(filter){
     document.getElementById('menuStats').textContent = totalVisible + ' ürün bulundu';
+    /* GA4: aramayı 1.5sn sonra kaydet (kullanıcı yazmayı bitirince) */
+    clearTimeout(window._searchGaTimer);
+    window._searchGaTimer = setTimeout(()=>{
+      gtag('event', 'arama', {
+        event_category: 'Arama',
+        event_label: filter,
+        value: totalVisible
+      });
+    }, 1500);
   } else {
     updateStats();
   }
@@ -1217,7 +1226,17 @@ function buildMenu(data){
         </div>
       </div>
       <div class="cat-arrow">▼</div>`;
-    header.onclick = function(){ this.parentElement.classList.toggle('active'); };
+    header.onclick = function(){
+      const isOpening = !this.parentElement.classList.contains('active');
+      this.parentElement.classList.toggle('active');
+      if(isOpening){
+        gtag('event', 'kategori_ac', {
+          event_category: 'Menu',
+          event_label: cat.name,
+          value: cat.products.length
+        });
+      }
+    };
 
     const list = document.createElement('div');
     list.className = 'product-list';
@@ -1277,6 +1296,11 @@ function addToCart(name, priceStr, btn){
   const existing = cart.find(i=>i.name===name);
   if(existing){ existing.qty++; } else { cart.push({name,price,qty:1}); }
   renderCart(); openCart();
+  gtag('event', 'sepete_ekle', {
+    event_category: 'Sepet',
+    event_label: name,
+    value: price
+  });
   if(btn){
     btn.classList.remove('btn-pop'); void btn.offsetWidth;
     btn.classList.add('btn-pop');
@@ -1352,6 +1376,11 @@ function checkoutWhatsApp(){
     msg+=`• ${item.name} x${item.qty} — ${(item.price*item.qty).toLocaleString('tr-TR',{minimumFractionDigits:2})} ₺\n`;
   });
   msg+=`\n*Toplam: ${calcTotal().toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2})} ₺*`;
+  gtag('event', 'whatsapp_siparis', {
+    event_category: 'Siparis',
+    event_label: cart.map(i=>i.name).join(', '),
+    value: calcTotal()
+  });
   window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
