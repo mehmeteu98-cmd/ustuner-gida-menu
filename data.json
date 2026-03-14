@@ -44,12 +44,12 @@
             {
               "label": "1755 ml",
               "price": 3500,
-              "inStock": false
+              "inStock": true
             },
             {
               "label": "2600 ml",
-              "price": 183,
-              "inStock": false
+              "price": 2000,
+              "inStock": true
             }
           ]
         },
