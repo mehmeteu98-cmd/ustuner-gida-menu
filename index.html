@@ -197,13 +197,14 @@ body {
 
 .header-inner {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0 16px;
-  gap: 12px;
+  padding: 0;
+  gap: 0;
 }
 
 .header-logo {
   display: flex; align-items: center;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .header-logo img {
@@ -215,43 +216,45 @@ body {
 
 .header-meta {
   display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+  padding: 0 12px 0 0;
+  flex-shrink: 0;
 }
 .header-meta .usd-badge,
 .header-meta .eur-badge {
   font-size: 11px; font-weight: 700;
   color: var(--gold-light);
   background: rgba(201,162,39,0.15);
-  padding: 3px 10px; border-radius: 20px;
+  padding: 4px 0; border-radius: 20px;
   border: 1px solid rgba(201,162,39,0.3);
   white-space: nowrap;
-}
-.header-meta .eur-badge {
-  font-size: 11px; font-weight: 700;
-  color: var(--gold-light);
-  background: rgba(201,162,39,0.15);
-  padding: 3px 10px; border-radius: 20px;
-  border: 1px solid rgba(201,162,39,0.3);
-  white-space: nowrap;
+  width: 116px; text-align: center;
+  display: block; box-sizing: border-box;
 }
 .header-meta .date-badge {
   font-size: 10px; color: rgba(255,255,255,0.5);
-  font-weight: 400;
+  font-weight: 400; text-align: right;
 }
 
 /* ═══ ANALOG SAAT ═══ */
 .header-clock {
   flex: 1;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px;
 }
 #analogClock {
   width: 56px; height: 56px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.08), rgba(11,31,59,0.6));
   border: 1.5px solid rgba(201,162,39,0.45);
-  box-shadow:
-    0 0 12px rgba(201,162,39,0.2),
-    inset 0 1px 3px rgba(255,255,255,0.07);
+  box-shadow: 0 0 12px rgba(201,162,39,0.2), inset 0 1px 3px rgba(255,255,255,0.07);
   display: block;
+}
+#digitalClock {
+  font-size: 10px; font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 1.5px;
+  font-variant-numeric: tabular-nums;
+  font-family: 'DM Sans', sans-serif;
 }
 .search-wrap {
   padding: 16px 16px 8px;
@@ -928,6 +931,7 @@ body {
     </div>
     <div class="header-clock">
       <canvas id="analogClock" width="56" height="56"></canvas>
+      <span id="digitalClock">00:00:00</span>
     </div>
     <div class="header-meta">
       <div class="eur-badge" id="eur-header">💶 EUR: ...</div>
@@ -1072,7 +1076,7 @@ function enterSite(){
 /* Tarih & saat */
 const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
 const dateStr = new Date().toLocaleDateString('tr-TR', opts);
-document.getElementById('date').innerHTML = '📅 ' + dateStr;
+document.getElementById('date').innerHTML = '  ' + dateStr;
 document.getElementById('date-header').textContent = dateStr;
 
 /* USD */
@@ -1638,6 +1642,13 @@ function updateAdminStats(){
     ctx.arc(CX, CY, 1, 0, Math.PI * 2);
     ctx.fillStyle = '#fff';
     ctx.fill();
+
+    /* Dijital saat güncelle */
+    const hh = String(now.getHours()).padStart(2,'0');
+    const mm = String(now.getMinutes()).padStart(2,'0');
+    const ss = String(now.getSeconds()).padStart(2,'0');
+    const dEl = document.getElementById('digitalClock');
+    if(dEl) dEl.textContent = hh + ':' + mm + ':' + ss;
   }
 
   drawClock();
