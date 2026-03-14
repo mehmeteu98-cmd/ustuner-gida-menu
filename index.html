@@ -13,7 +13,7 @@ gtag('config', 'G-532PMVY2KK');
 </script>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Üstüner Gıda - Dijital Menü</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,12 @@ gtag('config', 'G-532PMVY2KK');
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Çift tıklama yakınlaştırmasını engelle */
+button, a, input, .chip, .category-header, .product-card,
+.add-btn, .variant-btn, .qty-btn, #cart-topbar, .header-logo {
+  touch-action: manipulation;
+}
 
 body {
   font-family: 'DM Sans', sans-serif;
@@ -463,6 +469,9 @@ body {
   transform: translateY(100%);
   transition: transform .4s cubic-bezier(.77,0,.175,1);
   max-height: 72vh; display: flex; flex-direction: column;
+  /* Scroll ile kaymaması için */
+  -webkit-overflow-scrolling: touch;
+  will-change: transform;
 }
 #cart-panel.open { transform: translateY(0); }
 
@@ -673,6 +682,7 @@ body {
   border-radius: 24px 24px 0 0;
   display: flex; flex-direction: column;
   animation: slideUp .35s cubic-bezier(.34,1.56,.64,1);
+  transition: transform .2s ease;
 }
 @keyframes slideUp {
   from { transform: translateY(100%); }
@@ -1288,11 +1298,12 @@ function buildMenu(data){
         : '';
 
       if(prod.variants && prod.variants.length > 0){
-        /* Varyantlı ürün — ilk varyant seçili gelir */
+        /* Varyantlı ürün — ilk stokta olan varyant seçili gelir */
         const firstVariant = prod.variants[0];
-        const savedPrice = getPriceData()[prod.name + '|' + firstVariant.label];
-        const initPrice = savedPrice !== undefined ? savedPrice : firstVariant.price;
+        const initPrice = firstVariant.price;
+        const initInStock = firstVariant.inStock !== false;
         const safeName = prod.name.replace(/'/g,"\\'");
+        const safeFirstLabel = firstVariant.label.replace(/'/g,"\\'");
 
         card.innerHTML = `
           ${imgHtml}
@@ -1300,7 +1311,14 @@ function buildMenu(data){
             <div class="product-name">${prod.name}</div>
             <div class="product-price" data-base="${initPrice}">${initPrice} ₺</div>
           </div>
-          <button class="add-btn" onclick="addToCart('${safeName} — ${firstVariant.label.replace(/'/g,"\\'")}','${initPrice}',this)">+</button>`;
+          <button class="add-btn ${initInStock ? '' : 'oos-btn'}"
+            onclick="${initInStock ? `addToCart('${safeName} — ${safeFirstLabel}','${initPrice}',this)` : ''}">+</button>`;
+
+        if(!initInStock){
+          card.querySelector('.add-btn').style.opacity = '0.3';
+          card.querySelector('.add-btn').style.cursor = 'not-allowed';
+          card.querySelector('.add-btn').style.pointerEvents = 'none';
+        }
 
         /* Varyant butonları satırı */
         const vRow = document.createElement('div');
@@ -1309,19 +1327,35 @@ function buildMenu(data){
 
         prod.variants.forEach((v, vi) => {
           const vBtn = document.createElement('button');
-          vBtn.className = 'variant-btn' + (vi === 0 ? ' selected' : '');
-          vBtn.textContent = v.label;
+          const vInStock = v.inStock !== false;
+          vBtn.className = 'variant-btn' + (vi === 0 ? ' selected' : '') + (!vInStock ? ' oos-variant' : '');
+          vBtn.textContent = v.label + (!vInStock ? ' · Tükendi' : '');
+          if(!vInStock){
+            vBtn.style.cssText += 'opacity:0.45;text-decoration:line-through;cursor:not-allowed;border-color:#e53935;color:#e53935;';
+          }
           vBtn.addEventListener('click', function(){
-            const sp = getPriceData()[prod.name + '|' + v.label];
-            const p = sp !== undefined ? sp : v.price;
+            const p = v.price;
+            const inStock = v.inStock !== false;
             /* Fiyatı güncelle */
             card.querySelector('.product-price').textContent = p + ' ₺';
             card.querySelector('.product-price').dataset.base = p;
             /* + butonunu güncelle */
             const safeLabel = v.label.replace(/'/g,"\\'");
             const safeN = prod.name.replace(/'/g,"\\'");
-            card.querySelector('.add-btn').setAttribute('onclick',
-              `addToCart('${safeN} — ${safeLabel}','${p}',this)`);
+            const addBtn = card.querySelector('.add-btn');
+            if(inStock){
+              addBtn.setAttribute('onclick', `addToCart('${safeN} — ${safeLabel}','${p}',this)`);
+              addBtn.style.opacity = '1';
+              addBtn.style.cursor = 'pointer';
+              addBtn.style.pointerEvents = 'auto';
+              addBtn.style.background = '';
+            } else {
+              addBtn.setAttribute('onclick', '');
+              addBtn.style.opacity = '0.3';
+              addBtn.style.cursor = 'not-allowed';
+              addBtn.style.pointerEvents = 'none';
+              addBtn.style.background = '#9ca3af';
+            }
             /* Seçili stil */
             vRow.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('selected'));
             this.classList.add('selected');
@@ -1544,21 +1578,77 @@ function pushAllChanges(){
 
 function applyStockToCard(card){
   const name = card.dataset.name;
-  /* MENU_DATA'dan stok durumunu bul */
-  let inStock = true;
+  let prod = null;
   MENU_DATA.categories.forEach(cat => {
-    cat.products.forEach(p => {
-      if(p.name === name) inStock = p.inStock !== false;
-    });
+    cat.products.forEach(p => { if(p.name === name) prod = p; });
   });
-  if(!inStock){ card.classList.add('out-of-stock'); }
-  else { card.classList.remove('out-of-stock'); }
+  if(!prod) return;
+
+  if(prod.variants && prod.variants.length > 0){
+    /* Seçili varyantın stok durumuna bak */
+    const selectedBtn = card.querySelector('.variant-btn.selected');
+    if(!selectedBtn) return;
+    const selectedLabel = selectedBtn.textContent.replace(' · Tükendi','').trim();
+    const v = prod.variants.find(vv => vv.label === selectedLabel);
+    const inStock = v ? v.inStock !== false : true;
+    const addBtn = card.querySelector('.add-btn');
+    if(addBtn){
+      addBtn.style.opacity = inStock ? '1' : '0.3';
+      addBtn.style.cursor = inStock ? 'pointer' : 'not-allowed';
+      addBtn.style.pointerEvents = inStock ? 'auto' : 'none';
+      addBtn.style.background = inStock ? '' : '#9ca3af';
+    }
+    /* Varyant butonlarını güncelle */
+    card.querySelectorAll('.variant-btn').forEach(btn => {
+      const lbl = btn.textContent.replace(' · Tükendi','').trim();
+      const vv = prod.variants.find(x => x.label === lbl);
+      const vis = vv ? vv.inStock !== false : true;
+      if(!vis && !btn.textContent.includes('Tükendi')){
+        btn.textContent = lbl + ' · Tükendi';
+        btn.style.cssText += 'opacity:0.45;text-decoration:line-through;cursor:not-allowed;border-color:#e53935;color:#e53935;';
+      } else if(vis){
+        btn.textContent = lbl;
+        btn.style.opacity = '1';
+        btn.style.textDecoration = '';
+        btn.style.cursor = 'pointer';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }
+    });
+  } else {
+    const inStock = prod.inStock !== false;
+    if(!inStock){ card.classList.add('out-of-stock'); }
+    else { card.classList.remove('out-of-stock'); }
+  }
 }
 function applyAllStock(){
   document.querySelectorAll('.product-card').forEach(applyStockToCard);
 }
 
-/* Logo: tek tık → sayfayı yenile; 5 hızlı tık → admin */
+/* Saate 5 hızlı tık → admin */
+let clockTapCount = 0, clockTapTimer = null;
+document.getElementById('analogClock').style.cursor = 'pointer';
+document.getElementById('analogClock').addEventListener('click', function(){
+  clockTapCount++;
+  clearTimeout(clockTapTimer);
+  clockTapTimer = setTimeout(()=>{ clockTapCount = 0; }, 2500);
+  if(clockTapCount >= 5){
+    clockTapCount = 0;
+    openAdmin();
+  }
+});
+
+/* Klavye açılınca panel yukarı kaymasın — görünür alanda kalsın */
+if(window.visualViewport){
+  window.visualViewport.addEventListener('resize', function(){
+    const panel = document.getElementById('admin-panel');
+    if(!panel) return;
+    const offsetFromBottom = window.innerHeight - window.visualViewport.height;
+    panel.style.transform = offsetFromBottom > 50
+      ? `translateY(-${offsetFromBottom}px)`
+      : '';
+  });
+}
 let adminTapCount = 0, adminTapTimer = null;
 document.getElementById('adminTrigger').addEventListener('click', function(e){
   adminTapCount++;
