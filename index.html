@@ -1175,9 +1175,13 @@ body {
 }
 .sl-skip {
   margin-top: 16px; font-size: 12px;
-  color: rgba(255,255,255,0.3); cursor: pointer;
+  color: rgba(255,255,255,0.5); cursor: pointer;
   text-decoration: underline; background: none; border: none;
   font-family: 'DM Sans', sans-serif;
+  padding: 12px 24px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative; z-index: 2;
 }
 
 /* ═══ ADMİN MÜŞTERİ SEKMESİ ═══ */
@@ -2860,10 +2864,8 @@ screen.style.display = ‘none’;
 }
 
 function storeLoginSkip(){
+document.getElementById(‘store-login-screen’).style.display = ‘none’;
 activeCustomer = null;
-const screen = document.getElementById(‘store-login-screen’);
-screen.classList.add(‘hidden’);
-screen.style.display = ‘none’;
 }
 
 function updateGreetingForCustomer(cust){
