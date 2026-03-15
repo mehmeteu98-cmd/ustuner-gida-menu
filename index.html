@@ -2854,12 +2854,16 @@ updateGreetingForCustomer(cust);
 prefillCustomerForm(cust);
 
 /* Giriş ekranını kapat */
-document.getElementById(‘store-login-screen’).classList.add(‘hidden’);
+const screen = document.getElementById(‘store-login-screen’);
+screen.classList.add(‘hidden’);
+screen.style.display = ‘none’;
 }
 
 function storeLoginSkip(){
 activeCustomer = null;
-document.getElementById(‘store-login-screen’).classList.add(‘hidden’);
+const screen = document.getElementById(‘store-login-screen’);
+screen.classList.add(‘hidden’);
+screen.style.display = ‘none’;
 }
 
 function updateGreetingForCustomer(cust){
@@ -2890,9 +2894,13 @@ if(addrEl)  addrEl.value  = cust.adres   || ‘’;
 
 /* Sayfa yüklenince kaydedilmiş kodu kontrol et */
 async function initStoreLogin(){
+try {
 await loadCustomers();
+} catch(e){ CUSTOMERS = {}; }
+
 const saved = localStorage.getItem(‘ug_store_code’);
 if(saved && CUSTOMERS[saved]){
+try {
 const cust = decodeCustomer(CUSTOMERS[saved]);
 if(cust){
 activeCustomer = { …cust, code: saved };
@@ -2901,10 +2909,13 @@ prefillCustomerForm(cust);
 document.getElementById(‘store-login-screen’).classList.add(‘hidden’);
 return;
 }
+} catch(e){}
 }
-/* Göster */
-document.getElementById(‘store-code-input’).focus && setTimeout(()=>
-document.getElementById(‘store-code-input’).focus(), 400);
+/* Giriş ekranını göster */
+const screen = document.getElementById(‘store-login-screen’);
+screen.classList.remove(‘hidden’);
+screen.style.display = ‘flex’;
+setTimeout(()=>{ document.getElementById(‘store-code-input’).focus(); }, 400);
 }
 
 /* ── ADMİN: SEKME GEÇİŞİ ── */
