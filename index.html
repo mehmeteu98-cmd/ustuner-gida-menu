@@ -1099,7 +1099,8 @@ body {
   color: var(--gold); flex-shrink: 0;
 }
 
-
+/* Toggle switch */
+.toggle-wrap { flex-shrink: 0; }
 .toggle-input { display: none; }
 .toggle-label {
   display: flex; align-items: center; cursor: pointer;
@@ -1340,7 +1341,7 @@ body {
     <div class="about-section">
       <h3>📞 İletişim & Çalışma Saatleri</h3>
       <div class="info-row"><span>📱</span><div><strong>WhatsApp:</strong> +90 544 446 55 03</div></div>
-      <div class="info-row"><span>📧</span><div><strong>E-posta:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d69bb3bebbb3a2a3b3efee96b1bbb7bfbaf8b5b9bb">[email&#160;protected]</a></div></div>
+      <div class="info-row"><span>📧</span><div><strong>E-posta:</strong> Mehmetue98@gmail.com</div></div>
       <div class="info-row"><span>🕐</span><div><strong>Hafta içi:</strong> 08:00 – 18:00</div></div>
       <div class="info-row"><span>🕐</span><div><strong>Cumartesi:</strong> 09:00 – 14:00</div></div>
       <div class="info-row"><span>❌</span><div><strong>Pazar:</strong> Kapalı</div></div>
@@ -1499,23 +1500,11 @@ body {
     </button>
     <div id="admin-save-status" style="font-size:12px;margin-top:6px;min-height:18px;text-align:center;"></div>
   </div>
-
-  <div id="admin-search">
-      <input type="text" id="adminSearch" placeholder="🔍 Ürün ara..." oninput="renderAdminList()">
-    </div>
-    <div id="admin-list"></div>
-    <div class="admin-announce-wrap">
-      <label>📢 Duyuru Bandı Metni</label>
-      <textarea class="admin-announce-input" id="admin-announce-input"></textarea>
-      <button class="admin-announce-save" onclick="saveAnnouncement()">Duyuruyu Güncelle</button>
-    </div>
-    <div id="admin-stats-bar">
-      <div>Toplam: <span id="as-total">0</span> ürün</div>
-      <div>Tükenmiş: <span id="as-oos">0</span> ürün</div>
-      <div>Mevcut: <span id="as-in">0</span> ürün</div>
-    </div>
+  <div class="admin-announce-wrap">
+    <label>📢 Duyuru Bandı Metni</label>
+    <textarea class="admin-announce-input" id="admin-announce-input"></textarea>
+    <button class="admin-announce-save" onclick="saveAnnouncement()">Duyuruyu Güncelle</button>
   </div>
-</div>
   <div id="admin-search">
     <input type="text" id="adminSearch" placeholder="🔍 Ürün ara..." oninput="renderAdminList()">
   </div>
@@ -1536,492 +1525,510 @@ body {
   <span id="fab-badge">0</span>
 </button>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-
+<script>
 /* ── AYARLAR ── */
-const WHATSAPP_PHONE = ‘905444465503’;
+const WHATSAPP_PHONE = '905444465503';
 
 /* ── AÇILIŞ ── */
 function enterSite(){
-document.getElementById(‘welcome-screen’).classList.add(‘hide’);
-setTimeout(()=>{ document.getElementById(‘welcome-screen’).style.display=‘none’; }, 950);
+  document.getElementById('welcome-screen').classList.add('hide');
+  setTimeout(()=>{ document.getElementById('welcome-screen').style.display='none'; }, 950);
 }
 
 /* Tarih & saat */
-const opts = { weekday:‘long’, year:‘numeric’, month:‘long’, day:‘numeric’ };
-const dateStr = new Date().toLocaleDateString(‘tr-TR’, opts);
-document.getElementById(‘date’).innerHTML = dateStr;
-document.getElementById(‘date-header’).textContent = dateStr;
+const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+const dateStr = new Date().toLocaleDateString('tr-TR', opts);
+document.getElementById('date').innerHTML = dateStr;
+document.getElementById('date-header').textContent = dateStr;
 
 /* Saate göre selamlama */
 (function(){
-const h = new Date().getHours();
-let icon, zaman;
-if(h >= 5 && h < 12){
-icon = ‘🌅’; zaman = ‘Günaydın’;
-} else if(h >= 12 && h < 17){
-icon = ‘☀️’; zaman = ‘İyi Günler’;
-} else if(h >= 17 && h < 21){
-icon = ‘🌇’; zaman = ‘İyi Akşamlar’;
-} else {
-icon = ‘🌙’; zaman = ‘İyi Geceler’;
-}
-const el = document.getElementById(‘welcomeGreeting’);
-if(el){
-el.innerHTML = ` <div class="greet-time">${icon} ${zaman} ${icon}</div> <div class="greet-sub">Değerli Misafirimiz</div>`;
-}
+  const h = new Date().getHours();
+  let icon, zaman;
+  if(h >= 5 && h < 12){
+    icon = '🌅'; zaman = 'Günaydın';
+  } else if(h >= 12 && h < 17){
+    icon = '☀️'; zaman = 'İyi Günler';
+  } else if(h >= 17 && h < 21){
+    icon = '🌇'; zaman = 'İyi Akşamlar';
+  } else {
+    icon = '🌙'; zaman = 'İyi Geceler';
+  }
+  const el = document.getElementById('welcomeGreeting');
+  if(el){
+    el.innerHTML = `
+      <div class="greet-time">${icon} ${zaman} ${icon}</div>
+      <div class="greet-sub">Değerli Misafirimiz</div>`;
+  }
 })();
 
 /* USD */
 async function getUsdRate(){
-try {
-const res = await fetch(“https://api.frankfurter.app/latest?from=USD&to=TRY”);
-const data = await res.json();
-const rate = data.rates.TRY.toFixed(2) + ’ ₺’;
-document.getElementById(“usd-rate”).textContent = “USD: “ + rate;
-document.getElementById(“usd-header”).textContent = “💵 USD: “ + rate;
-} catch(e) {
-document.getElementById(“usd-rate”).textContent = “USD veri yok”;
-}
+  try {
+    const res = await fetch("https://api.frankfurter.app/latest?from=USD&to=TRY");
+    const data = await res.json();
+    const rate = data.rates.TRY.toFixed(2) + ' ₺';
+    document.getElementById("usd-rate").textContent = "USD: " + rate;
+    document.getElementById("usd-header").textContent = "💵 USD: " + rate;
+  } catch(e) {
+    document.getElementById("usd-rate").textContent = "USD veri yok";
+  }
 }
 getUsdRate();
 setInterval(getUsdRate, 60000);
 
 /* EUR */
 async function getEurRate(){
-try {
-const res = await fetch(“https://api.frankfurter.app/latest?from=EUR&to=TRY”);
-const data = await res.json();
-const rate = data.rates.TRY.toFixed(2) + ’ ₺’;
-document.getElementById(“eur-rate”).textContent = “EUR: “ + rate;
-document.getElementById(“eur-header”).textContent = “💶 EUR: “ + rate;
-} catch(e) {
-document.getElementById(“eur-rate”).textContent = “EUR veri yok”;
-document.getElementById(“eur-header”).textContent = “💶 EUR veri yok”;
-}
+  try {
+    const res = await fetch("https://api.frankfurter.app/latest?from=EUR&to=TRY");
+    const data = await res.json();
+    const rate = data.rates.TRY.toFixed(2) + ' ₺';
+    document.getElementById("eur-rate").textContent = "EUR: " + rate;
+    document.getElementById("eur-header").textContent = "💶 EUR: " + rate;
+  } catch(e) {
+    document.getElementById("eur-rate").textContent = "EUR veri yok";
+    document.getElementById("eur-header").textContent = "💶 EUR veri yok";
+  }
 }
 getEurRate();
 setInterval(getEurRate, 60000);
 
 /* Ana ekrana dön */
 function goHome(){
-const ws = document.getElementById(‘welcome-screen’);
-ws.classList.remove(‘hide’);
-ws.style.display = ‘flex’;
-ws.style.transform = ‘’;
-ws.style.opacity = ‘’;
+  const ws = document.getElementById('welcome-screen');
+  ws.classList.remove('hide');
+  ws.style.display = 'flex';
+  ws.style.transform = '';
+  ws.style.opacity = '';
 }
 
-/* ── MENU_DATA global (data.json’dan doldurulur) ── */
+/* ── MENU_DATA global (data.json'dan doldurulur) ── */
 let MENU_DATA = { categories: [] };
 
 /* ── ARAMA ── */
 function searchProducts(){
-const filter = document.getElementById(‘searchInput’).value.toLowerCase().trim();
-let totalVisible = 0;
+  const filter = document.getElementById('searchInput').value.toLowerCase().trim();
+  let totalVisible = 0;
 
-document.querySelectorAll(’.category-wrapper[data-cat]’).forEach(wrapper => {
-let catVisible = 0;
-wrapper.querySelectorAll(’.product-card’).forEach(card => {
-const match = card.dataset.name.toLowerCase().includes(filter);
-card.style.display = match ? ‘flex’ : ‘none’;
-if(match) catVisible++;
-});
-totalVisible += catVisible;
-if(filter && catVisible > 0){
-wrapper.classList.add(‘active’);
-} else if(filter && catVisible === 0){
-wrapper.style.display = ‘none’;
-} else {
-wrapper.style.display = ‘block’;
-if(!filter) wrapper.classList.remove(‘active’);
-}
-});
+  document.querySelectorAll('.category-wrapper[data-cat]').forEach(wrapper => {
+    let catVisible = 0;
+    wrapper.querySelectorAll('.product-card').forEach(card => {
+      const match = card.dataset.name.toLowerCase().includes(filter);
+      card.style.display = match ? 'flex' : 'none';
+      if(match) catVisible++;
+    });
+    totalVisible += catVisible;
+    if(filter && catVisible > 0){
+      wrapper.classList.add('active');
+    } else if(filter && catVisible === 0){
+      wrapper.style.display = 'none';
+    } else {
+      wrapper.style.display = 'block';
+      if(!filter) wrapper.classList.remove('active');
+    }
+  });
 
-document.getElementById(‘noResults’).style.display = (filter && totalVisible === 0) ? ‘block’ : ‘none’;
-if(filter){
-document.getElementById(‘menuStats’).textContent = totalVisible + ’ ürün bulundu’;
-/* GA4: aramayı 1.5sn sonra kaydet (kullanıcı yazmayı bitirince) */
-clearTimeout(window._searchGaTimer);
-window._searchGaTimer = setTimeout(()=>{
-gtag(‘event’, ‘arama’, {
-event_category: ‘Arama’,
-event_label: filter,
-value: totalVisible
-});
-}, 1500);
-} else {
-updateStats();
-}
+  document.getElementById('noResults').style.display = (filter && totalVisible === 0) ? 'block' : 'none';
+  if(filter){
+    document.getElementById('menuStats').textContent = totalVisible + ' ürün bulundu';
+    /* GA4: aramayı 1.5sn sonra kaydet (kullanıcı yazmayı bitirince) */
+    clearTimeout(window._searchGaTimer);
+    window._searchGaTimer = setTimeout(()=>{
+      gtag('event', 'arama', {
+        event_category: 'Arama',
+        event_label: filter,
+        value: totalVisible
+      });
+    }, 1500);
+  } else {
+    updateStats();
+  }
 }
 
 function updateStats(){
-const total = MENU_DATA.categories.reduce((s,c)=>s+c.products.length,0);
-document.getElementById(‘menuStats’).textContent = MENU_DATA.categories.length + ’ kategori · ’ + total + ’ ürün’;
+  const total = MENU_DATA.categories.reduce((s,c)=>s+c.products.length,0);
+  document.getElementById('menuStats').textContent = MENU_DATA.categories.length + ' kategori · ' + total + ' ürün';
 }
 
 /* ── FİLTRE CHİPLERİ ── */
 function filterAll(el){
-document.querySelectorAll(’.chip’).forEach(c=>c.classList.remove(‘active’));
-el.classList.add(‘active’);
-document.querySelectorAll(’.category-wrapper[data-cat]’).forEach(w=>{
-w.style.display=‘block’;
-w.querySelectorAll(’.product-card’).forEach(c=>c.style.display=‘flex’);
-});
-document.getElementById(‘searchInput’).value=’’;
-updateStats();
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.category-wrapper[data-cat]').forEach(w=>{
+    w.style.display='block';
+    w.querySelectorAll('.product-card').forEach(c=>c.style.display='flex');
+  });
+  document.getElementById('searchInput').value='';
+  updateStats();
 }
 
 function filterCategory(el, catName){
-document.querySelectorAll(’.chip’).forEach(c=>c.classList.remove(‘active’));
-el.classList.add(‘active’);
-document.querySelectorAll(’.category-wrapper[data-cat]’).forEach(w=>{
-if(w.dataset.cat === catName){
-w.style.display=‘block’; w.classList.add(‘active’);
-w.querySelectorAll(’.product-card’).forEach(c=>c.style.display=‘flex’);
-} else {
-w.style.display=‘none’;
-}
-});
-document.getElementById(‘searchInput’).value=’’;
-}
-
-/* ── MENÜ YÜKLEME (data.json’dan) ── */
-function buildMenu(data){
-MENU_DATA = data;
-const root = document.getElementById(‘menu-root’);
-const chips = document.getElementById(‘filterChips’);
-let totalProducts = 0;
-const priceData = getPriceData();
-
-data.categories.forEach((cat) => {
-if(!cat.products || cat.products.length === 0) return;
-totalProducts += cat.products.length;
-
-```
-const chip = document.createElement('div');
-chip.className = 'chip';
-chip.textContent = (cat.icon || '') + ' ' + cat.name;
-chip.onclick = function(){ filterCategory(this, cat.name); };
-chips.appendChild(chip);
-
-const wrapper = document.createElement('div');
-wrapper.className = 'category-wrapper';
-wrapper.dataset.cat = cat.name;
-
-const header = document.createElement('div');
-header.className = 'category-header';
-header.innerHTML = `
-  <div class="cat-left">
-    <div class="cat-icon">${cat.icon || '📦'}</div>
-    <div class="cat-info">
-      <div class="cat-name">${cat.name}</div>
-      <div class="cat-count">${cat.products.length} ürün</div>
-    </div>
-  </div>
-  <div class="cat-arrow">▼</div>`;
-header.onclick = function(){
-  const isOpening = !this.parentElement.classList.contains('active');
-  /* Diğer tüm kategorileri kapat */
-  document.querySelectorAll('.category-wrapper.active').forEach(w => {
-    if(w !== this.parentElement) w.classList.remove('active');
-  });
-  this.parentElement.classList.toggle('active');
-  if(isOpening){
-    gtag('event', 'kategori_ac', {
-      event_category: 'Menu',
-      event_label: cat.name,
-      value: cat.products.length
-    });
-  }
-};
-
-const list = document.createElement('div');
-list.className = 'product-list';
-
-cat.products.forEach((prod, pi) => {
-  const card = document.createElement('div');
-  card.className = 'product-card';
-  card.dataset.name = prod.name;
-  card.style.animationDelay = (pi * 0.03) + 's';
-  card.style.flexWrap = 'wrap';
-
-  const imgHtml = prod.image
-    ? `<img class="product-img" src="${prod.image}" alt="${prod.name}" onerror="this.style.display='none'">`
-    : '';
-
-  if(prod.variants && prod.variants.length > 0){
-    /* Varyantlı ürün — ilk stokta olan varyant seçili gelir */
-    const firstVariant = prod.variants[0];
-    const initPrice = firstVariant.price;
-    const initInStock = firstVariant.inStock !== false;
-    const safeName = prod.name.replace(/'/g,"\\'");
-    const safeFirstLabel = firstVariant.label.replace(/'/g,"\\'");
-
-    card.innerHTML = `
-      ${imgHtml}
-      <div class="product-info" style="flex:1;min-width:0;">
-        <div class="product-name">${prod.name}</div>
-        <div class="product-price" data-base="${initPrice}">${initPrice} ₺</div>
-      </div>
-      <button class="add-btn ${initInStock ? '' : 'oos-btn'}"
-        onclick="${initInStock ? `addToCart('${safeName} — ${safeFirstLabel}','${initPrice}',this)` : ''}">+</button>`;
-
-    if(!initInStock){
-      card.querySelector('.add-btn').style.opacity = '0.3';
-      card.querySelector('.add-btn').style.cursor = 'not-allowed';
-      card.querySelector('.add-btn').style.pointerEvents = 'none';
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.category-wrapper[data-cat]').forEach(w=>{
+    if(w.dataset.cat === catName){
+      w.style.display='block'; w.classList.add('active');
+      w.querySelectorAll('.product-card').forEach(c=>c.style.display='flex');
+    } else {
+      w.style.display='none';
     }
-
-    /* Varyant butonları satırı */
-    const vRow = document.createElement('div');
-    vRow.className = 'variant-row';
-    vRow.style.width = '100%';
-
-    prod.variants.forEach((v, vi) => {
-      const vBtn = document.createElement('button');
-      const vInStock = v.inStock !== false;
-      vBtn.className = 'variant-btn' + (vi === 0 ? ' selected' : '') + (!vInStock ? ' oos-variant' : '');
-      vBtn.textContent = v.label + (!vInStock ? ' · Tükendi' : '');
-      if(!vInStock){
-        vBtn.style.cssText += 'opacity:0.45;text-decoration:line-through;cursor:not-allowed;border-color:#e53935;color:#e53935;';
-      }
-      vBtn.addEventListener('click', function(){
-        const p = v.price;
-        const inStock = v.inStock !== false;
-        /* Fiyatı güncelle */
-        card.querySelector('.product-price').textContent = p + ' ₺';
-        card.querySelector('.product-price').dataset.base = p;
-        /* + butonunu güncelle */
-        const safeLabel = v.label.replace(/'/g,"\\'");
-        const safeN = prod.name.replace(/'/g,"\\'");
-        const addBtn = card.querySelector('.add-btn');
-        if(inStock){
-          addBtn.setAttribute('onclick', `addToCart('${safeN} — ${safeLabel}','${p}',this)`);
-          addBtn.style.opacity = '1';
-          addBtn.style.cursor = 'pointer';
-          addBtn.style.pointerEvents = 'auto';
-          addBtn.style.background = '';
-        } else {
-          addBtn.setAttribute('onclick', '');
-          addBtn.style.opacity = '0.3';
-          addBtn.style.cursor = 'not-allowed';
-          addBtn.style.pointerEvents = 'none';
-          addBtn.style.background = '#9ca3af';
-        }
-        /* Seçili stil */
-        vRow.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('selected'));
-        this.classList.add('selected');
-      });
-      vRow.appendChild(vBtn);
-    });
-    card.appendChild(vRow);
-
-  } else {
-    /* Normal ürün */
-    const displayPrice = prod.name in priceData ? priceData[prod.name] : prod.price;
-    const safeName = prod.name.replace(/'/g,"\\'");
-    card.innerHTML = `
-      ${imgHtml}
-      <div class="product-info">
-        <div class="product-name">${prod.name}</div>
-        <div class="product-price">${displayPrice} ₺</div>
-      </div>
-      <button class="add-btn" onclick="addToCart('${safeName}','${displayPrice}',this)">+</button>`;
-  }
-
-  list.appendChild(card);
-});
-
-wrapper.appendChild(header);
-wrapper.appendChild(list);
-root.appendChild(wrapper);
-```
-
-});
-
-document.getElementById(‘menuStats’).textContent =
-data.categories.filter(c => c.products && c.products.length > 0).length + ’ kategori · ’ + totalProducts + ’ ürün’;
-
-setTimeout(applyAllStock, 100);
+  });
+  document.getElementById('searchInput').value='';
 }
 
-fetch(‘data.json’)
-.then(r => r.json())
-.then(data => buildMenu(data))
-.catch(err => {
-console.error(‘data.json yüklenemedi:’, err);
-document.getElementById(‘menuStats’).textContent = ‘⚠️ Menü yüklenemedi.’;
-});
+/* ── MENÜ YÜKLEME (data.json'dan) ── */
+function buildMenu(data){
+  MENU_DATA = data;
+  const root = document.getElementById('menu-root');
+  const chips = document.getElementById('filterChips');
+  let totalProducts = 0;
+  const priceData = getPriceData();
+
+  data.categories.forEach((cat) => {
+    if(!cat.products || cat.products.length === 0) return;
+    totalProducts += cat.products.length;
+
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = (cat.icon || '') + ' ' + cat.name;
+    chip.onclick = function(){ filterCategory(this, cat.name); };
+    chips.appendChild(chip);
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'category-wrapper';
+    wrapper.dataset.cat = cat.name;
+
+    const header = document.createElement('div');
+    header.className = 'category-header';
+    header.innerHTML = `
+      <div class="cat-left">
+        <div class="cat-icon">${cat.icon || '📦'}</div>
+        <div class="cat-info">
+          <div class="cat-name">${cat.name}</div>
+          <div class="cat-count">${cat.products.length} ürün</div>
+        </div>
+      </div>
+      <div class="cat-arrow">▼</div>`;
+    header.onclick = function(){
+      const isOpening = !this.parentElement.classList.contains('active');
+      /* Diğer tüm kategorileri kapat */
+      document.querySelectorAll('.category-wrapper.active').forEach(w => {
+        if(w !== this.parentElement) w.classList.remove('active');
+      });
+      this.parentElement.classList.toggle('active');
+      if(isOpening){
+        gtag('event', 'kategori_ac', {
+          event_category: 'Menu',
+          event_label: cat.name,
+          value: cat.products.length
+        });
+      }
+    };
+
+    const list = document.createElement('div');
+    list.className = 'product-list';
+
+    cat.products.forEach((prod, pi) => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.dataset.name = prod.name;
+      card.style.animationDelay = (pi * 0.03) + 's';
+      card.style.flexWrap = 'wrap';
+
+      const imgHtml = prod.image
+        ? `<img class="product-img" src="${prod.image}" alt="${prod.name}" onerror="this.style.display='none'">`
+        : '';
+
+      if(prod.variants && prod.variants.length > 0){
+        /* Varyantlı ürün — ilk stokta olan varyant seçili gelir */
+        const firstVariant = prod.variants[0];
+        const initPrice = firstVariant.price;
+        const initInStock = firstVariant.inStock !== false;
+        const safeName = prod.name.replace(/'/g,"\\'");
+        const safeFirstLabel = firstVariant.label.replace(/'/g,"\\'");
+
+        card.innerHTML = `
+          ${imgHtml}
+          <div class="product-info" style="flex:1;min-width:0;">
+            <div class="product-name">${prod.name}</div>
+            <div class="product-price" data-base="${initPrice}">${initPrice} ₺</div>
+          </div>
+          <button class="add-btn ${initInStock ? '' : 'oos-btn'}"
+            onclick="${initInStock ? `addToCart('${safeName} — ${safeFirstLabel}','${initPrice}',this)` : ''}">+</button>`;
+
+        if(!initInStock){
+          card.querySelector('.add-btn').style.opacity = '0.3';
+          card.querySelector('.add-btn').style.cursor = 'not-allowed';
+          card.querySelector('.add-btn').style.pointerEvents = 'none';
+        }
+
+        /* Varyant butonları satırı */
+        const vRow = document.createElement('div');
+        vRow.className = 'variant-row';
+        vRow.style.width = '100%';
+
+        prod.variants.forEach((v, vi) => {
+          const vBtn = document.createElement('button');
+          const vInStock = v.inStock !== false;
+          vBtn.className = 'variant-btn' + (vi === 0 ? ' selected' : '') + (!vInStock ? ' oos-variant' : '');
+          vBtn.textContent = v.label + (!vInStock ? ' · Tükendi' : '');
+          if(!vInStock){
+            vBtn.style.cssText += 'opacity:0.45;text-decoration:line-through;cursor:not-allowed;border-color:#e53935;color:#e53935;';
+          }
+          vBtn.addEventListener('click', function(){
+            const p = v.price;
+            const inStock = v.inStock !== false;
+            /* Fiyatı güncelle */
+            card.querySelector('.product-price').textContent = p + ' ₺';
+            card.querySelector('.product-price').dataset.base = p;
+            /* + butonunu güncelle */
+            const safeLabel = v.label.replace(/'/g,"\\'");
+            const safeN = prod.name.replace(/'/g,"\\'");
+            const addBtn = card.querySelector('.add-btn');
+            if(inStock){
+              addBtn.setAttribute('onclick', `addToCart('${safeN} — ${safeLabel}','${p}',this)`);
+              addBtn.style.opacity = '1';
+              addBtn.style.cursor = 'pointer';
+              addBtn.style.pointerEvents = 'auto';
+              addBtn.style.background = '';
+            } else {
+              addBtn.setAttribute('onclick', '');
+              addBtn.style.opacity = '0.3';
+              addBtn.style.cursor = 'not-allowed';
+              addBtn.style.pointerEvents = 'none';
+              addBtn.style.background = '#9ca3af';
+            }
+            /* Seçili stil */
+            vRow.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('selected'));
+            this.classList.add('selected');
+          });
+          vRow.appendChild(vBtn);
+        });
+        card.appendChild(vRow);
+
+      } else {
+        /* Normal ürün */
+        const displayPrice = prod.name in priceData ? priceData[prod.name] : prod.price;
+        const safeName = prod.name.replace(/'/g,"\\'");
+        card.innerHTML = `
+          ${imgHtml}
+          <div class="product-info">
+            <div class="product-name">${prod.name}</div>
+            <div class="product-price">${displayPrice} ₺</div>
+          </div>
+          <button class="add-btn" onclick="addToCart('${safeName}','${displayPrice}',this)">+</button>`;
+      }
+
+      list.appendChild(card);
+    });
+
+    wrapper.appendChild(header);
+    wrapper.appendChild(list);
+    root.appendChild(wrapper);
+  });
+
+  document.getElementById('menuStats').textContent =
+    data.categories.filter(c => c.products && c.products.length > 0).length + ' kategori · ' + totalProducts + ' ürün';
+
+  setTimeout(applyAllStock, 100);
+}
+
+fetch('data.json')
+  .then(r => r.json())
+  .then(data => buildMenu(data))
+  .catch(err => {
+    console.error('data.json yüklenemedi:', err);
+    document.getElementById('menuStats').textContent = '⚠️ Menü yüklenemedi.';
+  });
 
 /* ── YASAL BİLGİ TOGGLE ── */
 function toggleLegal(){
-document.getElementById(‘legalSection’).classList.toggle(‘open’);
+  document.getElementById('legalSection').classList.toggle('open');
 }
 
 /* ── SEPET ── */
 let cart = [];
 
 function addToCart(name, priceStr, btn){
-const price = parseFloat(String(priceStr).replace(/./g,’’).replace(’,’,’.’));
-const existing = cart.find(i=>i.name===name);
-if(existing){ existing.qty++; } else { cart.push({name,price,qty:1}); }
-renderCart(); openCart(); saveCartToStorage();
-gtag(‘event’, ‘sepete_ekle’, {
-event_category: ‘Sepet’,
-event_label: name,
-value: price
-});
-if(btn){
-btn.classList.remove(‘btn-pop’); void btn.offsetWidth;
-btn.classList.add(‘btn-pop’);
-btn.addEventListener(‘animationend’,()=>btn.classList.remove(‘btn-pop’),{once:true});
-}
+  const price = parseFloat(String(priceStr).replace(/\./g,'').replace(',','.'));
+  const existing = cart.find(i=>i.name===name);
+  if(existing){ existing.qty++; } else { cart.push({name,price,qty:1}); }
+  renderCart(); openCart(); saveCartToStorage();
+  gtag('event', 'sepete_ekle', {
+    event_category: 'Sepet',
+    event_label: name,
+    value: price
+  });
+  if(btn){
+    btn.classList.remove('btn-pop'); void btn.offsetWidth;
+    btn.classList.add('btn-pop');
+    btn.addEventListener('animationend',()=>btn.classList.remove('btn-pop'),{once:true});
+  }
 }
 
 function increaseQty(name){ const i=cart.find(i=>i.name===name); if(i) i.qty++; renderCart(); saveCartToStorage(); }
 function decreaseQty(name){
-const i=cart.find(i=>i.name===name);
-if(i){ i.qty–; if(i.qty<=0) cart=cart.filter(c=>c.name!==name); }
-renderCart(); saveCartToStorage();
-if(cart.length===0) collapseCart();
+  const i=cart.find(i=>i.name===name);
+  if(i){ i.qty--; if(i.qty<=0) cart=cart.filter(c=>c.name!==name); }
+  renderCart(); saveCartToStorage();
+  if(cart.length===0) collapseCart();
 }
-function clearCart(){ cart=[]; renderCart(); collapseCart(); hideCheckoutOptions(); saveCartToStorage(); document.getElementById(‘min-order-warn’).style.display=‘none’; }
+function clearCart(){ cart=[]; renderCart(); collapseCart(); hideCheckoutOptions(); saveCartToStorage(); document.getElementById('min-order-warn').style.display='none'; }
 function calcTotal(){ return cart.reduce((s,i)=>s+i.price*i.qty,0); }
 
 function renderCart(){
-const list=document.getElementById(‘cart-items-list’);
-const emptyMsg=document.getElementById(‘cart-empty-msg’);
-const badge=document.getElementById(‘cart-badge’);
-const fabBadge=document.getElementById(‘fab-badge’);
-const totalEl=document.getElementById(‘cart-total-amount’);
-const fab=document.getElementById(‘cart-fab’);
-const panel=document.getElementById(‘cart-panel’);
-const totalQty=cart.reduce((s,i)=>s+i.qty,0);
+  const list=document.getElementById('cart-items-list');
+  const emptyMsg=document.getElementById('cart-empty-msg');
+  const badge=document.getElementById('cart-badge');
+  const fabBadge=document.getElementById('fab-badge');
+  const totalEl=document.getElementById('cart-total-amount');
+  const fab=document.getElementById('cart-fab');
+  const panel=document.getElementById('cart-panel');
+  const totalQty=cart.reduce((s,i)=>s+i.qty,0);
 
-badge.textContent=totalQty;
-fabBadge.textContent=totalQty;
-totalEl.textContent=calcTotal().toLocaleString(‘tr-TR’,{minimumFractionDigits:2,maximumFractionDigits:2})+’ ₺’;
-list.innerHTML=’’;
+  badge.textContent=totalQty;
+  fabBadge.textContent=totalQty;
+  totalEl.textContent=calcTotal().toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2})+' ₺';
+  list.innerHTML='';
 
-if(cart.length===0){
-emptyMsg.style.display=‘block’; fab.classList.add(‘hidden’);
-} else {
-emptyMsg.style.display=‘none’;
-cart.forEach(item=>{
-const row=document.createElement(‘div’);
-row.className=‘cart-item-row’;
-const safe=item.name.replace(/’/g,”\’”);
-row.innerHTML=` <span class="cart-item-name">${item.name}</span> <div class="qty-control"> <button class="qty-btn" onclick="decreaseQty('${safe}')">−</button> <span class="qty-value">${item.qty}</span> <button class="qty-btn" onclick="increaseQty('${safe}')">+</button> </div> <span class="cart-item-price">${(item.price*item.qty).toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2})} ₺</span>`;
-list.appendChild(row);
-});
-if(!panel.classList.contains(‘open’)) fab.classList.remove(‘hidden’);
-}
+  if(cart.length===0){
+    emptyMsg.style.display='block'; fab.classList.add('hidden');
+  } else {
+    emptyMsg.style.display='none';
+    cart.forEach(item=>{
+      const row=document.createElement('div');
+      row.className='cart-item-row';
+      const safe=item.name.replace(/'/g,"\\'");
+      row.innerHTML=`
+        <span class="cart-item-name">${item.name}</span>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="decreaseQty('${safe}')">−</button>
+          <span class="qty-value">${item.qty}</span>
+          <button class="qty-btn" onclick="increaseQty('${safe}')">+</button>
+        </div>
+        <span class="cart-item-price">${(item.price*item.qty).toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2})} ₺</span>`;
+      list.appendChild(row);
+    });
+    if(!panel.classList.contains('open')) fab.classList.remove('hidden');
+  }
 }
 
 function openCart(){
-document.getElementById(‘cart-panel’).classList.add(‘open’);
-document.getElementById(‘cart-toggle-icon’).textContent=‘▼’;
-document.getElementById(‘cart-fab’).classList.add(‘hidden’);
+  document.getElementById('cart-panel').classList.add('open');
+  document.getElementById('cart-toggle-icon').textContent='▼';
+  document.getElementById('cart-fab').classList.add('hidden');
 }
 function collapseCart(){
-document.getElementById(‘cart-panel’).classList.remove(‘open’);
-document.getElementById(‘cart-toggle-icon’).textContent=‘▲’;
-if(cart.length>0) document.getElementById(‘cart-fab’).classList.remove(‘hidden’);
+  document.getElementById('cart-panel').classList.remove('open');
+  document.getElementById('cart-toggle-icon').textContent='▲';
+  if(cart.length>0) document.getElementById('cart-fab').classList.remove('hidden');
 }
 function toggleCartExpand(){
-document.getElementById(‘cart-panel’).classList.contains(‘open’) ? collapseCart() : openCart();
+  document.getElementById('cart-panel').classList.contains('open') ? collapseCart() : openCart();
 }
 
-const ORDER_EMAIL  = ‘Mehmetue98@gmail.com’;
+const ORDER_EMAIL  = 'Mehmetue98@gmail.com';
 const MIN_ORDER    = 500;
 
 /* ── SİPARİŞ NUMARASI ── */
 function generateOrderNo(){
-const now = new Date();
-const y = now.getFullYear();
-const m = String(now.getMonth()+1).padStart(2,‘0’);
-const d = String(now.getDate()).padStart(2,‘0’);
-const todayKey = `ug_order_${y}${m}${d}`;
-let count = parseInt(localStorage.getItem(todayKey) || ‘0’) + 1;
-localStorage.setItem(todayKey, count);
-Object.keys(localStorage).forEach(k => {
-if(k.startsWith(‘ug_order_’) && k !== todayKey) localStorage.removeItem(k);
-});
-return `${y}${m}${d}${String(count).padStart(3,'0')}`;
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth()+1).padStart(2,'0');
+  const d = String(now.getDate()).padStart(2,'0');
+  const todayKey = `ug_order_${y}${m}${d}`;
+  let count = parseInt(localStorage.getItem(todayKey) || '0') + 1;
+  localStorage.setItem(todayKey, count);
+  Object.keys(localStorage).forEach(k => {
+    if(k.startsWith('ug_order_') && k !== todayKey) localStorage.removeItem(k);
+  });
+  return `${y}${m}${d}${String(count).padStart(3,'0')}`;
 }
 
 /* ── MÜŞTERİ FORMU ── */
 function showCheckoutOptions(){
-if(cart.length === 0){ alert(‘Sepetiniz boş!’); return; }
-if(calcTotal() < MIN_ORDER){
-const warn = document.getElementById(‘min-order-warn’);
-warn.style.display = ‘block’;
-document.getElementById(‘min-order-current’).textContent =
-calcTotal().toLocaleString(‘tr-TR’,{minimumFractionDigits:2}) + ’ ₺’;
-setTimeout(()=>{ warn.style.display=‘none’; }, 4000);
-return;
-}
-document.getElementById(‘min-order-warn’).style.display = ‘none’;
-const prev = JSON.parse(localStorage.getItem(‘ug_cust’) || ‘{}’);
-if(prev.name)    document.getElementById(‘cust-name’).value    = prev.name;
-if(prev.phone)   document.getElementById(‘cust-phone’).value   = prev.phone;
-if(prev.address) document.getElementById(‘cust-address’).value = prev.address;
-document.getElementById(‘customer-overlay’).classList.add(‘open’);
+  if(cart.length === 0){ alert('Sepetiniz boş!'); return; }
+  if(calcTotal() < MIN_ORDER){
+    const warn = document.getElementById('min-order-warn');
+    warn.style.display = 'block';
+    document.getElementById('min-order-current').textContent =
+      calcTotal().toLocaleString('tr-TR',{minimumFractionDigits:2}) + ' ₺';
+    setTimeout(()=>{ warn.style.display='none'; }, 4000);
+    return;
+  }
+  document.getElementById('min-order-warn').style.display = 'none';
+  const prev = JSON.parse(localStorage.getItem('ug_cust') || '{}');
+  if(prev.name)    document.getElementById('cust-name').value    = prev.name;
+  if(prev.phone)   document.getElementById('cust-phone').value   = prev.phone;
+  if(prev.address) document.getElementById('cust-address').value = prev.address;
+  document.getElementById('customer-overlay').classList.add('open');
 }
 function closeCustomerForm(){
-document.getElementById(‘customer-overlay’).classList.remove(‘open’);
-document.getElementById(‘cust-error’).style.display = ‘none’;
+  document.getElementById('customer-overlay').classList.remove('open');
+  document.getElementById('cust-error').style.display = 'none';
 }
 function hideCheckoutOptions(){ /* eski çağrılar için boş bırak */ }
 
 function submitOrder(channel){
-const name    = document.getElementById(‘cust-name’).value.trim();
-const phone   = document.getElementById(‘cust-phone’).value.trim();
-const address = document.getElementById(‘cust-address’).value.trim();
-const note    = document.getElementById(‘cust-note’).value.trim();
-if(!name || !phone){
-document.getElementById(‘cust-error’).style.display = ‘block’; return;
-}
-localStorage.setItem(‘ug_cust’, JSON.stringify({name, phone, address}));
-closeCustomerForm();
-if(channel === ‘wp’) checkoutWhatsApp(name, phone, address, note);
-else                 checkoutEmail(name, phone, address, note);
+  const name    = document.getElementById('cust-name').value.trim();
+  const phone   = document.getElementById('cust-phone').value.trim();
+  const address = document.getElementById('cust-address').value.trim();
+  const note    = document.getElementById('cust-note').value.trim();
+  if(!name || !phone){
+    document.getElementById('cust-error').style.display = 'block'; return;
+  }
+  localStorage.setItem('ug_cust', JSON.stringify({name, phone, address}));
+  closeCustomerForm();
+  if(channel === 'wp') checkoutWhatsApp(name, phone, address, note);
+  else                 checkoutEmail(name, phone, address, note);
 }
 
 /* ── SİPARİŞ METNİ OLUŞTUR ── */
 function buildOrderText(name, phone, address, note){
-const now = new Date();
-const tarih = now.toLocaleDateString(‘tr-TR’, {day:‘numeric’,month:‘long’,year:‘numeric’});
-const saat  = now.toLocaleTimeString(‘tr-TR’, {hour:‘2-digit’,minute:‘2-digit’});
-const orderNo = generateOrderNo();
-let lines = ‘’;
-cart.forEach(item => {
-lines += `▪ ${item.name} × ${item.qty}  →  ${(item.price*item.qty).toLocaleString('tr-TR',{minimumFractionDigits:2})} ₺\n`;
-});
-localStorage.setItem(‘ug_last_order’, JSON.stringify({
-items: cart.map(i=>({…i})), total: calcTotal(), tarih, orderNo
-}));
-updateLastOrderBar();
-return { tarih, saat, orderNo, lines,
-bildirim: ‘Bu sipariş Üstüner Gıda dijital menüsü üzerinden oluşturulmuştur.’,
-name, phone, address, note };
+  const now = new Date();
+  const tarih = now.toLocaleDateString('tr-TR', {day:'numeric',month:'long',year:'numeric'});
+  const saat  = now.toLocaleTimeString('tr-TR', {hour:'2-digit',minute:'2-digit'});
+  const orderNo = generateOrderNo();
+  let lines = '';
+  cart.forEach(item => {
+    lines += `▪ ${item.name} × ${item.qty}  →  ${(item.price*item.qty).toLocaleString('tr-TR',{minimumFractionDigits:2})} ₺\n`;
+  });
+  localStorage.setItem('ug_last_order', JSON.stringify({
+    items: cart.map(i=>({...i})), total: calcTotal(), tarih, orderNo
+  }));
+  updateLastOrderBar();
+  return { tarih, saat, orderNo, lines,
+    bildirim: 'Bu sipariş Üstüner Gıda dijital menüsü üzerinden oluşturulmuştur.',
+    name, phone, address, note };
 }
 
-function checkoutWhatsApp(name=’’, phone=’’, address=’’, note=’’){
-const {tarih, saat, orderNo, lines, bildirim} = buildOrderText(name, phone, address, note);
-const adresSatir = address ? `\n📍 Adres        : ${address}` : ‘’;
-const notSatir   = note    ? `\n📝 Not          : ${note}`    : ‘’;
-const msg =
-`🏪 ÜSTÜNER GIDA ━━━━━━━━━━━━━━━━━━ 📋 SİPARİŞ FORMU 📅 ${tarih} — ${saat} 🔢 Sipariş No   : ${orderNo} ━━━━━━━━━━━━━━━━━━ 👤 Ad / İşletme : ${name} 📞 Telefon      : ${phone}${adresSatir}${notSatir} ━━━━━━━━━━━━━━━━━━ 📦 ÜRÜNLER: ${lines}━━━━━━━━━━━━━━━━━━ 💰 TOPLAM: ${calcTotal().toLocaleString('tr-TR',{minimumFractionDigits:2})} ₺ ━━━━━━━━━━━━━━━━━━ ${bildirim}`;
-gtag(‘event’,‘whatsapp_siparis’,{event_category:‘Siparis’,event_label:orderNo,value:calcTotal()});
-window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`,’_blank’);
+function checkoutWhatsApp(name='', phone='', address='', note=''){
+  const {tarih, saat, orderNo, lines, bildirim} = buildOrderText(name, phone, address, note);
+  const adresSatir = address ? `\n📍 Adres        : ${address}` : '';
+  const notSatir   = note    ? `\n📝 Not          : ${note}`    : '';
+  const msg =
+`🏪 ÜSTÜNER GIDA
+━━━━━━━━━━━━━━━━━━
+📋 SİPARİŞ FORMU
+📅 ${tarih} — ${saat}
+🔢 Sipariş No   : ${orderNo}
+━━━━━━━━━━━━━━━━━━
+👤 Ad / İşletme : ${name}
+📞 Telefon      : ${phone}${adresSatir}${notSatir}
+━━━━━━━━━━━━━━━━━━
+📦 ÜRÜNLER:
+${lines}━━━━━━━━━━━━━━━━━━
+💰 TOPLAM: ${calcTotal().toLocaleString('tr-TR',{minimumFractionDigits:2})} ₺
+━━━━━━━━━━━━━━━━━━
+${bildirim}`;
+  gtag('event','whatsapp_siparis',{event_category:'Siparis',event_label:orderNo,value:calcTotal()});
+  window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
-function checkoutEmail(name=’’, phone=’’, address=’’, note=’’){
-const {tarih, saat, orderNo, lines, bildirim} = buildOrderText(name, phone, address, note);
-const konu = `Üstüner Gıda Sipariş No: ${orderNo} — ${tarih}`;
-const govde =
+function checkoutEmail(name='', phone='', address='', note=''){
+  const {tarih, saat, orderNo, lines, bildirim} = buildOrderText(name, phone, address, note);
+  const konu = `Üstüner Gıda Sipariş No: ${orderNo} — ${tarih}`;
+  const govde =
 `ÜSTÜNER GIDA SİPARİŞ FORMU
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 Tarih        : ${tarih}
@@ -2029,532 +2036,564 @@ Saat         : ${saat}
 Sipariş No   : ${orderNo}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 Ad / İşletme : ${name}
-Telefon      : ${phone}${address ? ’\nAdres        : ’+address : ‘’}${note ? ’\nNot          : ’+note : ‘’}
+Telefon      : ${phone}${address ? '\nAdres        : '+address : ''}${note ? '\nNot          : '+note : ''}
 
 ÜRÜNLER
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 ${lines}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
-TOPLAM : ${calcTotal().toLocaleString(‘tr-TR’,{minimumFractionDigits:2})} ₺
+TOPLAM : ${calcTotal().toLocaleString('tr-TR',{minimumFractionDigits:2})} ₺
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
-${bildirim}`; gtag('event','email_siparis',{event_category:'Siparis',event_label:orderNo,value:calcTotal()}); window.location.href = `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(konu)}&body=${encodeURIComponent(govde)}`;
+${bildirim}`;
+  gtag('event','email_siparis',{event_category:'Siparis',event_label:orderNo,value:calcTotal()});
+  window.location.href = `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(konu)}&body=${encodeURIComponent(govde)}`;
 }
 
 /* ── SON SİPARİŞ ── */
 function updateLastOrderBar(){
-const last = JSON.parse(localStorage.getItem(‘ug_last_order’) || ‘null’);
-const bar  = document.getElementById(‘last-order-bar’);
-if(!last || !bar) return;
-bar.style.display = ‘flex’;
-document.getElementById(‘lo-text’).innerHTML =
-`<strong>Son siparişiniz</strong> — ${last.tarih}<br>` +
-last.items.slice(0,2).map(i=>`${i.name} ×${i.qty}`).join(’, ’) +
-(last.items.length > 2 ? ` +${last.items.length-2} ürün` : ‘’);
+  const last = JSON.parse(localStorage.getItem('ug_last_order') || 'null');
+  const bar  = document.getElementById('last-order-bar');
+  if(!last || !bar) return;
+  bar.style.display = 'flex';
+  document.getElementById('lo-text').innerHTML =
+    `<strong>Son siparişiniz</strong> — ${last.tarih}<br>` +
+    last.items.slice(0,2).map(i=>`${i.name} ×${i.qty}`).join(', ') +
+    (last.items.length > 2 ? ` +${last.items.length-2} ürün` : '');
 }
 function repeatLastOrder(){
-const last = JSON.parse(localStorage.getItem(‘ug_last_order’) || ‘null’);
-if(!last) return;
-last.items.forEach(i => {
-const ex = cart.find(c=>c.name===i.name);
-if(ex){ ex.qty += i.qty; } else { cart.push({…i}); }
-});
-renderCart(); openCart(); saveCartToStorage();
+  const last = JSON.parse(localStorage.getItem('ug_last_order') || 'null');
+  if(!last) return;
+  last.items.forEach(i => {
+    const ex = cart.find(c=>c.name===i.name);
+    if(ex){ ex.qty += i.qty; } else { cart.push({...i}); }
+  });
+  renderCart(); openCart(); saveCartToStorage();
 }
 
 /* ══════════════════════════════════════════
-ADMİN PANELİ & GITHUB API ENTEGRASYONU
+   ADMİN PANELİ & GITHUB API ENTEGRASYONU
 ══════════════════════════════════════════ */
-const ADMIN_PASSWORD = ‘ustuner2024’;
-const _a = ‘Z2hwX1Y0OE5nakx0RUxk’;
-const _b = ‘b0FMY3kyNG9iR3F6aEl0N3JkeTMwT1hBNQ==’;
+const ADMIN_PASSWORD = 'ustuner2024';
+const _a = 'Z2hwX1Y0OE5nakx0RUxk';
+const _b = 'b0FMY3kyNG9iR3F6aEl0N3JkeTMwT1hBNQ==';
 const GH_TOKEN   = atob(_a + _b);
-const GH_USER    = ‘mehmeteu98-cmd’;
-const GH_REPO    = ‘ustuner-gida-menu’;
-const GH_FILE    = ‘data.json’;
+const GH_USER    = 'mehmeteu98-cmd';
+const GH_REPO    = 'ustuner-gida-menu';
+const GH_FILE    = 'data.json';
 
 /* Yerel önbellek — sayfa açıkken hızlı erişim */
 function getStockData(){
-try { return JSON.parse(localStorage.getItem(‘ug_stock’) || ‘{}’); }
-catch(e){ return {}; }
+  try { return JSON.parse(localStorage.getItem('ug_stock') || '{}'); }
+  catch(e){ return {}; }
 }
-function saveStockData(d){ localStorage.setItem(‘ug_stock’, JSON.stringify(d)); }
+function saveStockData(d){ localStorage.setItem('ug_stock', JSON.stringify(d)); }
 function isInStock(name){
-const d = getStockData();
-return d[name] !== false;
+  const d = getStockData();
+  return d[name] !== false;
 }
 
 function getPriceData(){
-try { return JSON.parse(localStorage.getItem(‘ug_prices’) || ‘{}’); }
-catch(e){ return {}; }
+  try { return JSON.parse(localStorage.getItem('ug_prices') || '{}'); }
+  catch(e){ return {}; }
 }
 
-/* ── GitHub’dan mevcut data.json SHA’sını al ── */
+/* ── GitHub'dan mevcut data.json SHA'sını al ── */
 async function getFileSha(){
-const res = await fetch(
-`https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${GH_FILE}`,
-{ headers: { Authorization: `token ${GH_TOKEN}` } }
-);
-const json = await res.json();
-return json.sha;
+  const res = await fetch(
+    `https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${GH_FILE}`,
+    { headers: { Authorization: `token ${GH_TOKEN}` } }
+  );
+  const json = await res.json();
+  return json.sha;
 }
 
-/* ── data.json’ı GitHub’a kaydet ── */
+/* ── data.json'ı GitHub'a kaydet ── */
 async function saveDataToGitHub(newData){
-const statusEl = document.getElementById(‘admin-save-status’);
-if(statusEl){ statusEl.textContent = ‘⏳ Kaydediliyor…’; statusEl.style.color = ‘#f59e0b’; }
+  const statusEl = document.getElementById('admin-save-status');
+  if(statusEl){ statusEl.textContent = '⏳ Kaydediliyor...'; statusEl.style.color = '#f59e0b'; }
 
-try {
-const sha = await getFileSha();
-const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
-const res = await fetch(
-`https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${GH_FILE}`,
-{
-method: ‘PUT’,
-headers: {
-Authorization: `token ${GH_TOKEN}`,
-‘Content-Type’: ‘application/json’
-},
-body: JSON.stringify({
-message: ‘Admin: fiyat/stok güncelleme’,
-content,
-sha
-})
-}
-);
-if(res.ok){
-if(statusEl){ statusEl.textContent = ‘✅ Kaydedildi — tüm cihazlara yansıdı’; statusEl.style.color = ‘#22c55e’; }
-setTimeout(()=>{ if(statusEl) statusEl.textContent = ‘’; }, 4000);
-} else {
-throw new Error(‘API hatası’);
-}
-} catch(e){
-if(statusEl){ statusEl.textContent = ‘❌ Kaydetme hatası, tekrar dene’; statusEl.style.color = ‘#e53935’; }
-}
+  try {
+    const sha = await getFileSha();
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
+    const res = await fetch(
+      `https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${GH_FILE}`,
+      {
+        method: 'PUT',
+        headers: {
+          Authorization: `token ${GH_TOKEN}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: 'Admin: fiyat/stok güncelleme',
+          content,
+          sha
+        })
+      }
+    );
+    if(res.ok){
+      if(statusEl){ statusEl.textContent = '✅ Kaydedildi — tüm cihazlara yansıdı'; statusEl.style.color = '#22c55e'; }
+      setTimeout(()=>{ if(statusEl) statusEl.textContent = ''; }, 4000);
+    } else {
+      throw new Error('API hatası');
+    }
+  } catch(e){
+    if(statusEl){ statusEl.textContent = '❌ Kaydetme hatası, tekrar dene'; statusEl.style.color = '#e53935'; }
+  }
 }
 
-/* ── Tüm değişiklikleri MENU_DATA’dan GitHub’a yaz ── */
+/* ── Tüm değişiklikleri MENU_DATA'dan GitHub'a yaz ── */
 function pushAllChanges(){
-saveDataToGitHub(MENU_DATA);
+  saveDataToGitHub(MENU_DATA);
 }
 
 function applyStockToCard(card){
-const name = card.dataset.name;
-let prod = null;
-MENU_DATA.categories.forEach(cat => {
-cat.products.forEach(p => { if(p.name === name) prod = p; });
-});
-if(!prod) return;
+  const name = card.dataset.name;
+  let prod = null;
+  MENU_DATA.categories.forEach(cat => {
+    cat.products.forEach(p => { if(p.name === name) prod = p; });
+  });
+  if(!prod) return;
 
-if(prod.variants && prod.variants.length > 0){
-/* Seçili varyantın stok durumuna bak */
-const selectedBtn = card.querySelector(’.variant-btn.selected’);
-if(!selectedBtn) return;
-const selectedLabel = selectedBtn.textContent.replace(’ · Tükendi’,’’).trim();
-const v = prod.variants.find(vv => vv.label === selectedLabel);
-const inStock = v ? v.inStock !== false : true;
-const addBtn = card.querySelector(’.add-btn’);
-if(addBtn){
-addBtn.style.opacity = inStock ? ‘1’ : ‘0.3’;
-addBtn.style.cursor = inStock ? ‘pointer’ : ‘not-allowed’;
-addBtn.style.pointerEvents = inStock ? ‘auto’ : ‘none’;
-addBtn.style.background = inStock ? ‘’ : ‘#9ca3af’;
-}
-/* Varyant butonlarını güncelle */
-card.querySelectorAll(’.variant-btn’).forEach(btn => {
-const lbl = btn.textContent.replace(’ · Tükendi’,’’).trim();
-const vv = prod.variants.find(x => x.label === lbl);
-const vis = vv ? vv.inStock !== false : true;
-if(!vis && !btn.textContent.includes(‘Tükendi’)){
-btn.textContent = lbl + ’ · Tükendi’;
-btn.style.cssText += ‘opacity:0.45;text-decoration:line-through;cursor:not-allowed;border-color:#e53935;color:#e53935;’;
-} else if(vis){
-btn.textContent = lbl;
-btn.style.opacity = ‘1’;
-btn.style.textDecoration = ‘’;
-btn.style.cursor = ‘pointer’;
-btn.style.borderColor = ‘’;
-btn.style.color = ‘’;
-}
-});
-} else {
-const inStock = prod.inStock !== false;
-if(!inStock){ card.classList.add(‘out-of-stock’); }
-else { card.classList.remove(‘out-of-stock’); }
-}
+  if(prod.variants && prod.variants.length > 0){
+    /* Seçili varyantın stok durumuna bak */
+    const selectedBtn = card.querySelector('.variant-btn.selected');
+    if(!selectedBtn) return;
+    const selectedLabel = selectedBtn.textContent.replace(' · Tükendi','').trim();
+    const v = prod.variants.find(vv => vv.label === selectedLabel);
+    const inStock = v ? v.inStock !== false : true;
+    const addBtn = card.querySelector('.add-btn');
+    if(addBtn){
+      addBtn.style.opacity = inStock ? '1' : '0.3';
+      addBtn.style.cursor = inStock ? 'pointer' : 'not-allowed';
+      addBtn.style.pointerEvents = inStock ? 'auto' : 'none';
+      addBtn.style.background = inStock ? '' : '#9ca3af';
+    }
+    /* Varyant butonlarını güncelle */
+    card.querySelectorAll('.variant-btn').forEach(btn => {
+      const lbl = btn.textContent.replace(' · Tükendi','').trim();
+      const vv = prod.variants.find(x => x.label === lbl);
+      const vis = vv ? vv.inStock !== false : true;
+      if(!vis && !btn.textContent.includes('Tükendi')){
+        btn.textContent = lbl + ' · Tükendi';
+        btn.style.cssText += 'opacity:0.45;text-decoration:line-through;cursor:not-allowed;border-color:#e53935;color:#e53935;';
+      } else if(vis){
+        btn.textContent = lbl;
+        btn.style.opacity = '1';
+        btn.style.textDecoration = '';
+        btn.style.cursor = 'pointer';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }
+    });
+  } else {
+    const inStock = prod.inStock !== false;
+    if(!inStock){ card.classList.add('out-of-stock'); }
+    else { card.classList.remove('out-of-stock'); }
+  }
 }
 function applyAllStock(){
-document.querySelectorAll(’.product-card’).forEach(applyStockToCard);
+  document.querySelectorAll('.product-card').forEach(applyStockToCard);
 }
 
 /* Saate 5 hızlı tık → admin */
 let clockTapCount = 0, clockTapTimer = null;
-document.getElementById(‘analogClock’).style.cursor = ‘pointer’;
-document.getElementById(‘analogClock’).addEventListener(‘click’, function(){
-clockTapCount++;
-clearTimeout(clockTapTimer);
-clockTapTimer = setTimeout(()=>{ clockTapCount = 0; }, 2500);
-if(clockTapCount >= 5){
-clockTapCount = 0;
-openAdmin();
-}
+document.getElementById('analogClock').style.cursor = 'pointer';
+document.getElementById('analogClock').addEventListener('click', function(){
+  clockTapCount++;
+  clearTimeout(clockTapTimer);
+  clockTapTimer = setTimeout(()=>{ clockTapCount = 0; }, 2500);
+  if(clockTapCount >= 5){
+    clockTapCount = 0;
+    openAdmin();
+  }
 });
 
 /* Klavye açılınca panel yukarı kaymasın — görünür alanda kalsın */
 if(window.visualViewport){
-window.visualViewport.addEventListener(‘resize’, function(){
-const panel = document.getElementById(‘admin-panel’);
-if(!panel) return;
-const offsetFromBottom = window.innerHeight - window.visualViewport.height;
-panel.style.transform = offsetFromBottom > 50
-? `translateY(-${offsetFromBottom}px)`
-: ‘’;
-});
+  window.visualViewport.addEventListener('resize', function(){
+    const panel = document.getElementById('admin-panel');
+    if(!panel) return;
+    const offsetFromBottom = window.innerHeight - window.visualViewport.height;
+    panel.style.transform = offsetFromBottom > 50
+      ? `translateY(-${offsetFromBottom}px)`
+      : '';
+  });
 }
 let adminTapCount = 0, adminTapTimer = null;
-document.getElementById(‘adminTrigger’).addEventListener(‘click’, function(e){
-adminTapCount++;
-clearTimeout(adminTapTimer);
-if(adminTapCount >= 5){
-adminTapCount = 0;
-e.stopImmediatePropagation();
-openAdmin();
-} else {
-adminTapTimer = setTimeout(()=>{
-adminTapCount = 0;
-}, 600);
-}
+document.getElementById('adminTrigger').addEventListener('click', function(e){
+  adminTapCount++;
+  clearTimeout(adminTapTimer);
+  if(adminTapCount >= 5){
+    adminTapCount = 0;
+    e.stopImmediatePropagation();
+    openAdmin();
+  } else {
+    adminTapTimer = setTimeout(()=>{
+      adminTapCount = 0;
+    }, 600);
+  }
 });
 
 function openAdmin(){
-document.getElementById(‘admin-overlay’).classList.add(‘open’);
-document.getElementById(‘admin-login’).style.display = ‘block’;
-document.getElementById(‘admin-content’).style.display = ‘none’;
-document.getElementById(‘admin-pass-input’).value = ‘’;
-document.getElementById(‘admin-login-error’).style.display = ‘none’;
-setTimeout(()=>document.getElementById(‘admin-pass-input’).focus(), 350);
+  document.getElementById('admin-overlay').classList.add('open');
+  document.getElementById('admin-login').style.display = 'block';
+  document.getElementById('admin-content').style.display = 'none';
+  document.getElementById('admin-pass-input').value = '';
+  document.getElementById('admin-login-error').style.display = 'none';
+  setTimeout(()=>document.getElementById('admin-pass-input').focus(), 350);
 }
 function closeAdmin(){
-document.getElementById(‘admin-overlay’).classList.remove(‘open’);
+  document.getElementById('admin-overlay').classList.remove('open');
 }
 function adminOverlayClick(e){
-if(e.target === document.getElementById(‘admin-overlay’)) closeAdmin();
+  if(e.target === document.getElementById('admin-overlay')) closeAdmin();
 }
 
 function adminDoLogin(){
-const val = document.getElementById(‘admin-pass-input’).value;
-if(val === ADMIN_PASSWORD){
-document.getElementById(‘admin-login’).style.display = ‘none’;
-document.getElementById(‘admin-content’).style.display = ‘flex’;
-document.getElementById(‘adminSearch’).value = ‘’;
-initAdminAnnounce();
-renderAdminList();
-} else {
-document.getElementById(‘admin-login-error’).style.display = ‘block’;
-document.getElementById(‘admin-pass-input’).value = ‘’;
-document.getElementById(‘admin-pass-input’).focus();
-document.getElementById(‘admin-pass-input’).style.borderColor = ‘#e53935’;
-setTimeout(()=>{
-document.getElementById(‘admin-pass-input’).style.borderColor = ‘’;
-}, 1200);
-}
+  const val = document.getElementById('admin-pass-input').value;
+  if(val === ADMIN_PASSWORD){
+    document.getElementById('admin-login').style.display = 'none';
+    document.getElementById('admin-content').style.display = 'flex';
+    document.getElementById('adminSearch').value = '';
+    initAdminAnnounce();
+    renderAdminList();
+  } else {
+    document.getElementById('admin-login-error').style.display = 'block';
+    document.getElementById('admin-pass-input').value = '';
+    document.getElementById('admin-pass-input').focus();
+    document.getElementById('admin-pass-input').style.borderColor = '#e53935';
+    setTimeout(()=>{
+      document.getElementById('admin-pass-input').style.borderColor = '';
+    }, 1200);
+  }
 }
 
 function renderAdminList(){
-const filter = (document.getElementById(‘adminSearch’).value || ‘’).toLowerCase();
-const listEl = document.getElementById(‘admin-list’);
-listEl.innerHTML = ‘’;
-let total = 0, oos = 0;
+  const filter = (document.getElementById('adminSearch').value || '').toLowerCase();
+  const listEl = document.getElementById('admin-list');
+  listEl.innerHTML = '';
+  let total = 0, oos = 0;
 
-MENU_DATA.categories.forEach(cat => {
-const filtered = cat.products.filter(p =>
-!filter || p.name.toLowerCase().includes(filter)
-);
-if(filtered.length === 0) return;
+  MENU_DATA.categories.forEach(cat => {
+    const filtered = cat.products.filter(p =>
+      !filter || p.name.toLowerCase().includes(filter)
+    );
+    if(filtered.length === 0) return;
 
-```
-const label = document.createElement('div');
-label.className = 'admin-cat-label';
-label.textContent = (cat.icon || '') + ' ' + cat.name;
-listEl.appendChild(label);
+    const label = document.createElement('div');
+    label.className = 'admin-cat-label';
+    label.textContent = (cat.icon || '') + ' ' + cat.name;
+    listEl.appendChild(label);
 
-filtered.forEach(prod => {
-  total++;
-  const inStock = prod.inStock !== false;
-  if(!inStock) oos++;
-
-  /* Varyantlı ürün */
-  if(prod.variants && prod.variants.length > 0){
-    const varLabel = document.createElement('div');
-    varLabel.style.cssText = 'padding:8px 0 2px; font-size:12px; font-weight:700; color:var(--navy);';
-    varLabel.textContent = prod.name;
-    listEl.appendChild(varLabel);
-
-    prod.variants.forEach(v => {
+    filtered.forEach(prod => {
       total++;
-      const vInStock = v.inStock !== false;
-      if(!vInStock) oos++;
+      const inStock = prod.inStock !== false;
+      if(!inStock) oos++;
 
-      const row = document.createElement('div');
-      row.className = 'admin-row';
-      const uid = 'tog_' + Math.random().toString(36).slice(2);
+      /* Varyantlı ürün */
+      if(prod.variants && prod.variants.length > 0){
+        const varLabel = document.createElement('div');
+        varLabel.style.cssText = 'padding:8px 0 2px; font-size:12px; font-weight:700; color:var(--navy);';
+        varLabel.textContent = prod.name;
+        listEl.appendChild(varLabel);
 
-      row.innerHTML = `
-        <div class="admin-row-name ${vInStock ? '' : 'oos'}" style="font-size:12px;color:#6b7280;">
-          └ ${v.label}
-        </div>
-        <div class="price-edit-wrap">
-          <input type="number" class="price-edit-input" value="${v.price}" min="0" step="0.5">
-          <span class="price-lira">₺</span>
-        </div>
-        <div class="toggle-wrap">
-          <input type="checkbox" class="toggle-input" id="${uid}" ${vInStock ? 'checked' : ''}>
-          <label class="toggle-label" for="${uid}">
-            <div class="toggle-track"><div class="toggle-thumb"></div></div>
-            <span class="toggle-text">${vInStock ? 'AÇIK' : 'KAPALI'}</span>
-          </label>
-        </div>`;
+        prod.variants.forEach(v => {
+          total++;
+          const vInStock = v.inStock !== false;
+          if(!vInStock) oos++;
 
-      /* Fiyat güncelle */
-      const priceInput = row.querySelector('.price-edit-input');
-      priceInput.addEventListener('change', function(){
-        const newPrice = parseFloat(this.value);
-        if(isNaN(newPrice) || newPrice < 0){ this.value = v.price; return; }
-        v.price = newPrice;
-        /* Menü kartındaki fiyatı güncelle */
-        document.querySelectorAll('.product-card').forEach(card => {
-          if(card.dataset.name === prod.name){
-            const selectedBtn = card.querySelector('.variant-btn.selected');
-            if(selectedBtn && selectedBtn.textContent.trim() === v.label){
+          const row = document.createElement('div');
+          row.className = 'admin-row';
+          const uid = 'tog_' + Math.random().toString(36).slice(2);
+
+          row.innerHTML = `
+            <div class="admin-row-name ${vInStock ? '' : 'oos'}" style="font-size:12px;color:#6b7280;">
+              └ ${v.label}
+            </div>
+            <div class="price-edit-wrap">
+              <input type="number" class="price-edit-input" value="${v.price}" min="0" step="0.5">
+              <span class="price-lira">₺</span>
+            </div>
+            <div class="toggle-wrap">
+              <input type="checkbox" class="toggle-input" id="${uid}" ${vInStock ? 'checked' : ''}>
+              <label class="toggle-label" for="${uid}">
+                <div class="toggle-track"><div class="toggle-thumb"></div></div>
+                <span class="toggle-text">${vInStock ? 'AÇIK' : 'KAPALI'}</span>
+              </label>
+            </div>`;
+
+          /* Fiyat güncelle */
+          const priceInput = row.querySelector('.price-edit-input');
+          priceInput.addEventListener('change', function(){
+            const newPrice = parseFloat(this.value);
+            if(isNaN(newPrice) || newPrice < 0){ this.value = v.price; return; }
+            v.price = newPrice;
+            /* Menü kartındaki fiyatı güncelle */
+            document.querySelectorAll('.product-card').forEach(card => {
+              if(card.dataset.name === prod.name){
+                const selectedBtn = card.querySelector('.variant-btn.selected');
+                if(selectedBtn && selectedBtn.textContent.trim() === v.label){
+                  card.querySelector('.product-price').textContent = newPrice + ' ₺';
+                }
+              }
+            });
+            this.classList.add('saved');
+            setTimeout(()=> this.classList.remove('saved'), 1200);
+          });
+
+          /* Stok toggle */
+          const checkbox = row.querySelector('.toggle-input');
+          checkbox.addEventListener('change', function(){
+            const nowInStock = this.checked;
+            v.inStock = nowInStock;
+            row.querySelector('.admin-row-name').className = 'admin-row-name' + (nowInStock ? '' : ' oos');
+            row.querySelector('.toggle-text').textContent = nowInStock ? 'AÇIK' : 'KAPALI';
+            updateAdminStats();
+          });
+
+          listEl.appendChild(row);
+        });
+
+      } else {
+        /* Normal ürün */
+        const row = document.createElement('div');
+        row.className = 'admin-row';
+        const uid = 'tog_' + Math.random().toString(36).slice(2);
+
+        row.innerHTML = `
+          <div class="admin-row-name ${inStock ? '' : 'oos'}">${prod.name}</div>
+          <div class="price-edit-wrap">
+            <input type="number" class="price-edit-input" value="${prod.price}" min="0" step="0.5">
+            <span class="price-lira">₺</span>
+          </div>
+          <div class="toggle-wrap">
+            <input type="checkbox" class="toggle-input" id="${uid}" ${inStock ? 'checked' : ''}>
+            <label class="toggle-label" for="${uid}">
+              <div class="toggle-track"><div class="toggle-thumb"></div></div>
+              <span class="toggle-text">${inStock ? 'AÇIK' : 'KAPALI'}</span>
+            </label>
+          </div>`;
+
+        const priceInput = row.querySelector('.price-edit-input');
+        priceInput.addEventListener('change', function(){
+          const newPrice = parseFloat(this.value);
+          if(isNaN(newPrice) || newPrice < 0){ this.value = prod.price; return; }
+          prod.price = newPrice;
+          document.querySelectorAll('.product-card').forEach(card => {
+            if(card.dataset.name === prod.name){
               card.querySelector('.product-price').textContent = newPrice + ' ₺';
             }
-          }
+          });
+          this.classList.add('saved');
+          setTimeout(()=> this.classList.remove('saved'), 1200);
         });
-        this.classList.add('saved');
-        setTimeout(()=> this.classList.remove('saved'), 1200);
-      });
 
-      /* Stok toggle */
-      const checkbox = row.querySelector('.toggle-input');
-      checkbox.addEventListener('change', function(){
-        const nowInStock = this.checked;
-        v.inStock = nowInStock;
-        row.querySelector('.admin-row-name').className = 'admin-row-name' + (nowInStock ? '' : ' oos');
-        row.querySelector('.toggle-text').textContent = nowInStock ? 'AÇIK' : 'KAPALI';
-        updateAdminStats();
-      });
+        const checkbox = row.querySelector('.toggle-input');
+        checkbox.addEventListener('change', function(){
+          const nowInStock = this.checked;
+          prod.inStock = nowInStock;
+          row.querySelector('.admin-row-name').className = 'admin-row-name' + (nowInStock ? '' : ' oos');
+          row.querySelector('.toggle-text').textContent = nowInStock ? 'AÇIK' : 'KAPALI';
+          document.querySelectorAll('.product-card').forEach(card => {
+            if(card.dataset.name === prod.name) applyStockToCard(card);
+          });
+          updateAdminStats();
+        });
 
-      listEl.appendChild(row);
+        listEl.appendChild(row);
+      }
     });
+  });
 
-  } else {
-    /* Normal ürün */
-    const row = document.createElement('div');
-    row.className = 'admin-row';
-    const uid = 'tog_' + Math.random().toString(36).slice(2);
-
-    row.innerHTML = `
-      <div class="admin-row-name ${inStock ? '' : 'oos'}">${prod.name}</div>
-      <div class="price-edit-wrap">
-        <input type="number" class="price-edit-input" value="${prod.price}" min="0" step="0.5">
-        <span class="price-lira">₺</span>
-      </div>
-      <div class="toggle-wrap">
-        <input type="checkbox" class="toggle-input" id="${uid}" ${inStock ? 'checked' : ''}>
-        <label class="toggle-label" for="${uid}">
-          <div class="toggle-track"><div class="toggle-thumb"></div></div>
-          <span class="toggle-text">${inStock ? 'AÇIK' : 'KAPALI'}</span>
-        </label>
-      </div>`;
-
-    const priceInput = row.querySelector('.price-edit-input');
-    priceInput.addEventListener('change', function(){
-      const newPrice = parseFloat(this.value);
-      if(isNaN(newPrice) || newPrice < 0){ this.value = prod.price; return; }
-      prod.price = newPrice;
-      document.querySelectorAll('.product-card').forEach(card => {
-        if(card.dataset.name === prod.name){
-          card.querySelector('.product-price').textContent = newPrice + ' ₺';
-        }
-      });
-      this.classList.add('saved');
-      setTimeout(()=> this.classList.remove('saved'), 1200);
-    });
-
-    const checkbox = row.querySelector('.toggle-input');
-    checkbox.addEventListener('change', function(){
-      const nowInStock = this.checked;
-      prod.inStock = nowInStock;
-      row.querySelector('.admin-row-name').className = 'admin-row-name' + (nowInStock ? '' : ' oos');
-      row.querySelector('.toggle-text').textContent = nowInStock ? 'AÇIK' : 'KAPALI';
-      document.querySelectorAll('.product-card').forEach(card => {
-        if(card.dataset.name === prod.name) applyStockToCard(card);
-      });
-      updateAdminStats();
-    });
-
-    listEl.appendChild(row);
-  }
-});
-```
-
-});
-
-document.getElementById(‘as-total’).textContent = total;
-document.getElementById(‘as-oos’).textContent = oos;
-document.getElementById(‘as-in’).textContent = total - oos;
+  document.getElementById('as-total').textContent = total;
+  document.getElementById('as-oos').textContent = oos;
+  document.getElementById('as-in').textContent = total - oos;
 }
 
 function updateAdminStats(){
-let total = 0, oos = 0;
-MENU_DATA.categories.forEach(cat => {
-cat.products.forEach(p => {
-if(p.variants && p.variants.length > 0){
-p.variants.forEach(v => {
-total++;
-if(v.inStock === false) oos++;
-});
-} else {
-total++;
-if(p.inStock === false) oos++;
-}
-});
-});
-document.getElementById(‘as-total’).textContent = total;
-document.getElementById(‘as-oos’).textContent = oos;
-document.getElementById(‘as-in’).textContent = total - oos;
+  let total = 0, oos = 0;
+  MENU_DATA.categories.forEach(cat => {
+    cat.products.forEach(p => {
+      if(p.variants && p.variants.length > 0){
+        p.variants.forEach(v => {
+          total++;
+          if(v.inStock === false) oos++;
+        });
+      } else {
+        total++;
+        if(p.inStock === false) oos++;
+      }
+    });
+  });
+  document.getElementById('as-total').textContent = total;
+  document.getElementById('as-oos').textContent = oos;
+  document.getElementById('as-in').textContent = total - oos;
 }
 
 /* ── ANALOG SAAT ── */
 (function(){
-const canvas = document.getElementById(‘analogClock’);
-const ctx = canvas.getContext(‘2d’);
-const SIZE = 56;
-const CX = SIZE / 2, CY = SIZE / 2, R = SIZE / 2 - 2;
+  const canvas = document.getElementById('analogClock');
+  const ctx = canvas.getContext('2d');
+  const SIZE = 56;
+  const CX = SIZE / 2, CY = SIZE / 2, R = SIZE / 2 - 2;
 
-const GOLD       = ‘#C9A227’;
-const GOLD_LIGHT = ‘#e8bb3a’;
-const NAVY       = ‘#0B1F3B’;
-const WHITE_DIM  = ‘rgba(255,255,255,0.75)’;
-const WHITE_FAINT= ‘rgba(255,255,255,0.18)’;
+  const GOLD       = '#C9A227';
+  const GOLD_LIGHT = '#e8bb3a';
+  const NAVY       = '#0B1F3B';
+  const WHITE_DIM  = 'rgba(255,255,255,0.75)';
+  const WHITE_FAINT= 'rgba(255,255,255,0.18)';
 
-function drawClock(){
-ctx.clearRect(0, 0, SIZE, SIZE);
+  function drawClock(){
+    ctx.clearRect(0, 0, SIZE, SIZE);
 
-```
-/* Arka yüz */
-ctx.beginPath();
-ctx.arc(CX, CY, R, 0, Math.PI * 2);
-const bg = ctx.createRadialGradient(CX - 6, CY - 6, 2, CX, CY, R);
-bg.addColorStop(0, 'rgba(20,45,87,0.85)');
-bg.addColorStop(1, 'rgba(11,31,59,0.95)');
-ctx.fillStyle = bg;
-ctx.fill();
-
-/* Dış çember */
-ctx.beginPath();
-ctx.arc(CX, CY, R, 0, Math.PI * 2);
-ctx.strokeStyle = GOLD;
-ctx.lineWidth = 1.2;
-ctx.stroke();
-
-/* Saat çizgileri */
-for(let i = 0; i < 12; i++){
-  const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
-  const isMajor = i % 3 === 0;
-  const outer = R - 1;
-  const inner = isMajor ? R - 7 : R - 4;
-  ctx.beginPath();
-  ctx.moveTo(CX + Math.cos(angle) * outer, CY + Math.sin(angle) * inner);
-  ctx.lineTo(CX + Math.cos(angle) * outer, CY + Math.sin(angle) * inner);
-  ctx.moveTo(CX + Math.cos(angle) * outer, CY + Math.sin(angle) * outer);
-  /* düzelt */
-  ctx.moveTo(
-    CX + Math.cos(angle) * outer,
-    CY + Math.sin(angle) * outer
-  );
-  ctx.lineTo(
-    CX + Math.cos(angle) * inner,
-    CY + Math.sin(angle) * inner
-  );
-  ctx.strokeStyle = isMajor ? GOLD : WHITE_FAINT;
-  ctx.lineWidth = isMajor ? 1.4 : 0.8;
-  ctx.stroke();
-}
-
-const now = new Date();
-const sec  = now.getSeconds() + now.getMilliseconds() / 1000;
-const min  = now.getMinutes() + sec / 60;
-const hour = (now.getHours() % 12) + min / 60;
-
-function hand(angle, length, width, color, hasTip){
-  const a = angle - Math.PI / 2;
-  ctx.save();
-  ctx.beginPath();
-  ctx.moveTo(CX, CY);
-  ctx.lineTo(CX + Math.cos(a) * length, CY + Math.sin(a) * length);
-  ctx.strokeStyle = color;
-  ctx.lineWidth = width;
-  ctx.lineCap = 'round';
-  ctx.stroke();
-  if(hasTip){
-    /* Küçük arka çıkıntı */
+    /* Arka yüz */
     ctx.beginPath();
-    ctx.moveTo(CX, CY);
-    ctx.lineTo(CX - Math.cos(a) * 4, CY - Math.sin(a) * 4);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = width * 0.6;
+    ctx.arc(CX, CY, R, 0, Math.PI * 2);
+    const bg = ctx.createRadialGradient(CX - 6, CY - 6, 2, CX, CY, R);
+    bg.addColorStop(0, 'rgba(20,45,87,0.85)');
+    bg.addColorStop(1, 'rgba(11,31,59,0.95)');
+    ctx.fillStyle = bg;
+    ctx.fill();
+
+    /* Dış çember */
+    ctx.beginPath();
+    ctx.arc(CX, CY, R, 0, Math.PI * 2);
+    ctx.strokeStyle = GOLD;
+    ctx.lineWidth = 1.2;
     ctx.stroke();
+
+    /* Saat çizgileri */
+    for(let i = 0; i < 12; i++){
+      const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
+      const isMajor = i % 3 === 0;
+      const outer = R - 1;
+      const inner = isMajor ? R - 7 : R - 4;
+      ctx.beginPath();
+      ctx.moveTo(CX + Math.cos(angle) * outer, CY + Math.sin(angle) * inner);
+      ctx.lineTo(CX + Math.cos(angle) * outer, CY + Math.sin(angle) * inner);
+      ctx.moveTo(CX + Math.cos(angle) * outer, CY + Math.sin(angle) * outer);
+      /* düzelt */
+      ctx.moveTo(
+        CX + Math.cos(angle) * outer,
+        CY + Math.sin(angle) * outer
+      );
+      ctx.lineTo(
+        CX + Math.cos(angle) * inner,
+        CY + Math.sin(angle) * inner
+      );
+      ctx.strokeStyle = isMajor ? GOLD : WHITE_FAINT;
+      ctx.lineWidth = isMajor ? 1.4 : 0.8;
+      ctx.stroke();
+    }
+
+    const now = new Date();
+    const sec  = now.getSeconds() + now.getMilliseconds() / 1000;
+    const min  = now.getMinutes() + sec / 60;
+    const hour = (now.getHours() % 12) + min / 60;
+
+    function hand(angle, length, width, color, hasTip){
+      const a = angle - Math.PI / 2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(CX, CY);
+      ctx.lineTo(CX + Math.cos(a) * length, CY + Math.sin(a) * length);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+      if(hasTip){
+        /* Küçük arka çıkıntı */
+        ctx.beginPath();
+        ctx.moveTo(CX, CY);
+        ctx.lineTo(CX - Math.cos(a) * 4, CY - Math.sin(a) * 4);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width * 0.6;
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    /* Saat akrebi */
+    hand((hour / 12) * Math.PI * 2, R * 0.50, 2.2, WHITE_DIM, true);
+    /* Dakika akrebi */
+    hand((min / 60) * Math.PI * 2, R * 0.70, 1.6, WHITE_DIM, true);
+    /* Saniye akrebi */
+    hand((sec / 60) * Math.PI * 2, R * 0.76, 0.9, GOLD_LIGHT, false);
+
+    /* Merkez nokta */
+    ctx.beginPath();
+    ctx.arc(CX, CY, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = GOLD;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(CX, CY, 1, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+
+    /* Dijital saat güncelle */
+    const hh = String(now.getHours()).padStart(2,'0');
+    const mm = String(now.getMinutes()).padStart(2,'0');
+    const ss = String(now.getSeconds()).padStart(2,'0');
+    const dEl = document.getElementById('digitalClock');
+    if(dEl) dEl.textContent = hh + ':' + mm + ':' + ss;
   }
-  ctx.restore();
-}
 
-/* Saat akrebi */
-hand((hour / 12) * Math.PI * 2, R * 0.50, 2.2, WHITE_DIM, true);
-/* Dakika akrebi */
-hand((min / 60) * Math.PI * 2, R * 0.70, 1.6, WHITE_DIM, true);
-/* Saniye akrebi */
-hand((sec / 60) * Math.PI * 2, R * 0.76, 0.9, GOLD_LIGHT, false);
-
-/* Merkez nokta */
-ctx.beginPath();
-ctx.arc(CX, CY, 2.5, 0, Math.PI * 2);
-ctx.fillStyle = GOLD;
-ctx.fill();
-ctx.beginPath();
-ctx.arc(CX, CY, 1, 0, Math.PI * 2);
-ctx.fillStyle = '#fff';
-ctx.fill();
-
-/* Dijital saat güncelle */
-const hh = String(now.getHours()).padStart(2,'0');
-const mm = String(now.getMinutes()).padStart(2,'0');
-const ss = String(now.getSeconds()).padStart(2,'0');
-const dEl = document.getElementById('digitalClock');
-if(dEl) dEl.textContent = hh + ':' + mm + ':' + ss;
-```
-
-}
-
-drawClock();
-setInterval(drawClock, 1000 / 30); /* ~30fps akıcı saniye akrebi */
+  drawClock();
+  setInterval(drawClock, 1000 / 30); /* ~30fps akıcı saniye akrebi */
 })();
 
-/* Footer’a 5x tık ile admin aç */
+/* Footer'a 5x tık ile admin aç */
 let footerTapCount = 0, footerTapTimer = null;
-document.getElementById(‘footerAdminTrigger’).addEventListener(‘click’, function(){
-footerTapCount++;
-clearTimeout(footerTapTimer);
-footerTapTimer = setTimeout(()=>{ footerTapCount = 0; }, 2500);
-if(footerTapCount >= 5){
-footerTapCount = 0;
-openAdmin();
-}
+document.getElementById('footerAdminTrigger').addEventListener('click', function(){
+  footerTapCount++;
+  clearTimeout(footerTapTimer);
+  footerTapTimer = setTimeout(()=>{ footerTapCount = 0; }, 2500);
+  if(footerTapCount >= 5){
+    footerTapCount = 0;
+    openAdmin();
+  }
 });
 
-renderCart();
-document.getElementById(‘cart-fab’).classList.remove(‘hidden’);
+/* ── HAKKIMIZDA ── */
+function openAbout(){ document.getElementById('about-overlay').classList.add('open'); }
+function closeAbout(){ document.getElementById('about-overlay').classList.remove('open'); }
+
+/* ── DUYURU YÖNETİMİ ── */
+const DEFAULT_ANNOUNCE = 'Üstüner Gıda\'ya hoş geldiniz! &nbsp;·&nbsp; Toplu alımlarda özel fiyatlar için bizimle iletişime geçin &nbsp;·&nbsp; Hafta içi 08:00–18:00 hizmetinizdeyiz';
+
+function loadAnnouncement(){
+  const saved = localStorage.getItem('ug_announce');
+  const text = saved || DEFAULT_ANNOUNCE;
+  const el = document.getElementById('announce-content');
+  if(el) el.innerHTML = text + ' &nbsp;·&nbsp; ' + text;
 }
-} catch(e){ cart = []; }
+
+function saveAnnouncement(){
+  const val = document.getElementById('admin-announce-input').value.trim();
+  if(!val) return;
+  localStorage.setItem('ug_announce', val);
+  loadAnnouncement();
+  const btn = document.querySelector('.admin-announce-save');
+  btn.textContent = '✅ Güncellendi!';
+  setTimeout(()=>{ btn.textContent = 'Duyuruyu Güncelle'; }, 2000);
+}
+
+function initAdminAnnounce(){
+  const saved = localStorage.getItem('ug_announce') || DEFAULT_ANNOUNCE.replace(/&nbsp;/g,' ');
+  const input = document.getElementById('admin-announce-input');
+  if(input) input.value = saved;
+}
+
+/* ── SEPETİ KAYDET / GERİ YÜKLE ── */
+function saveCartToStorage(){ localStorage.setItem('ug_cart', JSON.stringify(cart)); }
+function loadCartFromStorage(){
+  try {
+    const saved = JSON.parse(localStorage.getItem('ug_cart') || '[]');
+    if(Array.isArray(saved) && saved.length > 0){
+      cart = saved; renderCart();
+      document.getElementById('cart-fab').classList.remove('hidden');
+    }
+  } catch(e){ cart = []; }
 }
 
 renderCart();
