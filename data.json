@@ -11,37 +11,37 @@
             {
               "label": "1,5 kg",
               "price": 100,
-              "inStock": false
+              "inStock": true
             },
             {
               "label": "4 kg",
               "price": 150,
-              "inStock": false
+              "inStock": true
             },
             {
               "label": "6 kg",
               "price": 200,
-              "inStock": false
+              "inStock": true
             },
             {
               "label": "7 kg",
               "price": 250,
-              "inStock": false
+              "inStock": true
             },
             {
               "label": "8 kg",
               "price": 300,
-              "inStock": false
+              "inStock": true
             },
             {
               "label": "9 kg",
               "price": 350,
-              "inStock": false
+              "inStock": true
             },
             {
               "label": "10 kg",
               "price": 400,
-              "inStock": false
+              "inStock": true
             }
           ]
         },
@@ -51,12 +51,12 @@
             {
               "label": "1755 ml",
               "price": 3500,
-              "inStock": false
+              "inStock": true
             },
             {
               "label": "2600 ml",
               "price": 2000,
-              "inStock": false
+              "inStock": true
             }
           ]
         },
