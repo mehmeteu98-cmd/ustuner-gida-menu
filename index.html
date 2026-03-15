@@ -434,6 +434,140 @@ body {
   background: none; border: none; cursor: pointer; white-space: nowrap;
 }
 
+/* ═══ HAKKIMIZDA SAYFASI ═══ */
+#about-overlay {
+  position: fixed; inset: 0;
+  background: var(--cream);
+  z-index: 800;
+  display: none; flex-direction: column;
+  overflow-y: auto;
+  animation: fadeIn .3s ease;
+}
+#about-overlay.open { display: flex; }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.about-header {
+  background: var(--navy);
+  padding: 16px 20px;
+  display: flex; align-items: center; gap: 14px;
+  position: sticky; top: 0; z-index: 2;
+}
+.about-back {
+  background: rgba(255,255,255,0.1); border: none;
+  color: white; width: 36px; height: 36px;
+  border-radius: 10px; font-size: 18px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.about-header h2 {
+  font-family: 'Playfair Display', serif;
+  color: white; font-size: 18px; font-weight: 700;
+}
+.about-logo-wrap {
+  background: var(--navy);
+  padding: 28px 20px 20px;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+}
+.about-logo-wrap img {
+  width: 200px; max-width: 70vw;
+  filter: drop-shadow(0 0 20px rgba(255,255,255,0.4));
+  margin-bottom: 12px;
+}
+.about-logo-wrap p {
+  color: rgba(255,255,255,0.6); font-size: 12px;
+  letter-spacing: 2px; text-transform: uppercase;
+}
+.about-body { padding: 20px 20px 40px; }
+.about-section {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid var(--gold);
+}
+.about-section h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: var(--navy); text-transform: uppercase;
+  letter-spacing: .5px; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.about-section p {
+  font-size: 13px; color: var(--text-muted);
+  line-height: 1.7;
+}
+.about-section .info-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid #f3f4f6;
+  font-size: 13px; color: var(--text);
+}
+.about-section .info-row:last-child { border-bottom: none; }
+.about-section .info-row span:first-child { font-size: 16px; flex-shrink: 0; }
+.about-section .info-row strong { color: var(--navy); }
+.about-wa-btn {
+  width: 100%; padding: 14px;
+  background: #25D366; color: white; border: none;
+  border-radius: 14px; margin-top: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center;
+  justify-content: center; gap: 8px;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+}
+
+/* ═══ HAKKIMIZDA BUTONU (footer yakını) ═══ */
+.about-trigger-btn {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; width: calc(100% - 24px); margin: 0 12px 8px;
+  padding: 12px; border-radius: 12px;
+  background: var(--surface); border: 1.5px solid var(--border);
+  font-family: 'DM Sans', sans-serif; font-size: 13px;
+  font-weight: 600; color: var(--navy); cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ═══ SABİT WP BUTONU ═══ */
+#wa-float {
+  position: fixed; bottom: 90px; right: 18px;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: #25D366; border: none;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+  z-index: 489; cursor: pointer;
+  transition: transform .2s;
+}
+#wa-float:hover { transform: scale(1.1); }
+#wa-float svg { width: 26px; height: 26px; }
+
+/* ═══ ADMİN DUYURU DÜZENLEME ═══ */
+.admin-announce-wrap {
+  padding: 12px 20px;
+  border-bottom: 1px solid #f3f4f6;
+  flex-shrink: 0;
+}
+.admin-announce-wrap label {
+  font-size: 11px; font-weight: 700; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 1px;
+  display: block; margin-bottom: 6px;
+}
+.admin-announce-input {
+  width: 100%; padding: 9px 12px;
+  border: 1.5px solid #e5e7eb; border-radius: 10px;
+  font-size: 13px; font-family: 'DM Sans', sans-serif;
+  outline: none; transition: border-color .2s;
+  color: var(--text); resize: none; height: 60px;
+}
+.admin-announce-input:focus { border-color: var(--gold); }
+.admin-announce-save {
+  margin-top: 6px; padding: 7px 16px;
+  background: var(--navy); color: var(--gold-light);
+  border: none; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 700; cursor: pointer;
+}
+
 .search-wrap {
   padding: 16px 16px 8px;
   background: var(--cream);
@@ -1179,6 +1313,56 @@ body {
 
 <!-- YASAL BİLGİLER -->
 
+<!-- HAKKIMIZDA SAYFASI -->
+
+<div id="about-overlay">
+  <div class="about-header">
+    <button class="about-back" onclick="closeAbout()">←</button>
+    <h2>Hakkımızda</h2>
+  </div>
+  <div class="about-logo-wrap">
+    <img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" alt="Üstüner Gıda">
+    <p>Dağıtım & Pazarlama — Est. 2004</p>
+  </div>
+  <div class="about-body">
+    <div class="about-section">
+      <h3>🏢 Biz Kimiz?</h3>
+      <p>Üstüner Gıda, 20 yılı aşkın tecrübesiyle gıda, temizlik ve kişisel bakım ürünleri dağıtımında güvenilir çözüm ortağınızdır. Seçkin markaları uygun fiyat ve kesintisiz stok güvencesiyle işletmenize ulaştırıyoruz.</p>
+      <p style="margin-top:10px;">Bölge esnafının, marketlerin, restoranların ve kafeteryaların toplu alım ihtiyaçlarını karşılamak üzere kurulmuş firmamız; müşteri memnuniyetini her zaman ön planda tutmaktadır.</p>
+    </div>
+    <div class="about-section">
+      <h3>📦 Hizmetlerimiz</h3>
+      <div class="info-row"><span>🫧</span><div>Temizlik & Deterjan ürünleri toplu dağıtımı</div></div>
+      <div class="info-row"><span>🥤</span><div>İçecek & Gıda ürünleri tedariki</div></div>
+      <div class="info-row"><span>🧴</span><div>Kişisel bakım & kağıt ürünleri</div></div>
+      <div class="info-row"><span>🚚</span><div>Bölgesel teslimat hizmeti</div></div>
+      <div class="info-row"><span>💼</span><div>B2B toplu alım & özel fiyatlandırma</div></div>
+    </div>
+    <div class="about-section">
+      <h3>📞 İletişim & Çalışma Saatleri</h3>
+      <div class="info-row"><span>📱</span><div><strong>WhatsApp:</strong> +90 544 446 55 03</div></div>
+      <div class="info-row"><span>📧</span><div><strong>E-posta:</strong> Mehmetue98@gmail.com</div></div>
+      <div class="info-row"><span>🕐</span><div><strong>Hafta içi:</strong> 08:00 – 18:00</div></div>
+      <div class="info-row"><span>🕐</span><div><strong>Cumartesi:</strong> 09:00 – 14:00</div></div>
+      <div class="info-row"><span>❌</span><div><strong>Pazar:</strong> Kapalı</div></div>
+      <button class="about-wa-btn" onclick="window.open('https://wa.me/905444465503','_blank')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M20.52 3.48A11.93 11.93 0 0012.01 0C5.38 0 0 5.38 0 12.01c0 2.12.55 4.19 1.6 6.01L0 24l6.12-1.56A11.94 11.94 0 0012 24c6.63 0 12-5.37 12-12 0-3.21-1.25-6.23-3.48-8.52zm-8.51 18.41a9.91 9.91 0 01-5.05-1.38l-.36-.22-3.73.95.98-3.63-.24-.38a9.93 9.93 0 1118.36-5.24 9.93 9.93 0 01-9.96 9.9zm5.45-7.43c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07a8.18 8.18 0 01-2.41-1.49 9.06 9.06 0 01-1.67-2.07c-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37s-1.04 1.01-1.04 2.47 1.06 2.87 1.21 3.07c.15.2 2.09 3.19 5.07 4.47.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35z"/></svg>
+        WhatsApp ile İletişime Geç
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SABİT WP BUTONU -->
+
+<button id="wa-float" onclick="window.open('https://wa.me/905444465503','_blank')" title="WhatsApp ile İletişim">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24"><path d="M20.52 3.48A11.93 11.93 0 0012.01 0C5.38 0 0 5.38 0 12.01c0 2.12.55 4.19 1.6 6.01L0 24l6.12-1.56A11.94 11.94 0 0012 24c6.63 0 12-5.37 12-12 0-3.21-1.25-6.23-3.48-8.52zm-8.51 18.41a9.91 9.91 0 01-5.05-1.38l-.36-.22-3.73.95.98-3.63-.24-.38a9.93 9.93 0 1118.36-5.24 9.93 9.93 0 01-9.96 9.9zm5.45-7.43c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07a8.18 8.18 0 01-2.41-1.49 9.06 9.06 0 01-1.67-2.07c-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37s-1.04 1.01-1.04 2.47 1.06 2.87 1.21 3.07c.15.2 2.09 3.19 5.07 4.47.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35z"/></svg>
+</button>
+
+<button class="about-trigger-btn" onclick="openAbout()">
+  🏢 Hakkımızda & İletişim
+</button>
+
 <div class="legal-section" id="legalSection">
   <div class="legal-header" onclick="toggleLegal()">
     <div class="legal-header-left">
@@ -1315,6 +1499,11 @@ body {
       💾 Değişiklikleri Kaydet
     </button>
     <div id="admin-save-status" style="font-size:12px;margin-top:6px;min-height:18px;text-align:center;"></div>
+  </div>
+  <div class="admin-announce-wrap">
+    <label>📢 Duyuru Bandı Metni</label>
+    <textarea class="admin-announce-input" id="admin-announce-input"></textarea>
+    <button class="admin-announce-save" onclick="saveAnnouncement()">Duyuruyu Güncelle</button>
   </div>
   <div id="admin-search">
     <input type="text" id="adminSearch" placeholder="🔍 Ürün ara..." oninput="renderAdminList()">
@@ -1664,7 +1853,7 @@ function addToCart(name, priceStr, btn){
   const price = parseFloat(String(priceStr).replace(/\./g,'').replace(',','.'));
   const existing = cart.find(i=>i.name===name);
   if(existing){ existing.qty++; } else { cart.push({name,price,qty:1}); }
-  renderCart(); openCart();
+  renderCart(); openCart(); saveCartToStorage();
   gtag('event', 'sepete_ekle', {
     event_category: 'Sepet',
     event_label: name,
@@ -1677,14 +1866,14 @@ function addToCart(name, priceStr, btn){
   }
 }
 
-function increaseQty(name){ const i=cart.find(i=>i.name===name); if(i) i.qty++; renderCart(); }
+function increaseQty(name){ const i=cart.find(i=>i.name===name); if(i) i.qty++; renderCart(); saveCartToStorage(); }
 function decreaseQty(name){
   const i=cart.find(i=>i.name===name);
   if(i){ i.qty--; if(i.qty<=0) cart=cart.filter(c=>c.name!==name); }
-  renderCart();
+  renderCart(); saveCartToStorage();
   if(cart.length===0) collapseCart();
 }
-function clearCart(){ cart=[]; renderCart(); collapseCart(); hideCheckoutOptions(); document.getElementById('min-order-warn').style.display='none'; }
+function clearCart(){ cart=[]; renderCart(); collapseCart(); hideCheckoutOptions(); saveCartToStorage(); document.getElementById('min-order-warn').style.display='none'; }
 function calcTotal(){ return cart.reduce((s,i)=>s+i.price*i.qty,0); }
 
 function renderCart(){
@@ -1878,7 +2067,7 @@ function repeatLastOrder(){
     const ex = cart.find(c=>c.name===i.name);
     if(ex){ ex.qty += i.qty; } else { cart.push({...i}); }
   });
-  renderCart(); openCart();
+  renderCart(); openCart(); saveCartToStorage();
 }
 
 /* ══════════════════════════════════════════
@@ -2066,6 +2255,7 @@ function adminDoLogin(){
     document.getElementById('admin-login').style.display = 'none';
     document.getElementById('admin-content').style.display = 'flex';
     document.getElementById('adminSearch').value = '';
+    initAdminAnnounce();
     renderAdminList();
   } else {
     document.getElementById('admin-login-error').style.display = 'block';
@@ -2364,8 +2554,52 @@ document.getElementById('footerAdminTrigger').addEventListener('click', function
   }
 });
 
+/* ── HAKKIMIZDA ── */
+function openAbout(){ document.getElementById('about-overlay').classList.add('open'); }
+function closeAbout(){ document.getElementById('about-overlay').classList.remove('open'); }
+
+/* ── DUYURU YÖNETİMİ ── */
+const DEFAULT_ANNOUNCE = 'Üstüner Gıda\'ya hoş geldiniz! &nbsp;·&nbsp; Toplu alımlarda özel fiyatlar için bizimle iletişime geçin &nbsp;·&nbsp; Hafta içi 08:00–18:00 hizmetinizdeyiz';
+
+function loadAnnouncement(){
+  const saved = localStorage.getItem('ug_announce');
+  const text = saved || DEFAULT_ANNOUNCE;
+  const el = document.getElementById('announce-content');
+  if(el) el.innerHTML = text + ' &nbsp;·&nbsp; ' + text;
+}
+
+function saveAnnouncement(){
+  const val = document.getElementById('admin-announce-input').value.trim();
+  if(!val) return;
+  localStorage.setItem('ug_announce', val);
+  loadAnnouncement();
+  const btn = document.querySelector('.admin-announce-save');
+  btn.textContent = '✅ Güncellendi!';
+  setTimeout(()=>{ btn.textContent = 'Duyuruyu Güncelle'; }, 2000);
+}
+
+function initAdminAnnounce(){
+  const saved = localStorage.getItem('ug_announce') || DEFAULT_ANNOUNCE.replace(/&nbsp;/g,' ');
+  const input = document.getElementById('admin-announce-input');
+  if(input) input.value = saved;
+}
+
+/* ── SEPETİ KAYDET / GERİ YÜKLE ── */
+function saveCartToStorage(){ localStorage.setItem('ug_cart', JSON.stringify(cart)); }
+function loadCartFromStorage(){
+  try {
+    const saved = JSON.parse(localStorage.getItem('ug_cart') || '[]');
+    if(Array.isArray(saved) && saved.length > 0){
+      cart = saved; renderCart();
+      document.getElementById('cart-fab').classList.remove('hidden');
+    }
+  } catch(e){ cart = []; }
+}
+
 renderCart();
 updateLastOrderBar();
+loadAnnouncement();
+loadCartFromStorage();
 </script>
 
 </body>
