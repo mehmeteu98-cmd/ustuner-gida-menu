@@ -317,6 +317,123 @@ body {
   border-color: var(--gold); color: var(--navy);
 }
 
+/* ═══ DUYURU BANDI ═══ */
+#announcement-bar {
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  border-bottom: 1px solid rgba(201,162,39,0.3);
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+#announcement-bar.hidden { display: none; }
+.announce-inner {
+  display: flex; align-items: center;
+  padding: 7px 12px; gap: 8px;
+}
+.announce-text {
+  flex: 1; overflow: hidden;
+  font-size: 12px; font-weight: 600;
+  color: var(--gold-light);
+  white-space: nowrap;
+}
+.announce-text span {
+  display: inline-block;
+  animation: marquee 18s linear infinite;
+}
+@keyframes marquee {
+  0%   { transform: translateX(100vw); }
+  100% { transform: translateX(-100%); }
+}
+.announce-close {
+  background: none; border: none;
+  color: rgba(255,255,255,0.4); font-size: 16px;
+  cursor: pointer; flex-shrink: 0; padding: 0 4px;
+}
+
+/* ═══ MÜŞTERİ FORMU OVERLAY ═══ */
+#customer-overlay {
+  position: fixed; inset: 0;
+  background: rgba(11,31,59,0.88);
+  backdrop-filter: blur(8px);
+  z-index: 600;
+  display: none; align-items: flex-end; justify-content: center;
+}
+#customer-overlay.open { display: flex; }
+#customer-panel {
+  background: #fff; width: 100%; max-width: 520px;
+  border-radius: 24px 24px 0 0;
+  padding: 28px 24px 36px;
+  animation: slideUp .35s cubic-bezier(.34,1.56,.64,1);
+}
+#customer-panel h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--navy); font-size: 18px;
+  margin-bottom: 4px;
+}
+#customer-panel p {
+  font-size: 12px; color: var(--text-muted); margin-bottom: 18px;
+}
+.cust-input {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid #e5e7eb; border-radius: 12px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  outline: none; margin-bottom: 10px;
+  transition: border-color .2s; color: var(--text);
+}
+.cust-input:focus { border-color: var(--gold); }
+.cust-btns { display: flex; gap: 10px; margin-top: 6px; }
+.cust-btn-wp {
+  flex: 1; background: #25D366; color: white; border: none;
+  padding: 13px; border-radius: 12px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.cust-btn-mail {
+  flex: 1; background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: var(--gold-light); border: none;
+  padding: 13px; border-radius: 12px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700;
+  cursor: pointer;
+}
+.cust-btn-cancel {
+  background: #f3f4f6; color: #6b7280; border: none;
+  padding: 13px 16px; border-radius: 12px;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer;
+}
+
+/* ═══ MİNİMUM SİPARİŞ UYARISI ═══ */
+#min-order-warn {
+  display: none;
+  background: rgba(229,57,53,0.12);
+  border: 1px solid rgba(229,57,53,0.3);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12px; font-weight: 600;
+  color: #e53935;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* ═══ SON SİPARİŞ BUTONU ═══ */
+#last-order-bar {
+  display: none;
+  background: rgba(201,162,39,0.1);
+  border: 1px solid rgba(201,162,39,0.25);
+  border-radius: 10px;
+  padding: 9px 14px;
+  margin: 8px 16px 0;
+  cursor: pointer;
+  align-items: center; gap: 8px;
+  transition: background .2s;
+}
+#last-order-bar:hover { background: rgba(201,162,39,0.18); }
+#last-order-bar .lo-icon { font-size: 16px; }
+#last-order-bar .lo-text { flex: 1; font-size: 12px; font-weight: 600; color: var(--navy); line-height: 1.4; }
+#last-order-bar .lo-btn {
+  font-size: 11px; font-weight: 700; color: var(--gold);
+  background: none; border: none; cursor: pointer; white-space: nowrap;
+}
+
 .search-wrap {
   padding: 16px 16px 8px;
   background: var(--cream);
@@ -1016,7 +1133,25 @@ body {
   </div>
 </header>
 
-<!-- ARAMA -->
+<!-- DUYURU BANDI -->
+
+<div id="announcement-bar">
+  <div class="announce-inner">
+    <span style="font-size:14px;">📢</span>
+    <div class="announce-text">
+      <span id="announce-content">Üstüner Gıda'ya hoş geldiniz! &nbsp;·&nbsp; Toplu alımlarda özel fiyatlar için bizimle iletişime geçin &nbsp;·&nbsp; Hafta içi 08:00–18:00 hizmetinizdeyiz &nbsp;·&nbsp; Üstüner Gıda'ya hoş geldiniz!</span>
+    </div>
+    <button class="announce-close" onclick="document.getElementById('announcement-bar').classList.add('hidden')">✕</button>
+  </div>
+</div>
+
+<!-- SON SİPARİŞ BARI -->
+
+<div id="last-order-bar">
+  <span class="lo-icon">🔄</span>
+  <div class="lo-text" id="lo-text">Son siparişinizi tekrarlamak ister misiniz?</div>
+  <button class="lo-btn" onclick="repeatLastOrder()">Tekrarla →</button>
+</div>
 
 <div class="search-wrap">
   <div class="search-inner">
@@ -1075,10 +1210,15 @@ body {
     <span id="cart-toggle-icon">▲</span>
   </div>
   <div id="cart-items-wrapper">
-    <div id="cart-empty-msg"><span>🛒</span>Sepetiniz boş — ürün ekleyin!</div>
+    <div id="cart-empty-msg">
+      <span>🛒</span>
+      Henüz ürün eklemediniz<br>
+      <span style="font-size:12px;opacity:0.6;">Üstüner Gıda ile alışverişe başlayın!</span>
+    </div>
     <div id="cart-items-list"></div>
   </div>
   <div id="cart-footer">
+    <div id="min-order-warn">⚠️ Minimum sipariş tutarı <strong>500 ₺</strong>'dir. Sepetiniz: <span id="min-order-current"></span></div>
     <div id="cart-total-line">
       <span>Toplam</span>
       <span id="cart-total-amount">0,00 ₺</span>
@@ -1119,6 +1259,28 @@ body {
 </div>
 ```
 
+  </div>
+</div>
+
+<!-- MÜŞTERİ BİLGİ FORMU -->
+
+<div id="customer-overlay">
+  <div id="customer-panel">
+    <h3>📋 Sipariş Bilgileri</h3>
+    <p>Siparişinizi göndermeden önce lütfen bilgilerinizi girin.</p>
+    <input class="cust-input" id="cust-name" type="text" placeholder="Ad Soyad / İşletme Adı *" autocomplete="name">
+    <input class="cust-input" id="cust-phone" type="tel" placeholder="Telefon Numarası *" autocomplete="tel">
+    <input class="cust-input" id="cust-address" type="text" placeholder="Adres / Semt (isteğe bağlı)" autocomplete="street-address">
+    <input class="cust-input" id="cust-note" type="text" placeholder="Sipariş notu (isteğe bağlı)">
+    <div id="cust-error" style="color:#e53935;font-size:12px;margin-bottom:8px;display:none;">⚠️ Ad ve telefon alanları zorunludur.</div>
+    <div class="cust-btns">
+      <button class="cust-btn-wp" onclick="submitOrder('wp')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M20.52 3.48A11.93 11.93 0 0012.01 0C5.38 0 0 5.38 0 12.01c0 2.12.55 4.19 1.6 6.01L0 24l6.12-1.56A11.94 11.94 0 0012 24c6.63 0 12-5.37 12-12 0-3.21-1.25-6.23-3.48-8.52zm-8.51 18.41a9.91 9.91 0 01-5.05-1.38l-.36-.22-3.73.95.98-3.63-.24-.38a9.93 9.93 0 1118.36-5.24 9.93 9.93 0 01-9.96 9.9zm5.45-7.43c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07a8.18 8.18 0 01-2.41-1.49 9.06 9.06 0 01-1.67-2.07c-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37s-1.04 1.01-1.04 2.47 1.06 2.87 1.21 3.07c.15.2 2.09 3.19 5.07 4.47.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35z"/></svg>
+        WhatsApp
+      </button>
+      <button class="cust-btn-mail" onclick="submitOrder('mail')">✉️ E-Posta</button>
+      <button class="cust-btn-cancel" onclick="closeCustomerForm()">✕</button>
+    </div>
   </div>
 </div>
 
@@ -1522,7 +1684,7 @@ function decreaseQty(name){
   renderCart();
   if(cart.length===0) collapseCart();
 }
-function clearCart(){ cart=[]; renderCart(); collapseCart(); hideCheckoutOptions(); }
+function clearCart(){ cart=[]; renderCart(); collapseCart(); hideCheckoutOptions(); document.getElementById('min-order-warn').style.display='none'; }
 function calcTotal(){ return cart.reduce((s,i)=>s+i.price*i.qty,0); }
 
 function renderCart(){
@@ -1576,7 +1738,8 @@ function toggleCartExpand(){
   document.getElementById('cart-panel').classList.contains('open') ? collapseCart() : openCart();
 }
 
-const ORDER_EMAIL = 'Mehmetue98@gmail.com';
+const ORDER_EMAIL  = 'Mehmetue98@gmail.com';
+const MIN_ORDER    = 500;
 
 /* ── SİPARİŞ NUMARASI ── */
 function generateOrderNo(){
@@ -1585,27 +1748,54 @@ function generateOrderNo(){
   const m = String(now.getMonth()+1).padStart(2,'0');
   const d = String(now.getDate()).padStart(2,'0');
   const todayKey = `ug_order_${y}${m}${d}`;
-  /* Bugünün sayacını al, artır */
   let count = parseInt(localStorage.getItem(todayKey) || '0') + 1;
   localStorage.setItem(todayKey, count);
-  /* Eski günlerin kayıtlarını temizle (hafıza tasarrufu) */
   Object.keys(localStorage).forEach(k => {
     if(k.startsWith('ug_order_') && k !== todayKey) localStorage.removeItem(k);
   });
   return `${y}${m}${d}${String(count).padStart(3,'0')}`;
 }
 
+/* ── MÜŞTERİ FORMU ── */
 function showCheckoutOptions(){
-  if(cart.length===0){ alert('Sepetiniz boş!'); return; }
-  document.getElementById('cart-actions').style.display = 'none';
-  document.getElementById('checkout-options').style.display = 'flex';
+  if(cart.length === 0){ alert('Sepetiniz boş!'); return; }
+  if(calcTotal() < MIN_ORDER){
+    const warn = document.getElementById('min-order-warn');
+    warn.style.display = 'block';
+    document.getElementById('min-order-current').textContent =
+      calcTotal().toLocaleString('tr-TR',{minimumFractionDigits:2}) + ' ₺';
+    setTimeout(()=>{ warn.style.display='none'; }, 4000);
+    return;
+  }
+  document.getElementById('min-order-warn').style.display = 'none';
+  const prev = JSON.parse(localStorage.getItem('ug_cust') || '{}');
+  if(prev.name)    document.getElementById('cust-name').value    = prev.name;
+  if(prev.phone)   document.getElementById('cust-phone').value   = prev.phone;
+  if(prev.address) document.getElementById('cust-address').value = prev.address;
+  document.getElementById('customer-overlay').classList.add('open');
 }
-function hideCheckoutOptions(){
-  document.getElementById('cart-actions').style.display = 'flex';
-  document.getElementById('checkout-options').style.display = 'none';
+function closeCustomerForm(){
+  document.getElementById('customer-overlay').classList.remove('open');
+  document.getElementById('cust-error').style.display = 'none';
+}
+function hideCheckoutOptions(){ /* eski çağrılar için boş bırak */ }
+
+function submitOrder(channel){
+  const name    = document.getElementById('cust-name').value.trim();
+  const phone   = document.getElementById('cust-phone').value.trim();
+  const address = document.getElementById('cust-address').value.trim();
+  const note    = document.getElementById('cust-note').value.trim();
+  if(!name || !phone){
+    document.getElementById('cust-error').style.display = 'block'; return;
+  }
+  localStorage.setItem('ug_cust', JSON.stringify({name, phone, address}));
+  closeCustomerForm();
+  if(channel === 'wp') checkoutWhatsApp(name, phone, address, note);
+  else                 checkoutEmail(name, phone, address, note);
 }
 
-function buildOrderText(){
+/* ── SİPARİŞ METNİ OLUŞTUR ── */
+function buildOrderText(name, phone, address, note){
   const now = new Date();
   const tarih = now.toLocaleDateString('tr-TR', {day:'numeric',month:'long',year:'numeric'});
   const saat  = now.toLocaleTimeString('tr-TR', {hour:'2-digit',minute:'2-digit'});
@@ -1614,43 +1804,50 @@ function buildOrderText(){
   cart.forEach(item => {
     lines += `▪ ${item.name} × ${item.qty}  →  ${(item.price*item.qty).toLocaleString('tr-TR',{minimumFractionDigits:2})} ₺\n`;
   });
-  const bildirim = `Bu sipariş Üstüner Gıda dijital menüsü üzerinden oluşturulmuştur.`;
-  return { tarih, saat, orderNo, lines, bildirim };
+  localStorage.setItem('ug_last_order', JSON.stringify({
+    items: cart.map(i=>({...i})), total: calcTotal(), tarih, orderNo
+  }));
+  updateLastOrderBar();
+  return { tarih, saat, orderNo, lines,
+    bildirim: 'Bu sipariş Üstüner Gıda dijital menüsü üzerinden oluşturulmuştur.',
+    name, phone, address, note };
 }
 
-function checkoutWhatsApp(){
-  const {tarih, saat, orderNo, lines, bildirim} = buildOrderText();
+function checkoutWhatsApp(name='', phone='', address='', note=''){
+  const {tarih, saat, orderNo, lines, bildirim} = buildOrderText(name, phone, address, note);
+  const adresSatir = address ? `\n📍 Adres        : ${address}` : '';
+  const notSatir   = note    ? `\n📝 Not          : ${note}`    : '';
   const msg =
 `🏪 ÜSTÜNER GIDA
 ━━━━━━━━━━━━━━━━━━
 📋 SİPARİŞ FORMU
 📅 ${tarih} — ${saat}
-🔢 Sipariş No: ${orderNo}
-
+🔢 Sipariş No   : ${orderNo}
+━━━━━━━━━━━━━━━━━━
+👤 Ad / İşletme : ${name}
+📞 Telefon      : ${phone}${adresSatir}${notSatir}
+━━━━━━━━━━━━━━━━━━
 📦 ÜRÜNLER:
 ${lines}━━━━━━━━━━━━━━━━━━
 💰 TOPLAM: ${calcTotal().toLocaleString('tr-TR',{minimumFractionDigits:2})} ₺
 ━━━━━━━━━━━━━━━━━━
 ${bildirim}`;
-
-  gtag('event', 'whatsapp_siparis', {
-    event_category: 'Siparis',
-    event_label: orderNo,
-    value: calcTotal()
-  });
-  hideCheckoutOptions();
+  gtag('event','whatsapp_siparis',{event_category:'Siparis',event_label:orderNo,value:calcTotal()});
   window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
-function checkoutEmail(){
-  const {tarih, saat, orderNo, lines, bildirim} = buildOrderText();
+function checkoutEmail(name='', phone='', address='', note=''){
+  const {tarih, saat, orderNo, lines, bildirim} = buildOrderText(name, phone, address, note);
   const konu = `Üstüner Gıda Sipariş No: ${orderNo} — ${tarih}`;
   const govde =
 `ÜSTÜNER GIDA SİPARİŞ FORMU
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
-Tarih      : ${tarih}
-Saat       : ${saat}
-Sipariş No : ${orderNo}
+Tarih        : ${tarih}
+Saat         : ${saat}
+Sipariş No   : ${orderNo}
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+Ad / İşletme : ${name}
+Telefon      : ${phone}${address ? '\nAdres        : '+address : ''}${note ? '\nNot          : '+note : ''}
 
 ÜRÜNLER
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1658,16 +1855,30 @@ ${lines}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 TOPLAM : ${calcTotal().toLocaleString('tr-TR',{minimumFractionDigits:2})} ₺
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 ${bildirim}`;
-
-  gtag('event', 'email_siparis', {
-    event_category: 'Siparis',
-    event_label: orderNo,
-    value: calcTotal()
-  });
-  hideCheckoutOptions();
+  gtag('event','email_siparis',{event_category:'Siparis',event_label:orderNo,value:calcTotal()});
   window.location.href = `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(konu)}&body=${encodeURIComponent(govde)}`;
+}
+
+/* ── SON SİPARİŞ ── */
+function updateLastOrderBar(){
+  const last = JSON.parse(localStorage.getItem('ug_last_order') || 'null');
+  const bar  = document.getElementById('last-order-bar');
+  if(!last || !bar) return;
+  bar.style.display = 'flex';
+  document.getElementById('lo-text').innerHTML =
+    `<strong>Son siparişiniz</strong> — ${last.tarih}<br>` +
+    last.items.slice(0,2).map(i=>`${i.name} ×${i.qty}`).join(', ') +
+    (last.items.length > 2 ? ` +${last.items.length-2} ürün` : '');
+}
+function repeatLastOrder(){
+  const last = JSON.parse(localStorage.getItem('ug_last_order') || 'null');
+  if(!last) return;
+  last.items.forEach(i => {
+    const ex = cart.find(c=>c.name===i.name);
+    if(ex){ ex.qty += i.qty; } else { cart.push({...i}); }
+  });
+  renderCart(); openCart();
 }
 
 /* ══════════════════════════════════════════
@@ -2154,6 +2365,7 @@ document.getElementById('footerAdminTrigger').addEventListener('click', function
 });
 
 renderCart();
+updateLastOrderBar();
 </script>
 
 </body>
