@@ -133,7 +133,7 @@ body {
   margin-bottom: 4px;
 }
 .welcome-greeting .greet-time {
-  font-size: clamp(11px, 3vw, 13px);
+  font-size: clamp(12px, 3.5vw, 15px);
   color: var(--gold-light);
   font-weight: 600;
   letter-spacing: 2px;
@@ -146,16 +146,13 @@ body {
   display: block; width: 28px; height: 1px;
   background: rgba(201,162,39,0.45);
 }
-.welcome-greeting .greet-msg {
+.welcome-greeting .greet-sub {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(18px, 5.5vw, 28px);
+  font-size: clamp(16px, 4.5vw, 22px);
   font-weight: 700;
-  color: white;
-  margin-top: 4px;
-  line-height: 1.2;
-}
-.welcome-greeting .greet-msg span {
   color: var(--gold-light);
+  margin-top: 5px;
+  text-align: center;
 }
 
 .welcome-tagline {
@@ -1190,31 +1187,27 @@ function enterSite(){
 /* Tarih & saat */
 const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
 const dateStr = new Date().toLocaleDateString('tr-TR', opts);
-document.getElementById('date').innerHTML = '📅 ' + dateStr;
+document.getElementById('date').innerHTML = dateStr;
 document.getElementById('date-header').textContent = dateStr;
 
 /* Saate göre selamlama */
 (function(){
   const h = new Date().getHours();
-  let icon, zaman, mesaj;
+  let icon, zaman;
   if(h >= 5 && h < 12){
     icon = '🌅'; zaman = 'Günaydın';
-    mesaj = 'Günaydın, <span>değerli misafirimiz</span>';
   } else if(h >= 12 && h < 17){
     icon = '☀️'; zaman = 'İyi Günler';
-    mesaj = 'İyi günler, <span>değerli misafirimiz</span>';
   } else if(h >= 17 && h < 21){
     icon = '🌇'; zaman = 'İyi Akşamlar';
-    mesaj = 'İyi akşamlar, <span>değerli misafirimiz</span>';
   } else {
     icon = '🌙'; zaman = 'İyi Geceler';
-    mesaj = 'İyi geceler, <span>değerli misafirimiz</span>';
   }
   const el = document.getElementById('welcomeGreeting');
   if(el){
     el.innerHTML = `
       <div class="greet-time">${icon} ${zaman} ${icon}</div>
-      <div class="greet-msg">${mesaj}</div>`;
+      <div class="greet-sub">Değerli Misafirimiz</div>`;
   }
 })();
 
