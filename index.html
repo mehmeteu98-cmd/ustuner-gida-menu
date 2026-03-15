@@ -1103,11 +1103,13 @@ body {
 #store-login-screen {
   position: fixed; inset: 0; z-index: 1100;
   background: var(--navy);
-  display: flex; flex-direction: column;
+  display: none;
+  flex-direction: column;
   align-items: center; justify-content: center;
   padding: 32px 24px;
   text-align: center;
 }
+#store-login-screen.visible { display: flex; }
 #store-login-screen.hidden { display: none; }
 
 .sl-logo { margin-bottom: 24px; }
@@ -2840,16 +2842,17 @@ activeCustomer = { adSoyad: ‘Mehmet Ardıç’, isletme: ‘Üstüner Gıda’
 if(document.getElementById(‘remember-me’).checked){
 localStorage.setItem(‘ug_store_code’, code);
 }
-document.getElementById(‘store-login-screen’).style.display = ‘none’;
-/* Admin panelini otomatik aç */
-setTimeout(()=> openAdmin(), 1200);
+hideStoreScreen();
+loadCustomers().catch(()=>{});
+setTimeout(()=> openAdmin(), 1000);
 return;
 }
 
-/* Misafir kodu */
+/* Misafir */
 if(code === ‘MISAFIR’){
-document.getElementById(‘store-login-screen’).style.display = ‘none’;
+hideStoreScreen();
 activeCustomer = null;
+loadCustomers().catch(()=>{});
 return;
 }
 
@@ -2873,12 +2876,19 @@ localStorage.setItem(‘ug_store_code’, code);
 
 updateGreetingForCustomer(cust);
 prefillCustomerForm(cust);
-document.getElementById(‘store-login-screen’).style.display = ‘none’;
+hideStoreScreen();
+}
+
+function hideStoreScreen(){
+const s = document.getElementById(‘store-login-screen’);
+s.style.display = ‘none’;
 }
 
 function storeLoginSkip(){
-document.getElementById(‘store-login-screen’).style.display = ‘none’;
+hideStoreScreen();
 activeCustomer = null;
+/* Müşteri listesini arka planda yükle */
+loadCustomers().catch(()=>{});
 }
 
 function updateGreetingForCustomer(cust){
@@ -2909,37 +2919,39 @@ if(addrEl)  addrEl.value  = cust.adres   || ‘’;
 
 /* Sayfa yüklenince kaydedilmiş kodu kontrol et */
 async function initStoreLogin(){
-try { await loadCustomers(); } catch(e){ CUSTOMERS = {}; }
-
+/* Önce kaydedilmiş kodu kontrol et — ağ isteği yapmadan */
 const saved = localStorage.getItem(‘ug_store_code’);
 
-/* Admin kodu kayıtlıysa direkt geç */
 if(saved === ADMIN_STORE_CODE){
 activeCustomer = { adSoyad: ‘Mehmet Ardıç’, isletme: ‘Üstüner Gıda’, isAdmin: true };
-document.getElementById(‘store-login-screen’).style.display = ‘none’;
-return;
+return; /* Ekranı hiç gösterme */
 }
 
-/* Müşteri kodu kayıtlıysa */
-if(saved && CUSTOMERS[saved]){
+/* Müşteri koduysa önce müşteri listesini yükle */
+if(saved){
+try { await loadCustomers(); } catch(e){ CUSTOMERS = {}; }
+if(CUSTOMERS[saved]){
 try {
 const cust = decodeCustomer(CUSTOMERS[saved]);
 if(cust){
 activeCustomer = { …cust, code: saved };
 updateGreetingForCustomer(cust);
 prefillCustomerForm(cust);
-document.getElementById(‘store-login-screen’).style.display = ‘none’;
-return;
+return; /* Ekranı hiç gösterme */
 }
 } catch(e){}
 }
+/* Kaydedilmiş kod geçersiz — temizle */
+localStorage.removeItem(‘ug_store_code’);
+}
 
-/* Giriş ekranını göster */
-document.getElementById(‘store-login-screen’).style.display = ‘flex’;
+/* Kayıtlı kod yok — giriş ekranını göster */
+const screen = document.getElementById(‘store-login-screen’);
+screen.style.display = ‘flex’;
 setTimeout(()=>{
 const inp = document.getElementById(‘store-code-input’);
 if(inp) inp.focus();
-}, 400);
+}, 300);
 }
 
 /* ── ADMİN: SEKME GEÇİŞİ ── */
