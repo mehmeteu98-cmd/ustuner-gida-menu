@@ -126,9 +126,41 @@ body {
   filter: drop-shadow(0 0 30px rgba(255,255,255,0.6)) drop-shadow(0 4px 20px rgba(201,162,39,0.5));
 }
 
+.welcome-greeting {
+  position: relative; z-index: 2;
+  animation: fadeUp 1s ease .3s forwards; opacity: 0;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.welcome-greeting .greet-time {
+  font-size: clamp(11px, 3vw, 13px);
+  color: var(--gold-light);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.welcome-greeting .greet-time::before,
+.welcome-greeting .greet-time::after {
+  content: '';
+  display: block; width: 28px; height: 1px;
+  background: rgba(201,162,39,0.45);
+}
+.welcome-greeting .greet-msg {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(18px, 5.5vw, 28px);
+  font-weight: 700;
+  color: white;
+  margin-top: 4px;
+  line-height: 1.2;
+}
+.welcome-greeting .greet-msg span {
+  color: var(--gold-light);
+}
+
 .welcome-tagline {
   position: relative; z-index: 2;
-  margin-top: 48px;
+  margin-top: 8px;
   animation: fadeUp 1s ease .4s forwards; opacity: 0;
 }
 .welcome-tagline h1 {
@@ -394,11 +426,19 @@ body {
 
 /* ═══ ÜRÜN LİSTESİ ═══ */
 .product-list {
-  display: none;
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 12px;
+  border-top: 0px solid rgba(201,162,39,0.1);
+  transition: max-height .38s cubic-bezier(.4,0,.2,1),
+              padding .38s ease,
+              border-top-width .38s ease;
+}
+.category-wrapper.active .product-list {
+  max-height: 4000px;
   padding: 0 12px 12px;
   border-top: 1px solid rgba(201,162,39,0.1);
 }
-.category-wrapper.active .product-list { display: block; }
 
 /* ═══ ÜRÜN KARTI ═══ */
 @keyframes cardIn {
@@ -942,6 +982,7 @@ body {
   <div class="welcome-logo-wrap">
     <img src="https://raw.githubusercontent.com/mehmeteu98-cmd/ustuner-gida-menu/main/ustuner_banner.png.PNG" alt="Üstüner Gıda">
   </div>
+  <div class="welcome-greeting" id="welcomeGreeting"></div>
   <div class="welcome-tagline">
     <h1>Hoş Geldiniz</h1>
   </div>
@@ -1152,6 +1193,31 @@ const dateStr = new Date().toLocaleDateString('tr-TR', opts);
 document.getElementById('date').innerHTML = '📅 ' + dateStr;
 document.getElementById('date-header').textContent = dateStr;
 
+/* Saate göre selamlama */
+(function(){
+  const h = new Date().getHours();
+  let icon, zaman, mesaj;
+  if(h >= 5 && h < 12){
+    icon = '🌅'; zaman = 'Günaydın';
+    mesaj = 'Günaydın, <span>değerli misafirimiz</span>';
+  } else if(h >= 12 && h < 17){
+    icon = '☀️'; zaman = 'İyi Günler';
+    mesaj = 'İyi günler, <span>değerli misafirimiz</span>';
+  } else if(h >= 17 && h < 21){
+    icon = '🌇'; zaman = 'İyi Akşamlar';
+    mesaj = 'İyi akşamlar, <span>değerli misafirimiz</span>';
+  } else {
+    icon = '🌙'; zaman = 'İyi Geceler';
+    mesaj = 'İyi geceler, <span>değerli misafirimiz</span>';
+  }
+  const el = document.getElementById('welcomeGreeting');
+  if(el){
+    el.innerHTML = `
+      <div class="greet-time">${icon} ${zaman} ${icon}</div>
+      <div class="greet-msg">${mesaj}</div>`;
+  }
+})();
+
 /* USD */
 async function getUsdRate(){
   try {
@@ -1301,6 +1367,10 @@ function buildMenu(data){
       <div class="cat-arrow">▼</div>`;
     header.onclick = function(){
       const isOpening = !this.parentElement.classList.contains('active');
+      /* Diğer tüm kategorileri kapat */
+      document.querySelectorAll('.category-wrapper.active').forEach(w => {
+        if(w !== this.parentElement) w.classList.remove('active');
+      });
       this.parentElement.classList.toggle('active');
       if(isOpening){
         gtag('event', 'kategori_ac', {
